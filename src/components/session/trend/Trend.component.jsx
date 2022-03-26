@@ -11,7 +11,7 @@ function Trend() {
                             </div>
                             <div className="trend__item">
                                 <div className="trend__item__pic">
-                                    <img src="img/trend/ht-1.jpg" alt />
+                                    <img src="img/trend/ht-1.jpg" alt={"kd"} />
                                 </div>
                                 <div className="trend__item__text">
                                     <h6>Chain bucket bag</h6>
@@ -27,7 +27,7 @@ function Trend() {
                             </div>
                             <div className="trend__item">
                                 <div className="trend__item__pic">
-                                    <img src="img/trend/ht-2.jpg" alt />
+                                    <img src="img/trend/ht-2.jpg" alt="" />
                                 </div>
                                 <div className="trend__item__text">
                                     <h6>Pendant earrings</h6>
@@ -43,7 +43,7 @@ function Trend() {
                             </div>
                             <div className="trend__item">
                                 <div className="trend__item__pic">
-                                    <img src="img/trend/ht-3.jpg" alt />
+                                    <img src="img/trend/ht-3.jpg" alt="" />
                                 </div>
                                 <div className="trend__item__text">
                                     <h6>Cotton T-Shirt</h6>
@@ -66,7 +66,7 @@ function Trend() {
                             </div>
                             <div className="trend__item">
                                 <div className="trend__item__pic">
-                                    <img src="img/trend/bs-1.jpg" alt />
+                                    <img src="img/trend/bs-1.jpg" alt="" />
                                 </div>
                                 <div className="trend__item__text">
                                     <h6>Cotton T-Shirt</h6>
@@ -82,7 +82,7 @@ function Trend() {
                             </div>
                             <div className="trend__item">
                                 <div className="trend__item__pic">
-                                    <img src="img/trend/bs-2.jpg" alt />
+                                    <img src="img/trend/bs-2.jpg" alt="gg" />
                                 </div>
                                 <div className="trend__item__text">
                                     <h6>Zip-pockets pebbled tote <br />briefcase</h6>
@@ -98,7 +98,7 @@ function Trend() {
                             </div>
                             <div className="trend__item">
                                 <div className="trend__item__pic">
-                                    <img src="img/trend/bs-3.jpg" alt />
+                                    <img src="img/trend/bs-3.jpg" alt="" />
                                 </div>
                                 <div className="trend__item__text">
                                     <h6>Round leather bag</h6>
@@ -121,7 +121,7 @@ function Trend() {
                             </div>
                             <div className="trend__item">
                                 <div className="trend__item__pic">
-                                    <img src="img/trend/f-1.jpg" alt />
+                                    <img src="img/trend/f-1.jpg" alt="" />
                                 </div>
                                 <div className="trend__item__text">
                                     <h6>Bow wrap skirt</h6>
@@ -137,7 +137,7 @@ function Trend() {
                             </div>
                             <div className="trend__item">
                                 <div className="trend__item__pic">
-                                    <img src="img/trend/f-2.jpg" alt />
+                                    <img src="img/trend/f-2.jpg" alt =""/>
                                 </div>
                                 <div className="trend__item__text">
                                     <h6>Metallic earrings</h6>
@@ -153,7 +153,7 @@ function Trend() {
                             </div>
                             <div className="trend__item">
                                 <div className="trend__item__pic">
-                                    <img src="img/trend/f-3.jpg" alt />
+                                    <img src="img/trend/f-3.jpg" alt ="" />
                                 </div>
                                 <div className="trend__item__text">
                                     <h6>Flap cross-body bag</h6>
