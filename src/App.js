@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/contact' exact element={<Contact />} />
-        <Route path='/detail' exact element={<Detail />} />
+        <Route path='/detail/' exact element={<Detail />} />
 
       </Routes>
       <Instagram />

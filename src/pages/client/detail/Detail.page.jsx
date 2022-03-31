@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import productApi from '../../../api/productApi';
+import reviewApi from '../../../api/reviewApi';
 
 
 function Detail() {
@@ -10,31 +12,20 @@ function Detail() {
     const [product, setProduct] = useState([])
     const [reviews, setReviews] = useState([])
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         try {
-    //             const { data: res } = await axios.get('https://623d4496db0fc039d4b504fa.mockapi.io/api/Products/')
-    //             setProduct(res);
-    //         } catch (error) {
-    //             console.error('error')
-    //         }
-    //         setLoading(false)
-    //     }
-    //     fetchData();
-    // }, [])
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`https://623d4496db0fc039d4b504fa.mockapi.io/api/Products/${productId}`);
-                setProduct(await res.json());
+                const res = await productApi.get(`${productId}`);
+                setProduct(res);
             } catch (error) {
                 console.log(error)
             }
             setLoading(false)
         }
         fetchData();
+        console.log(product);
     }, [])
 
 
@@ -42,7 +33,7 @@ function Detail() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const { data: res } = await axios.get('https://623d4496db0fc039d4b504fa.mockapi.io/api/Reviews/')
+                const res = await reviewApi.getAll();
                 setReviews(res);
             } catch (error) {
                 console.error('error')
