@@ -1,3 +1,7 @@
+import Home from './pages/client/home/Home.page';
+import ShopPage from './pages/client/shop/Shop.page';
+import RouterPage from './pages/Router.page';
+import './App.css';
 
 import './App.css';
 import Header from './components/header/Header.component';
@@ -20,6 +24,8 @@ function App() {
       </Routes>
       <Instagram />
       <Footer />
+    <div className="App">
+   <RouterPage />
     </div>
   );
 }

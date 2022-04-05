@@ -30,6 +30,71 @@
 
 /* Template default CSS
 /*----------------------------------------*/
+  
+  .value-button {
+	display: inline-block;
+	border: 1px solid #ddd;
+	margin: 0px;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	vertical-align: middle;
+	padding: 11px 0;
+	background: #eee;
+	border-left: 10%;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+  }
+  
+  .pro-qty > .value-button:hover {
+	cursor: pointer;
+	opacity: 0.6;
+  }
+  
+  .pro-qty > #decrease {
+	margin-right: -4px;
+	border-radius: 10px 0px 0px 10px;
+	line-height: 20px;
+	text-align: center;
+	font-weight: 750;
+	background-color: #ccc;
+  }
+  
+  .pro-qty > #increase {
+	margin-left: -4px;
+	border-radius: 0px 10px 10px 0px;
+	line-height: 20px;
+	text-align: center;
+	font-weight: 700;
+	background-color: #5cb85c;
+  }
+  
+  form #input-wrap {
+	margin: 0px;
+	padding: 0px;
+  }
+  .pro-qty .number{
+	  width: 45px;
+  }
+  input.number {
+	text-align: center;
+	border: none;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin: 0px;
+	width: 40px;
+	height: 40px;
+  }
+  
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+  }
 
 html,
 body {
@@ -317,7 +382,6 @@ ol {
 /*---------------------
   Header
 -----------------------*/
-
 .header {
 	background: #ffffff;
 	-webkit-box-shadow: 0px 5px 10px rgba(91, 91, 91, 0.1);
@@ -1802,7 +1866,10 @@ ol {
 	border-radius: 50px;
 	padding: 0 20px;
 	overflow: hidden;
-	display: inline-block;
+	
+}
+.shop__cart__table tbody tr .cart__quantity .pro-qty{
+	display: flex;
 }
 
 .pro-qty .qtybtn {
@@ -1820,7 +1887,7 @@ ol {
 	font-weight: 500;
 	border: none;
 	float: left;
-	width: 84px;
+	width: 40px;
 	text-align: center;
 	height: 48px;
 }
@@ -2148,6 +2215,7 @@ ol {
 	font-weight: 600;
 	text-transform: uppercase;
 	padding-bottom: 20px;
+	padding-left: 6px;
 }
 
 .shop__cart__table tbody tr {
