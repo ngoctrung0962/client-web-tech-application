@@ -790,6 +790,18 @@ ol {
 	margin-bottom: 0;
 }
 
+.services__item img {
+	object-fit: contain;
+	position: absolute;
+	left: 0;
+}
+
+.services__item .commentName {
+	color: #111111;
+	font-size: 17px;
+	font-weight: 600;
+	margin: 0;
+}
 /*---------------------
   Instagram
 -----------------------*/

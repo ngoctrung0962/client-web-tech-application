@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 function Header() {
     return (
         <header className="header">
@@ -5,33 +7,31 @@ function Header() {
                 <div className="row">
                     <div className="col-xl-3 col-lg-2">
                         <div className="header__logo">
-                            <a href="./index.html">
-                                <img src="img/logo.png" alt="" />
-                            </a>
+                            <NavLink to="./index.html"><img src="img/logo.png" alt="" /></NavLink>
                         </div>
                     </div>
                     <div className="col-xl-6 col-lg-7">
                         <nav className="header__menu">
                             <ul>
-                                <li><a href="./index.html">Home</a></li>
-                                <li><a href="./shop.html">Laptop</a></li>
-                                <li><a href="./shop.html">Mobile</a></li>
-                                <li><a href="./shop.html">Shop</a></li>
-                                <li><a href="./contact.html">Contact</a></li>
+                                <li><NavLink to="/">Home</NavLink></li>
+                                <li><NavLink to="./shop.html">Laptop</NavLink></li>
+                                <li><NavLink to="./shop.html">Mobile</NavLink></li>
+                                <li><NavLink to="/detail">Shop</NavLink></li>
+                                <li><NavLink to="/contact">Contact</NavLink></li>
                             </ul>
                         </nav>
                     </div>
                     <div className="col-lg-3">
                         <div className="header__right">
                             <div className="header__right__auth">
-                                <a href="#">Login</a>
-                                <a href="#">Register</a>
+                                <NavLink to="#">Login</NavLink>
+                                <NavLink to="#">Register</NavLink>
                             </div>
                             <ul className="header__right__widget">
                                 <li><span className="icon_search search-switch" /></li>
-                                <li><a href="/shop-cart.html"><span className="icon_bag_alt" />
+                                <li><NavLink to="/shop-cart.html"><span className="icon_bag_alt" />
                                     <div className="tip">2</div>
-                                </a></li>
+                                </NavLink></li>
                             </ul>
                         </div>
                     </div>
