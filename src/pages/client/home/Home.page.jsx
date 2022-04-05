@@ -1,7 +1,16 @@
 import { Fragment } from "react";
 import Footer from "../../../components/footer/Footer.component";
-import Header from "../../../components/header/Header.component";
 import Instagram from "../../../components/instagram/Instagram.component";
+import Banner from "../../../components/session/banner/Banner.component";
+import Categories from "../../../components/session/categories/Categories.component";
+function Home() {
+    return (
+        <>
+            <Categories />
+            <Banner />
+        </>
+
+    )
 import OffCanvasMenu from "../../../components/offCanvasMenu/OffCanvasMenu.component";
 import Banner from "../../../components/session/banner/Banner.component";
 import Categories from "../../../components/session/categories/Categories.component";
