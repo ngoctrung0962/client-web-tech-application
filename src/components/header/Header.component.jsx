@@ -18,6 +18,7 @@ function Header() {
                                 <li><NavLink to="./shop.html">Mobile</NavLink></li>
                                 <li><NavLink to="/detail">Shop</NavLink></li>
                                 <li><NavLink to="/contact">Contact</NavLink></li>
+                                <li><NavLink to="/login">Login</NavLink></li>
                             </ul>
                         </nav>
                     </div>
