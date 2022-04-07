@@ -8,18 +8,19 @@ import Home from './pages/client/home/Home.page';
 import Contact from './pages/client/contact/Contact.page';
 import { Route, Routes } from 'react-router-dom'
 import Detail from './pages/client/detail/Detail.page';
+import SignUp from './pages/authentication/signup/SignUp.page';
 function App() {
   return (
     <div >
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/contact' exact element={<Contact />} />
         <Route path='/detail/' exact element={<Detail />} />
-
+        <Route path='/signup' exact element={<SignUp />} />
       </Routes>
-      <Instagram />
-      <Footer />
+      {/* <Instagram />
+      <Footer /> */}
     </div>
   );
 }
