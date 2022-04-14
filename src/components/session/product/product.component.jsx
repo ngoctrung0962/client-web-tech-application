@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import productApi from "../../../api/productApi";
+import { Fragment } from "react";
 
 function Product() {
   const [loading, setLoading] = useState(true);
@@ -18,128 +19,173 @@ function Product() {
     };
     fetchData();
   }, []);
+
+  // categories list rendering using span tag
+  const [spans] = useState([
+    { id: "All", text: "All products" },
+    { id: "Laptop", text: "Laptop" },
+    { id: "SmartPhone", text: "Smart Phone" },
+  ]);
+
+  // active class state
+  const [active, setActive] = useState("All");
+
+  // category state
+  const [category, setCategory] = useState("All products");
+  useEffect(() => {
+    filterFunction(category);
+  }, [category]);
+  // handle change ... it will set category and active states
+  const handleChange = (individualSpan) => {
+    setActive(individualSpan.id);
+    setCategory(individualSpan.text);
+    filterFunction(individualSpan.text);
+  };
+  // filtered products state
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // filter function
   console.log(products);
-  const listProducts = products.map((product) => {
-    console.log("action map");
-    return (
-      <div key={product.id} className="col-lg-3 col-md-4 col-sm-6 mix women">
-        <div className="product__item">
-          <div
-            className="product__item__pic set-bg"
-            data-setbg={product.img}
-            // set style background-image
-            style={{ backgroundImage: `url(${product.img})` }}
-          >
-            <div className="label new">New</div>
-            <ul className="product__hover">
-              <li>
-                <a href={product.img} className="image-popup">
-                  <span className="arrow_expand" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span className="icon_heart_alt" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span className="icon_bag_alt" />
-                </a>
-              </li>
+
+  const filterFunction = (text) => {
+    if (products.length > 0) {
+      const filter = products.filter(
+        (product) =>
+          product.category === text ||
+          text === "All products" ||
+          category === "All products"
+      );
+      console.log(filter);
+      setFilteredProducts(filter);
+    } else {
+      console.log("no products to filter");
+    }
+  };
+
+  return (
+    <section className="product spad">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-4 col-md-4">
+            <div className="section-title">
+              <h4>New products</h4>
+            </div>
+          </div>
+          <div className="col-lg-8 col-md-8">
+            <ul className="filter__controls">
+              {spans.map((span) => {
+                return (
+                  <li
+                    key={span.id}
+                    className={span.id === active ? "active" : ""}
+                    onClick={() => handleChange(span)} // handle change
+                  >
+                    {span.text}
+                  </li>
+                );
+              })}
             </ul>
           </div>
-          <div className="product__item__text">
-            <h6>
-              <a href="/product-details.html">{product.name}</a>
-            </h6>
-            <div className="rating">
-              <i className="fa fa-star" />
-              <i className="fa fa-star" />
-              <i className="fa fa-star" />
-              <i className="fa fa-star" />
-              <i className="fa fa-star" />
-            </div>
-            <div className="product__price">{product.price}</div>
-          </div>
+        </div>
+        <div className="row property__gallery">
+          {filteredProducts.length > 0
+            ? filteredProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="col-lg-3 col-md-4 col-sm-6 mix women"
+                >
+                  <div className="product__item">
+                    <div
+                      className="product__item__pic set-bg"
+                      data-setbg={product.img}
+                      // set style background-image
+                      style={{ backgroundImage: `url(${product.img})` }}
+                    >
+                      <div className="label new">New</div>
+                      <ul className="product__hover">
+                        <li>
+                          <a href={product.img} className="image-popup">
+                            <span className="arrow_expand" />
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <span className="icon_heart_alt" />
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <span className="icon_bag_alt" />
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="product__item__text">
+                      <h6>
+                        <a href="/product-details.html">{product.name}</a>
+                      </h6>
+                      <div className="rating">
+                        <i className="fa fa-star" />
+                        <i className="fa fa-star" />
+                        <i className="fa fa-star" />
+                        <i className="fa fa-star" />
+                        <i className="fa fa-star" />
+                      </div>
+                      <div className="product__price">{product.price}</div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            : products.map((product) => (
+                <div
+                  key={product.id}
+                  className="col-lg-3 col-md-4 col-sm-6 mix women"
+                >
+                  <div className="product__item">
+                    <div
+                      className="product__item__pic set-bg"
+                      data-setbg={product.img}
+                      // set style background-image
+                      style={{ backgroundImage: `url(${product.img})` }}
+                    >
+                      <div className="label new">New</div>
+                      <ul className="product__hover">
+                        <li>
+                          <a href={product.img} className="image-popup">
+                            <span className="arrow_expand" />
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <span className="icon_heart_alt" />
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <span className="icon_bag_alt" />
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="product__item__text">
+                      <h6>
+                        <a href="/product-details.html">{product.name}</a>
+                      </h6>
+                      <div className="rating">
+                        <i className="fa fa-star" />
+                        <i className="fa fa-star" />
+                        <i className="fa fa-star" />
+                        <i className="fa fa-star" />
+                        <i className="fa fa-star" />
+                      </div>
+                      <div className="product__price">{product.price}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
         </div>
       </div>
-    );
-  });
-  console.log(listProducts);
-  return (
-    console.log("render"),
-    (
-      <section className="product spad">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-4 col-md-4">
-              <div className="section-title">
-                <h4>New product</h4>
-              </div>
-            </div>
-            <div className="col-lg-8 col-md-8">
-              <ul className="filter__controls">
-                <li className="active" data-filter="*">
-                  All
-                </li>
-                <li data-filter=".women">Women’s</li>
-                <li data-filter=".men">Men’s</li>
-                <li data-filter=".kid">Kid’s</li>
-                <li data-filter=".accessories">Accessories</li>
-                <li data-filter=".cosmetic">Cosmetics</li>
-              </ul>
-            </div>
-          </div>
-          <div className="row property__gallery">
-            {listProducts}
-            <div className="col-lg-3 col-md-4 col-sm-6 mix women">
-              <div className="product__item">
-                <div
-                  className="product__item__pic set-bg"
-                  data-setbg="img/product/product-1.jpg"
-                >
-                  <div className="label new">New</div>
-                  <ul className="product__hover">
-                    <li>
-                      <a
-                        href="img/product/product-1.jpg"
-                        className="image-popup"
-                      >
-                        <span className="arrow_expand" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span className="icon_heart_alt" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span className="icon_bag_alt" />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="product__item__text">
-                  <h6>
-                    <a href="/product-details.html">Buttons tweed blazer</a>
-                  </h6>
-                  <div className="rating">
-                    <i className="fa fa-star" />
-                    <i className="fa fa-star" />
-                    <i className="fa fa-star" />
-                    <i className="fa fa-star" />
-                    <i className="fa fa-star" />
-                  </div>
-                  <div className="product__price">$ 59.0</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
+    </section>
   );
 }
 

@@ -9,18 +9,17 @@ import Contact from './pages/client/contact/Contact.page';
 import { Route, Routes } from 'react-router-dom'
 import Detail from './pages/client/detail/Detail.page';
 import SignUp from './pages/authentication/signup/SignUp.page';
+import Shop from './pages/client/shop/Shop.page';
 function App() {
   return (
     <div >
-      {/* <Header /> */}
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/shop' element={<Shop />} />
         <Route path='/contact' exact element={<Contact />} />
         <Route path='/detail/' exact element={<Detail />} />
         <Route path='/signup' exact element={<SignUp />} />
       </Routes>
-      {/* <Instagram />
-      <Footer /> */}
     </div>
   );
 }

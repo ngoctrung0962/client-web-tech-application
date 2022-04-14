@@ -5,6 +5,7 @@ const productApi = {
         const url = '/Products'
         return axiosClient.get(url, { params: params });
     },
+    // get 10 products first
     get(id) {
         const url = `/Products/${id}`
         return axiosClient.get(url);
