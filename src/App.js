@@ -19,7 +19,7 @@ function App() {
   return (
     <div >
       <Routes>
-        <Route path='/' element={<Home />} />
+
         <Route path='/shop' element={<Shop />} />
         <Route path='/contact' exact element={<Contact />} />
         <Route path='/product/:id' exact element={<Detail />} />
@@ -34,6 +34,7 @@ function App() {
 
           element={user ? <Navigate to="/" replace /> : <SignUp />}
         />
+        <Route path='/' element={<Home />} />
       </Routes>
 
     </div>
