@@ -1,0 +1,4 @@
+export const GET_ORDERS = "GET_INVOICES";
+export const ADD_ORDERS = "ADD_INVOICE";
+export const UPDATE_ORDERS = "UPDATE_INVOICE";
+export const DELETE_ORDERS = "DELETE_INVOICE";
