@@ -25,7 +25,7 @@ function Header() {
           <div className="col-xl-3 col-lg-2">
             <div className="header__logo">
               <Link to="./index.html">
-                <img src="img/logo.png" alt="" />
+                <img src={require('../header/logo.png')} alt="" />
               </Link>
             </div>
           </div>
@@ -88,7 +88,7 @@ function Header() {
                       onClose={handleMenuClose}
 
                     >
-                      <Link to="/account" >
+                      <Link to="/account/detail" >
                         <MenuItem style={{ color: "black" }}>My account</MenuItem>
                       </Link>
 

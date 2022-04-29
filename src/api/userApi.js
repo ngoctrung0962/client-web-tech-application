@@ -5,6 +5,11 @@ const userApi = {
         const url = '/Users/Register'
         return axiosClient.post(url, data);
     },
+    get(username) {
+        const url = `/users/${username}`
+        return axiosClient.get(url);
+    },
+
 }
 
 export default userApi;
