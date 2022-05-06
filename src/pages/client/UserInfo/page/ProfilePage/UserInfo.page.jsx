@@ -18,22 +18,25 @@ function UserInfoPage() {
 
     const [loading, setLoading] = useState(true)
     const [userdetail, setUserdetail] = useState({})
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            const res = await userApi.get(`${user.username}`);
-            setUserdetail(res)
-            window.scrollTo(0, 0)
-        } catch (error) {
-            console.log(error)
-        }
-        setLoading(false)
-    }
-    useEffect(() => {
 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const res = await userApi.get(`${user.username}`);
+                setUserdetail(res)
+                window.scrollTo(0, 0)
+            } catch (error) {
+                console.log(error)
+            }
+            setLoading(false)
+        }
         fetchData();
     }, [user.username])
-
+    const changeState = (state) => {
+        setUserdetail(...userdetail, state)
+    }
     return (
         <div className='profilepage'>
             <div className='profilepage__container'>
@@ -45,8 +48,8 @@ function UserInfoPage() {
                         <Route path='detail' element={<DetailAccount userdetail={userdetail ? userdetail : null} />} />
 
                         <Route path='history' element={<History />} />
-                        <Route path='updateaccount' element={<UpdateProfile />} />
-                        <Route path='updatepassword' element={<UpdatePassword />} />
+                        <Route path='updateaccount' element={<UpdateProfile userdetail={userdetail ? userdetail : null} changeState={changeState} />} />
+                        <Route path='updatepassword' element={<UpdatePassword userdetail={userdetail ? userdetail : null} />} />
 
                     </Routes>
 

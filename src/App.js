@@ -41,9 +41,6 @@ function App() {
           element={user ? <Navigate to="/" replace /> : <SignUp />}
         />
         <Route path='/' element={<Home />} />
-
-
-
       </Routes>
     </div>
   );

@@ -9,6 +9,10 @@ const userApi = {
         const url = `/users/${username}`
         return axiosClient.get(url);
     },
+    update(username, data) {
+        const url = `/users/${username}`
+        return axiosClient.put(url, data);
+    },
 
 }
 
