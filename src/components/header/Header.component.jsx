@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Menu, MenuItem } from "@material-ui/core"
 import { useState } from 'react';
 import { Logout } from '../../redux/userRedux';
-function Header() {
+function Header(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -18,6 +18,9 @@ function Header() {
   const handlelogout = () => {
     dispatch(Logout());
   }
+
+  
+  
   return (
     <header className="header">
       <div className="container-fluid">
@@ -63,7 +66,7 @@ function Header() {
                   <span className="icon_search search-switch" />
                 </li>
                 <li>
-                  <Link to="/shop-cart.html">
+                  <Link to="/cart">
                     <span className="icon_bag_alt" />
                     <div className="tip">2</div>
                   </Link>

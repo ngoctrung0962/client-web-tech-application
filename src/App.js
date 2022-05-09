@@ -8,6 +8,8 @@ import Detail from './pages/client/detail/Detail.page';
 import SignUp from './pages/authentication/signup/SignUp.page';
 import Shop from './pages/client/shop/Shop.page';
 import SignIn from './pages/authentication/signin/SignIn.page';
+import Cart from './pages/client/cart/Cart.page';
+import Checkout from './pages/client/checkout/Checkout.page'
 import { useSelector } from "react-redux";
 
 import { Navigate } from "react-router-dom";
@@ -40,10 +42,17 @@ function App() {
           path="/signup"
           element={user ? <Navigate to="/" replace /> : <SignUp />}
         />
+        <Route
+          path="/cart"
+          element={<Cart />}
+        />
+
+        <Route
+          path="/checkout"
+          element={<Checkout />}
+        />
         <Route path='/' element={<Home />} />
-
-
-
+        
       </Routes>
     </div>
   );
