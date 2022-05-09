@@ -5,43 +5,24 @@ import './style.scss'
 import { Navigate } from 'react-router-dom';
 
 
-export const UpdateProfile = () => {
-    const user = useSelector((state) => state.user.currentUser);
+export const UpdateProfile = ({ userdetail, setUserdetail }) => {
 
-
-
-
-    const [loading, setLoading] = useState(true)
-    const [userdetail, setUserdetail] = useState([])
     const initValue = { name: userdetail.name, username: userdetail.username, email: userdetail.email, phoneNumber: userdetail.phoneNumber, address: userdetail.address, dateOfBirth: userdetail.dateOfBirth, gender: userdetail.gender }
     const [formvalues, setFormvalues] = useState(initValue);
-    console.log("xxx", initValue)
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormvalues({ ...formvalues, [name]: value });
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await userApi.update(userdetail.username, formvalues)
+        const data = await userApi.update(userdetail.username, formvalues)
         window.alert("Cập nhật thành công")
-        setFormvalues(formvalues);
+        setUserdetail(data);
     }
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await userApi.get(`${user.username}`);
-                setUserdetail(res);
-                setFormvalues(res)
-                window.scrollTo(0, 0)
-                console.log("Ket qua", res)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        fetchData();
-    }, [user.username])
+
     return (
         <div className='updateprofile'>
             <div className='updateprofile__container'>

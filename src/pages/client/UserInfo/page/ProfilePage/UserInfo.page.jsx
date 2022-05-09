@@ -34,8 +34,9 @@ function UserInfoPage() {
         }
         fetchData();
     }, [user.username])
-    const changeState = (state) => {
-        setUserdetail(...userdetail, state)
+
+    const change = (data) => {
+        setUserdetail(data)
     }
     return (
         <div className='profilepage'>
@@ -45,10 +46,9 @@ function UserInfoPage() {
                 </div>
                 <div className='profilepage__container--content'>
                     <Routes>
-                        <Route path='detail' element={<DetailAccount userdetail={userdetail ? userdetail : null} />} />
-
+                        <Route path='detail' element={<DetailAccount userdetail={userdetail ? userdetail : null} setUserdetail={setUserdetail} />} />
                         <Route path='history' element={<History />} />
-                        <Route path='updateaccount' element={<UpdateProfile userdetail={userdetail ? userdetail : null} changeState={changeState} />} />
+                        <Route path='updateaccount' element={<UpdateProfile userdetail={userdetail ? userdetail : null} setUserdetail={setUserdetail} change={change} />} />
                         <Route path='updatepassword' element={<UpdatePassword userdetail={userdetail ? userdetail : null} />} />
 
                     </Routes>
