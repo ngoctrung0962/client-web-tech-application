@@ -23,6 +23,7 @@ function Checkout() {
     const [listCart, setListCart] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [coupon, setCoupon] = useState('');
+    const [discount, setDiscount] = useState('');
     
 
     useEffect(async () => {
