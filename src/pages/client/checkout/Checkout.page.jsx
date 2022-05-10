@@ -3,9 +3,9 @@ import { Fragment } from 'react';
 import React, { Component } from "react";
 import swal from 'sweetalert2';
 import { formatVND } from '../../../utils/MyUtils';
-import { useNavigate, Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import {useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import Footer from "../../../components/footer/Footer.component";
 import Header from "../../../components/header/Header.component";
@@ -15,18 +15,24 @@ import BreadCrump from "../../../components/breadcrumb/breadcrumb.component"
 import Preloder from '../../../components/proloder/Preloder.component';
 import { insertOrderApi } from '../../../api/ordersApi';
 import { getListCartApi } from '../../../api/cartApi';
+import { getListDeliveriesApi } from '../../../api/deliveryApi';
 
 function Checkout() {
 
     const location = useLocation();
     let navigate = useNavigate();
     const [listCart, setListCart] = useState([]);
+    const [listDelivery, setListDelivery] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [coupon, setCoupon] = useState('');
     const [discount, setDiscount] = useState('');
-    
+    const [delivery, setDelivery] = useState('');
 
     useEffect(async () => {
+        const listDeliveries = await getListDeliveriesApi();
+        setListDelivery(listDeliveries);
+        setDelivery(listDeliveries[0].deliveryId);
+       
 
         setListCart(location.state.listCarts);
         await setCoupon(location.state.coupon);
@@ -46,12 +52,12 @@ function Checkout() {
         return formatVND(sum);
     }
 
-    const totalPayment = (listCart) =>{
+    const totalPayment = (listCart) => {
         let sum = 0;
         if (listCart.length > 0) {
             sum = listCart.reduce((total, cur) => total + cur.quantity * cur.product.price, 0)
         }
-        if(coupon)
+        if (coupon)
             sum -= coupon.discount;
 
         return formatVND(sum);
@@ -72,6 +78,26 @@ function Checkout() {
         return listDom;
     }
 
+    const showDeliveries = (listDelivery) => {
+        console.log(listDelivery);
+        let listDom = null;
+        if (listDelivery.length > 0) {
+            listDom = listDelivery.map((item, index) => {
+                return (
+                    <label htmlFor="check-payment">
+                        {item.name}
+                        <input type="checkbox" id="check-payment" onClick={() => setDelivery(item.deliveryId) } />
+                        <span className="checkmark" />
+                    </label>
+                )
+            })
+        }
+        else {
+            console.log(listDelivery)
+        }
+        return listDom;
+    }
+
     const addOrderHandler = async (e) => {
         e.preventDefault()
         let sum = 0;
@@ -82,6 +108,7 @@ function Checkout() {
         const { firstname, lastname, country, address, town, phone, email } = e.target.elements
         const day = new Date();
         const today = day.toISOString();
+        
         const order = {
             "user": {
                 "username": "nam"
@@ -92,12 +119,13 @@ function Checkout() {
             "purchaseDate": today,
             "totalPrices": 0,
             "delivery": {
-                "deliveryId": "D01"
+                "deliveryId": delivery
             },
             "status": "preparing",
             "couponId": 1,
             "discountPrice": coupon.discount
         }
+        
 
         const listOrderDetails = listCart.map((item) => {
             return {
@@ -110,7 +138,7 @@ function Checkout() {
                 "totalPrice": item.product.price * item.quantity
             }
         })
-        
+
 
         const res = await insertOrderApi(order, listOrderDetails);
         if (res.status == 200) {
@@ -199,29 +227,20 @@ function Checkout() {
                                                 <span className="top__text">Product</span>
                                                 <span className="top__text__right">Total</span>
                                             </li>
-                                                {showListCart(listCart)}
+                                            {showListCart(listCart)}
                                         </ul>
                                     </div>
                                     <div className="checkout__order__total">
                                         <ul>
                                             <li>Total Merchandise <span>{totalMerchandise(listCart)}</span></li>
                                             {
-                                                coupon? <li>Discount <span>{`- ${formatVND(coupon.discount)}`}</span></li>:''
+                                                coupon ? <li>Discount <span>{`- ${formatVND(coupon.discount)}`}</span></li> : ''
                                             }
                                             <li>Total payment <span>{totalPayment(listCart)}</span></li>
                                         </ul>
                                     </div>
                                     <div className="checkout__order__widget">
-                                        <label htmlFor="check-payment">
-                                            Cheque payment
-                                            <input type="checkbox" id="check-payment" />
-                                            <span className="checkmark" />
-                                        </label>
-                                        <label htmlFor="paypal">
-                                            PayPal
-                                            <input type="checkbox" id="paypal" />
-                                            <span className="checkmark" />
-                                        </label>
+                                        {showDeliveries(listDelivery)}
                                     </div>
                                     <button type="submit" className="site-btn">Place oder</button>
                                 </div>
