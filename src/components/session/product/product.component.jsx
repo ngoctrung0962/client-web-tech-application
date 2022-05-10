@@ -49,12 +49,13 @@ function Product() {
 
   const filterFunction = (text) => {
     if (products.length > 0) {
-      const filter = products.filter(
-        (product) =>
-          product.category === text ||
+      const filter = products.filter((product) => {
+        return (
+          product.category.name === text ||
           text === "All products" ||
           category === "All products"
-      );
+        );
+      });
       console.log(filter);
       setFilteredProducts(filter);
     } else {
@@ -97,14 +98,14 @@ function Product() {
                   <div className="product__item">
                     <div
                       className="product__item__pic set-bg"
-                      data-setbg={product.img}
+                      data-setbg={product.image}
                       // set style background-image
-                      style={{ backgroundImage: `url(${product.img})` }}
+                      style={{ backgroundImage: `url(${product.image})` }}
                     >
                       <div className="label new">New</div>
                       <ul className="product__hover">
                         <li>
-                          <a href={product.img} className="image-popup">
+                          <a href={product.image} className="image-popup">
                             <span className="arrow_expand" />
                           </a>
                         </li>
@@ -144,14 +145,14 @@ function Product() {
                   <div className="product__item">
                     <div
                       className="product__item__pic set-bg"
-                      data-setbg={product.img}
+                      data-setbg={product.image}
                       // set style background-image
-                      style={{ backgroundImage: `url(${product.img})` }}
+                      style={{ backgroundImage: `url(${product.image})` }}
                     >
                       <div className="label new">New</div>
                       <ul className="product__hover">
                         <li>
-                          <a href={product.img} className="image-popup">
+                          <a href={product.image} className="image-popup">
                             <span className="arrow_expand" />
                           </a>
                         </li>

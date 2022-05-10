@@ -1,4 +1,3 @@
-
 import './App.css';
 
 import Home from './pages/client/home/Home.page';
@@ -52,7 +51,10 @@ function App() {
           element={<Checkout />}
         />
         <Route path='/' element={<Home />} />
+<<<<<<< HEAD
         
+=======
+>>>>>>> master
       </Routes>
     </div>
   );

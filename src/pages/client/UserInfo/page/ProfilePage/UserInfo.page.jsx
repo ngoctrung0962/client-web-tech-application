@@ -18,22 +18,26 @@ function UserInfoPage() {
 
     const [loading, setLoading] = useState(true)
     const [userdetail, setUserdetail] = useState({})
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            const res = await userApi.get(`${user.username}`);
-            setUserdetail(res)
-            window.scrollTo(0, 0)
-        } catch (error) {
-            console.log(error)
-        }
-        setLoading(false)
-    }
-    useEffect(() => {
 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const res = await userApi.get(`${user.username}`);
+                setUserdetail(res)
+                window.scrollTo(0, 0)
+            } catch (error) {
+                console.log(error)
+            }
+            setLoading(false)
+        }
         fetchData();
     }, [user.username])
 
+    const change = (data) => {
+        setUserdetail(data)
+    }
     return (
         <div className='profilepage'>
             <div className='profilepage__container'>
@@ -42,11 +46,10 @@ function UserInfoPage() {
                 </div>
                 <div className='profilepage__container--content'>
                     <Routes>
-                        <Route path='detail' element={<DetailAccount userdetail={userdetail ? userdetail : null} />} />
-
+                        <Route path='detail' element={<DetailAccount userdetail={userdetail ? userdetail : null} setUserdetail={setUserdetail} />} />
                         <Route path='history' element={<History />} />
-                        <Route path='updateaccount' element={<UpdateProfile />} />
-                        <Route path='updatepassword' element={<UpdatePassword />} />
+                        <Route path='updateaccount' element={<UpdateProfile userdetail={userdetail ? userdetail : null} setUserdetail={setUserdetail} change={change} />} />
+                        <Route path='updatepassword' element={<UpdatePassword userdetail={userdetail ? userdetail : null} />} />
 
                     </Routes>
 

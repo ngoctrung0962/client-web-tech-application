@@ -10,7 +10,7 @@ export const Sidebar = () => {
             href: "/account/detail"
         },
         {
-            title: "Lịch sử đặt vé",
+            title: "Lịch sử mua hàng",
             href: "/account/history"
         },
         {

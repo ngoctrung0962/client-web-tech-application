@@ -1,21 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import userApi from '../../../../../../api/userApi';
+import { useSelector } from 'react-redux';
 import './style.scss'
+import { Navigate } from 'react-router-dom';
 
-export const  UpdateProfile=()=> {
+
+export const UpdateProfile = ({ userdetail, setUserdetail }) => {
+
+    const initValue = { name: userdetail.name, username: userdetail.username, email: userdetail.email, phoneNumber: userdetail.phoneNumber, address: userdetail.address, dateOfBirth: userdetail.dateOfBirth, gender: userdetail.gender }
+    const [formvalues, setFormvalues] = useState(initValue);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormvalues({ ...formvalues, [name]: value });
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const data = await userApi.update(userdetail.username, formvalues)
+        window.alert("Cập nhật thành công")
+        setUserdetail(data);
+    }
+
+
 
     return (
         <div className='updateprofile'>
             <div className='updateprofile__container'>
                 <div className='updateprofile__title'>
                     <p className='updateprofile__title--p'>CHỈNH SỬA THÔNG TIN CÁ NHÂN </p>
-                </div>       
-                <form className='updateprofile__form'>
+                </div>
+                <form onSubmit={handleSubmit} className='updateprofile__form'>
                     <div className='updateprofile__form--item'>
                         <div className='updateprofile__form--title'>
                             <p>Họ và tên</p>
                         </div>
                         <div className='updateprofile__form--input'>
-                            <input></input>
+                            <input
+                                value={formvalues.name}
+
+                                id="name"
+                                name="name"
+                                onChange={handleChange}
+                            ></input>
                         </div>
                     </div>
                     <div className='updateprofile__form--item'>
@@ -23,7 +49,12 @@ export const  UpdateProfile=()=> {
                             <p>Số điện thoại</p>
                         </div>
                         <div className='updateprofile__form--input'>
-                            <input ></input>
+                            <input
+                                value={formvalues.phoneNumber}
+                                id="phoneNumber"
+                                name="phoneNumber"
+                                onChange={handleChange}
+                            ></input>
                         </div>
                     </div>
                     <div className='updateprofile__form--date'>
@@ -31,7 +62,13 @@ export const  UpdateProfile=()=> {
                             <span>Ngày tháng năm sinh:</span>
                         </div>
                         <div className='updateprofile__form--date-dropdown'>
-                            <input type="date" name="namsinh"/>
+                            <input
+                                value={formvalues.dateOfBirth}
+                                id="dateOfBirth"
+                                name="dateOfBirth"
+                                onChange={handleChange}
+                                type="date"
+                            />
                         </div>
                     </div>
                     <div className='updateprofile__form--sex'>
@@ -39,9 +76,9 @@ export const  UpdateProfile=()=> {
                             <span>Giới tính:</span>
                         </div>
                         <div className='updateprofile__form--sex-dropdown'>
-                            <select id="sex" name="sex">
-                                <option value="Nam">Nam</option>
-                                <option value="Nu">Nữ</option>
+                            <select value={formvalues.gender} option={formvalues.gender} onChange={handleChange} id="gender" name="gender">
+                                <option value={true}>Nam</option>
+                                <option value={false}>Nữ</option>
                                 <option value="Khac">Khác</option>
                             </select>
                         </div>
@@ -51,7 +88,12 @@ export const  UpdateProfile=()=> {
                             <p>Email</p>
                         </div>
                         <div className='updateprofile__form--input'>
-                            <input ></input>
+                            <input
+                                value={formvalues.email}
+                                id="email"
+                                name="email"
+                                onChange={handleChange}
+                            ></input>
                         </div>
                     </div>
                     <div className='updateprofile__form--item'>
@@ -59,10 +101,15 @@ export const  UpdateProfile=()=> {
                             <p>Địa chỉ</p>
                         </div>
                         <div className='updateprofile__form--input'>
-                            <input ></input>
+                            <input
+                                value={formvalues.address}
+                                id="address"
+                                name="address"
+                                onChange={handleChange}
+                            ></input>
                         </div>
                     </div>
-                    <button className='updateprofile__form--button'>
+                    <button type='submit' className='updateprofile__form--button'>
                         <span>Cập nhật</span>
                     </button>
                 </form>
