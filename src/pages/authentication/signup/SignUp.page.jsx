@@ -6,7 +6,6 @@ function SignUp() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormvalues({ ...formvalues, [name]: value });
-
   }
   const nav = useNavigate();
   const handleSubmit = (e) => {

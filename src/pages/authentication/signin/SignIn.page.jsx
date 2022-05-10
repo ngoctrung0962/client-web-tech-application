@@ -2,10 +2,12 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login } from '../../../redux/userRedux';
+import { login } from '../../../redux/apiCalls';
+
 
 
 function SignIn() {
+    const errorlogin = useSelector(state => state.user.error)
     const nav = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -16,6 +18,7 @@ function SignIn() {
         e.preventDefault();
         login(dispatch, { username, password });
     };
+
     return (
         <div
             className="wrapper"
@@ -25,7 +28,7 @@ function SignIn() {
                 <div className="image-holder">
                     <img src="img/signup/ip13.jpg" />
                 </div>
-                <form onSubmit={handleClick}>
+                <form onSubmit={handleClick} >
                     <h3>Sign in</h3>
 
                     <div className="form-wrapper">
