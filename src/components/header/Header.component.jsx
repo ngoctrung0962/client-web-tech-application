@@ -19,8 +19,8 @@ function Header(props) {
     dispatch(Logout());
   }
 
-  
-  
+
+
   return (
     <header className="header">
       <div className="container-fluid">
@@ -37,12 +37,6 @@ function Header(props) {
               <ul>
                 <li>
                   <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="./shop.html">Laptop</Link>
-                </li>
-                <li>
-                  <Link to="./shop.html">Mobile</Link>
                 </li>
                 <li>
                   <Link to="/shop">Shop</Link>

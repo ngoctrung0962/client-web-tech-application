@@ -4,20 +4,25 @@ import productApi from "../../../api/productApi";
 import { Fragment } from "react";
 import { insertCartApi } from '../../../api/cartApi';
 import swal from 'sweetalert2';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
 import CategoriesShop from "./CategoriesShop.component";
 import FilterByPrice from "./FilterByPrice.component";
 import FileList from "./FilterList.component";
 import Products from "./Products.component";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Pagination from "./Pagination.component";
+import { useSelector } from 'react-redux';
 
 let PageSize = 9;
 
 function Shop() {
+  const user = useSelector((state) => state.user.currentUser);
   let navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [value, setValue] = useState(5);
   // get products data
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +30,7 @@ function Shop() {
       try {
         const products = await productApi.getAll();
         setProducts(products);
+        console.log(products)
       } catch (error) {
         console.error("error");
       }
@@ -106,7 +112,7 @@ function Shop() {
 
   const addToCart = async (e, item) => {
     e.preventDefault();
-    if(item.quantity ===  0){
+    if (item.quantity === 0) {
       //notify not enough quantity
       swal.fire({
         icon: 'warning',
@@ -115,12 +121,12 @@ function Shop() {
         confirmButtonText: 'Choose others',
         allowOutsideClick: false
       })
-        
+
     }
-    else{
+    else {
       const cartItem = {
         id: {
-          username: 'nam',
+          username: `${user.username}`,
           productId: item.productId
         },
         quantity: 1
@@ -200,22 +206,22 @@ function Shop() {
               <Fragment>
                 {currentTableData.map((individualFilteredProduct) => (
                   <div
-                    key={individualFilteredProduct.id}
+                    key={individualFilteredProduct.productId}
                     className="col-lg-4 col-md-6"
                   >
                     <div className="product__item">
                       <div
                         className="product__item__pic set-bg"
-                        data-setbg={individualFilteredProduct.img}
+                        data-setbg={individualFilteredProduct.image}
                         style={{
-                          backgroundImage: `url(${individualFilteredProduct.img})`,
+                          backgroundImage: `url(${individualFilteredProduct.image})`,
                         }}
                       >
                         <div className="label new">New</div>
                         <ul className="product__hover">
                           <li>
                             <a
-                              href={individualFilteredProduct.img}
+                              href={individualFilteredProduct.image}
                               className="image-popup"
                             >
                               <span className="arrow_expand" />
@@ -227,23 +233,26 @@ function Shop() {
                             </a>
                           </li>
                           <li>
-                            <a href="">
+                            <Link to="/cart">
                               <span className="icon_bag_alt" onClick={(e) => addToCart(e, individualFilteredProduct)} />
-                            </a>
+                            </Link>
                           </li>
                         </ul>
                       </div>
                       <div className="product__item__text">
                         <h6>
-                          <a href="#">{individualFilteredProduct.name}</a>
+                          <Link to={`/product/${individualFilteredProduct.productId}`}>{individualFilteredProduct.name}</Link>
                         </h6>
-                        <div className="rating">
+                        {/* <div className="rating">
                           <i className="fa fa-star" />
                           <i className="fa fa-star" />
                           <i className="fa fa-star" />
                           <i className="fa fa-star" />
                           <i className="fa fa-star" />
-                        </div>
+                        </div> */}
+                        <Box component="fieldset" mb={3} borderColor="transparent">
+                          <Rating name="read-only" value={value} readOnly />
+                        </Box>
                         <div className="product__price">
                           {individualFilteredProduct.price}
                         </div>

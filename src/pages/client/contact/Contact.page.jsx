@@ -1,8 +1,12 @@
 import React from "react";
+import Footer from "../../../components/footer/Footer.component";
+import Header from "../../../components/header/Header.component";
+import Instagram from "../../../components/instagram/Instagram.component";
 
 function Contact() {
   return (
     <>
+      <Header />
       <section className="contact spad">
         <div className="container">
           <div className="row">
@@ -63,6 +67,8 @@ function Contact() {
           </div>
         </div>
       </section>
+      <Instagram />
+      <Footer />
     </>
   );
 }

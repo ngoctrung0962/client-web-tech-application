@@ -30,7 +30,7 @@ function Detail() {
   const [reviews, setReviews] = useState([])
 
   //Rating product
-  const [value, setValue] = useState(4);
+  const [value, setValue] = useState(5);
 
   //Rating adcomment for product
   const [valueratingaddreview, setValueratingaddreview] = useState(0);
@@ -140,7 +140,10 @@ function Detail() {
     return (
       <div key={product.productId} className="col-lg-3 col-md-4 col-sm-6">
         <div className="product__item">
-          <div className="product__item__pic set-bg" data-setbg={product ? product.image : null}>
+          <div className="product__item__pic set-bg" data-setbg={product ? product.image : null}
+            style={{
+              backgroundImage: `url(${product.image})`
+            }}>
             <div className="label new">New</div>
             <ul className="product__hover">
               <li><a href="img/product/related/rp-1.jpg" className="image-popup"><span className="arrow_expand" /></a></li>
@@ -180,12 +183,12 @@ function Detail() {
 
           <div className="row">
             <div className="col-lg-6">
-              <div className="product__details__pic">
-                <div className="product__details__pic__left product__thumb nice-scroll">
-                  <a className="pt active" href="#product-1">
+              <div className="product__details__pic" >
+                <div className="product__details__pic__left product__thumb nice-scroll" >
+                  <a className="pt active " href="#product-1" >
                     <img src={product.image} alt="" />
                   </a>
-                  <a className="pt" href="#product-2">
+                  <a className="pt " href="#product-2">
                     <img src={product.image} alt="" />
                   </a>
                   <a className="pt" href="#product-3">
@@ -195,8 +198,10 @@ function Detail() {
                     <img src={product.image} alt="" />
                   </a>
                 </div>
-                <div className="product__details__slider__content">
-                  <div className="product__details__pic__slider owl-carousel">
+                <div className="product__details__slider__content  "  >
+                  <div className="product__details__pic__slider owl-carousel " style={{
+                    backgroundImage: `url(${product.image})`,
+                  }} >
                     <img data-hash="product-1" className="product__big__img" src={product.image} alt="" />
                     <img data-hash="product-2" className="product__big__img" src={product.image} alt="" />
                     <img data-hash="product-3" className="product__big__img" src={product.image} alt="" />

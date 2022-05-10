@@ -51,10 +51,6 @@ function App() {
           element={<Checkout />}
         />
         <Route path='/' element={<Home />} />
-<<<<<<< HEAD
-        
-=======
->>>>>>> master
       </Routes>
     </div>
   );
