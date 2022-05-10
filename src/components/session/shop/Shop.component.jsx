@@ -2,17 +2,20 @@
 import React, { useState, useEffect, useMemo } from "react";
 import productApi from "../../../api/productApi";
 import { Fragment } from "react";
+import { insertCartApi } from '../../../api/cartApi';
+import swal from 'sweetalert2';
 
 import CategoriesShop from "./CategoriesShop.component";
 import FilterByPrice from "./FilterByPrice.component";
 import FileList from "./FilterList.component";
 import Products from "./Products.component";
-
+import { useNavigate } from 'react-router-dom';
 import Pagination from "./Pagination.component";
 
 let PageSize = 9;
 
 function Shop() {
+  let navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   // get products data
@@ -76,6 +79,7 @@ function Shop() {
   useEffect(() => {
     filterFunction(category);
   }, [filterByPrice]);
+
   const handelFillterByPrice = () => {
     //   get value from filter by price component
     const priceMin = document.querySelector("#minamount").value.substring(1);
@@ -99,6 +103,35 @@ function Shop() {
     }
     return products.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, filteredProducts, products]);
+
+  const addToCart = async (e, item) => {
+    e.preventDefault();
+    if(item.quantity ===  0){
+      //notify not enough quantity
+      swal.fire({
+        icon: 'warning',
+        title: 'HUHU OH NO !!!',
+        text: 'Not enough products, my friends',
+        confirmButtonText: 'Choose others',
+        allowOutsideClick: false
+      })
+        
+    }
+    else{
+      const cartItem = {
+        id: {
+          username: 'nam',
+          productId: item.productId
+        },
+        quantity: 1
+      }
+      const res = await insertCartApi(cartItem);
+      if (res.status === 200) {
+        navigate('/cart')
+      }
+    }
+
+  }
 
   return (
     <section class="shop spad">
@@ -194,8 +227,8 @@ function Shop() {
                             </a>
                           </li>
                           <li>
-                            <a href="#">
-                              <span className="icon_bag_alt" />
+                            <a href="">
+                              <span className="icon_bag_alt" onClick={(e) => addToCart(e, individualFilteredProduct)} />
                             </a>
                           </li>
                         </ul>

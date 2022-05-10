@@ -77,8 +77,9 @@
 	padding: 20px;
 	background: #fff;
 	max-width: 850px;
-	/* margin: auto; */
+	margin: auto;
 	display: flex; }
+
 	.inner .image-holder {
 	  width: 50%; }
 	.inner form {
@@ -88,7 +89,7 @@
 	  padding-right: 45px; }
 	.inner h3 {
 	  text-transform: uppercase;
-	  font-size: 25px;
+	  font-size: 25px; 
 	  font-family: "Poppins-SemiBold";
 	  text-align: center;
 	  margin-bottom: 28px; }
@@ -242,6 +243,79 @@
 
 /* Template default CSS
 /*----------------------------------------*/
+
+/* Start button increase and decrease, input in cart */
+.value-button {
+	display: inline-block;
+	border: 1px solid #ddd;
+	margin: 0px;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	vertical-align: middle;
+	padding: 11px 0;
+	background: #eee;
+	border-left: 10%;
+	/* -webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none; */
+  }
+  
+  .pro-qty > .value-button:hover {
+	cursor: pointer;
+	opacity: 0.6;
+  }
+  .pro-qty{
+	  display: flex;
+  }
+  
+  .pro-qty  #decrease {
+	margin-right: -4px;
+	border-radius: 10px 0px 0px 10px;
+	line-height: 20px;
+	text-align: center;
+	font-weight: 750;
+	background-color: #ccc;
+	width: 40px;
+	height: 40px;
+  }
+  
+  .pro-qty  #increase {
+	margin-left: -4px;
+	border-radius: 0px 10px 10px 0px;
+	line-height: 20px;
+	text-align: center;
+	font-weight: 700;
+	background-color: #5cb85c;
+	width: 40px;
+	height: 40px;
+  }
+  
+  .pro-qty input[type=number]::-webkit-inner-spin-button,
+  .pro-qty input[type=number]::-webkit-outer-spin-button {
+	  -webkit-appearance: none;
+	  
+  }
+  
+  .pro-qty input.number {
+	text-align: center;
+	border: none;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin: 0px;
+	width: 40px;
+	height: 40px;
+  }
+ /* end custom button increase, decrease and input in Cart */
+
+  form #input-wrap {
+	margin: 0px;
+	padding: 0px;
+  }
+
 
 html,
 body {
@@ -2413,6 +2487,7 @@ ol {
 	padding: 0;
 	width: 110px;
 	border-radius: 0;
+	display: flex;
 }
 
 .shop__cart__table tbody tr .cart__quantity .pro-qty input {
@@ -2520,8 +2595,8 @@ ol {
 
 .discount__content form button {
 	position: absolute;
-	right: 4px;
-	top: 4px;
+	right: 0px;
+	top: -40px;
 }
 
 .cart__total__procced {

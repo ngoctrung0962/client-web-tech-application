@@ -1,4 +1,7 @@
+import { useLocation } from 'react-router-dom';
+
 function Breadcrumb() {
+  const location = useLocation();
   return (
     <div className="breadcrumb-option">
       <div className="container">
@@ -8,7 +11,7 @@ function Breadcrumb() {
               <a href="./index.html">
                 <i className="fa fa-home" /> Home
               </a>
-              <span>Shop</span>
+              <span>{location.pathname.slice(1)}</span>
             </div>
           </div>
         </div>
