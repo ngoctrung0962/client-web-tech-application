@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 const axiosClient = axios.create({
-    baseURL: 'https://623d4496db0fc039d4b504fa.mockapi.io/api/',
+    // baseURL: 'https://623d4496db0fc039d4b504fa.mockapi.io/api/',
     // baseURL: 'https://624bb3b671e21eebbcf54d85.mockapi.io',
+     baseURL: 'http://localhost:8080/api/technological_appliances',
     headers: {
         "Content-type": 'application/json'
     },
