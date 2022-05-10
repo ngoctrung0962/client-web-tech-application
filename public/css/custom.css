@@ -1,3 +1,12 @@
+/* Pagination */
+.d-flex{
+    display: flex;
+}
+.pagination_center{
+    display: flex;
+    justify-content: center;
+}
+
 /* Sign Up Page */
 .inner{
     display: flex;

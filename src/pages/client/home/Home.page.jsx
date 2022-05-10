@@ -13,6 +13,7 @@ import Header from "../../../components/header/Header.component";
 function Home() {
   return (
     <Fragment>
+      <Header />
       <OffCanvasMenu />
       <Categories />
       <Product />
@@ -20,6 +21,8 @@ function Home() {
       <Trend />
       <Discount />
       <Services />
+      <Instagram />
+      <Footer />
     </Fragment>
   );
 }
