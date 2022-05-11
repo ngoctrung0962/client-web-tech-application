@@ -51,10 +51,6 @@ function App() {
           element={<Checkout />}
         />
         <Route path='/' element={<Home />} />
-<<<<<<< HEAD
-=======
-        
->>>>>>> dc8aa8eb3ef87aa96b6656b6e0c80b2ff346bd61
       </Routes>
     </div>
   );

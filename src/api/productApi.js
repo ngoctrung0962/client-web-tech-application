@@ -28,6 +28,11 @@ const productApi = {
     getproductbybrandId(brandId) {
         const url = `/products/brand/${brandId}`
         return axiosClient.get(url);
+    },
+    //get top 8 products newest
+    getTop8ProductsNewest() {
+        const url = `/products/top8newest`
+        return axiosClient.get(url);
     }
 
 }
