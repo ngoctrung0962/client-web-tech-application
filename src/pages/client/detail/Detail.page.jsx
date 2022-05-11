@@ -180,7 +180,7 @@ function Detail() {
 
 
   return (
-    <Fragment>
+    <>
 
       <Header />
 
@@ -353,7 +353,7 @@ function Detail() {
         </div>
       </section>
       <Footer />
-    </Fragment>
+    </>
   );
 }
 

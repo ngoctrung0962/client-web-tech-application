@@ -608,6 +608,12 @@ ol {
 	background: #ffffff;
 	-webkit-box-shadow: 0px 5px 10px rgba(91, 91, 91, 0.1);
 	box-shadow: 0px 5px 10px rgba(91, 91, 91, 0.1);
+		position: fixed;
+		z-index: 10;
+		right: 0;
+		left: 0;
+		top: 0;
+		
 }
 
 .header__logo {
@@ -1343,11 +1349,13 @@ ol {
 -----------------------*/
 
 .categories {
+	
 	overflow: hidden;
-	margin-top: 10px;
+	margin-top: 88px;
 }
 
 .categories .container-fluid {
+	
 	padding-right: 8px;
 	margin: 16px;
 }
