@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+<<<<<<< HEAD
 import { login } from "../../../redux/apiCalls";
 
 function SignIn() {
@@ -16,6 +17,29 @@ function SignIn() {
     e.preventDefault();
     login(dispatch, { username, password });
   };
+=======
+import { login } from '../../../redux/userRedux';
+import userApi from '../../../api/userApi';
+
+
+
+function SignIn() {
+    const errorlogin = useSelector(state => state.user.error)
+    const nav = useNavigate();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+    const { isFetching, error } = useSelector((state) => state.user);
+    const handleClick = async (e) => {
+        e.preventDefault();
+        var formData = new FormData();
+        formData.append("username", username)
+        formData.append("password", password)
+        console.log(formData)
+        const data = await userApi.login(formData)
+        login(dispatch, data, username);
+    };
+>>>>>>> 2dc11ae4c4e370474c1fba68e9e02f7d31f8f211
 
   return (
     <div

@@ -49,7 +49,7 @@ function Product() {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   // filter function
-  console.log(products);
+  // console.log(products);
 
   const filterFunction = (text) => {
     if (products.length > 0) {
@@ -190,7 +190,9 @@ function Product() {
                     </div>
                     <div className="product__item__text">
                       <h6>
-                        <a href="/product-details.html">{product.name}</a>
+                        <Link to={`/product/${product.productId}`}>
+                          {product.name}
+                        </Link>
                       </h6>
                       {/* <div className="rating">
                       <i className="fa fa-star" />

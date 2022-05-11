@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Banner() {
   return (
     <section
@@ -13,8 +15,8 @@ function Banner() {
             <div className="banner__slider owl-carousel">
               <div className="banner__item">
                 <div className="banner__text">
-                  <span className="Banner_Slider">The Chloe Collection</span>
-                  <h1 className="Banner_Slider">The Project Jacket</h1>
+                  <span className="Banner_Slider">The Best Choose</span>
+                  <h1 className="Banner_Slider">Shop Tech</h1>
                   <a className="Banner_Slider" href="./shop.html">
                     Shop now
                   </a>
@@ -22,11 +24,11 @@ function Banner() {
               </div>
               <div className="banner__item">
                 <div className="banner__text">
-                  <span className="Banner_Slider">The Chloe Collection</span>
-                  <h1 className="Banner_Slider">The Project Jacket</h1>
-                  <a className="Banner_Slider" href="./shop.html">
+                  <span className="Banner_Slider">The Best Choose</span>
+                  <h1 className="Banner_Slider">Shop Tech</h1>
+                  <Link className="Banner_Slider" to="/shop">
                     Shop now
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="banner__item">

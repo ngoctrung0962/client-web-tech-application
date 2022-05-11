@@ -13,7 +13,7 @@ function OffCanvasMenu() {
                     </a></li>
                 </ul>
                 <div className="offcanvas__logo">
-                    <a href="./index.html"><img src="img/logo.png" alt="" /></a>
+                    <a href="./index.html"><img src="img/logo.png" alt="true" /></a>
                 </div>
                 <div id="mobile-menu-wrap" />
                 <div className="offcanvas__auth">

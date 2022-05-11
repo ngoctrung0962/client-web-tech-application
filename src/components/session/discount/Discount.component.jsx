@@ -6,7 +6,7 @@ function Discount() {
                 <div className="row">
                     <div className="col-lg-6 p-0">
                         <div className="discount__pic">
-                            <img src="img/discount.jpg" alt />
+                            <img src="img/discount.jpg" alt="true" />
                         </div>
                     </div>
                     <div className="col-lg-6 p-0">

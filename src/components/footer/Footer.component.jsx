@@ -1,13 +1,14 @@
+import { Link } from 'react-router-dom';
+
 function Footer() {
     return (
-
         <footer className="footer">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-4 col-md-6 col-sm-7">
                         <div className="footer__about">
                             <div className="footer__logo">
-                                <a href="./index.html"><img src="img/logo.png" alt="" /></a>
+                                <Link to="/"><img src={require('../footer/logo.png')} alt="" /></Link>
                             </div>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                                 cilisis.</p>
@@ -24,10 +25,8 @@ function Footer() {
                         <div className="footer__widget">
                             <h6>Quick links</h6>
                             <ul>
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Blogs</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">FAQ</a></li>
+                                <li><Link to="/contact">Contact</Link></li>
+                                <li><Link to="/shop">Shop</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -35,10 +34,9 @@ function Footer() {
                         <div className="footer__widget">
                             <h6>Account</h6>
                             <ul>
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">Orders Tracking</a></li>
-                                <li><a href="#">Checkout</a></li>
-                                <li><a href="#">Wishlist</a></li>
+                                <li><Link to="/account/detail">My Account</Link></li>
+                                <li><Link to="/account/history">Orders History</Link></li>
+                                <li><Link to="/checkout">Checkout</Link></li>
                             </ul>
                         </div>
                     </div>

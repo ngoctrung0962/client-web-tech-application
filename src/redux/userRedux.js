@@ -2,19 +2,29 @@ import { createSlice } from "@reduxjs/toolkit";
 import userApi from "../api/userApi";
 import Storagekey from "../constants/storagekey";
 
-export const login = async (dispatch, user) => {
+export const login = async (dispatch, data, username) => {
     dispatch(loginStart());
 
-    const userFake = {
-        username: "Trung",
-        password: "123"
-    }
+    // const userFake = {
+    //     username: "Trung",
+    //     password: "123"
+    // }
 
-    if (user.username === userFake.username && user.password === userFake.password) {
-        dispatch(loginSuccess(userFake));
-        localStorage.setItem(Storagekey.USER, JSON.stringify(user))
-    }
-    else {
+    // if (data.username === userFake.username && data.password === userFake.password) {
+    //     dispatch(loginSuccess(userFake));
+    //     localStorage.setItem(Storagekey.USER, JSON.stringify(data))
+    // }
+    // else {
+    //     dispatch(loginFailure());
+    // }
+
+    if (data.AccessToken && data.RefreshToken) {
+        localStorage.setItem(Storagekey.ACCESS_TOKEN, data.AccessToken)
+        localStorage.setItem(Storagekey.REFRESH_TOKEN, data.RefreshToken)
+        const userdata = await userApi.get(username)
+        dispatch(loginSuccess(userdata))
+        localStorage.setItem(Storagekey.USER, JSON.stringify(userdata))
+    } else {
         dispatch(loginFailure());
     }
 };
@@ -40,6 +50,7 @@ const userSlice = createSlice({
         loginStart: (state) => {
             state.isFetching = true;
             state.error = false;
+
         },
         loginSuccess: (state, action) => {
             state.isFetching = false;
