@@ -25,6 +25,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
         // formData.append("dateOfBirth", formvalues.dateOfBirth)
         // formData.append("gender", formvalues.gender)
         const data = await userApi.update(userdetail.username, formvalues)
+        console.log("e", formvalues)
         window.alert("Cập nhật thành công")
         setUserdetail(data);
     }
