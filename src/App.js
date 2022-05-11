@@ -10,6 +10,8 @@ import SignIn from './pages/authentication/signin/SignIn.page';
 import Cart from './pages/client/cart/Cart.page';
 import Checkout from './pages/client/checkout/Checkout.page'
 import { useSelector } from "react-redux";
+import Forgot from './pages/authentication/forgotpwd/Forgotpwd.page';
+import Reset from './pages/authentication/resetpass/ResetPass.page';
 
 import { Navigate } from "react-router-dom";
 import UserInfoPage from './pages/client/UserInfo/page/ProfilePage/UserInfo.page';
@@ -41,6 +43,17 @@ function App() {
           path="/signup"
           element={user ? <Navigate to="/" replace /> : <SignUp />}
         />
+
+        <Route
+          path="/forgot"
+          element={<Forgot />}
+        />
+
+        <Route
+          path="/reset"
+          element={<Reset />}
+        />
+
         <Route
           path="/cart"
           element={<Cart />}
@@ -51,10 +64,7 @@ function App() {
           element={<Checkout />}
         />
         <Route path='/' element={<Home />} />
-<<<<<<< HEAD
-=======
-        
->>>>>>> dc8aa8eb3ef87aa96b6656b6e0c80b2ff346bd61
+
       </Routes>
     </div>
   );
