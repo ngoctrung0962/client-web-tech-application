@@ -14,7 +14,7 @@ function Product() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const products = await productApi.getAll();
+        const products = await productApi.getTop8ProductsNewest();
         setProducts(products);
       } catch (error) {
         console.error("error");
