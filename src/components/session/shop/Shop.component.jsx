@@ -107,6 +107,8 @@ function Shop() {
     });
   };
 
+
+
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
 
