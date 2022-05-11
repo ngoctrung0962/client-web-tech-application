@@ -10,6 +10,9 @@ import { useSelector } from 'react-redux';
 
 import { Fragment } from "react";
 
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 
 function Detail() {
   const nav = useNavigate();
@@ -131,6 +134,10 @@ function Detail() {
             <Box component="fieldset" mb={3} borderColor="transparent">
               <Rating name="read-only" value={review.rate} readOnly />
             </Box>
+            {/* <IconButton aria-label="delete">
+              <DeleteIcon />
+            </IconButton> */}
+
           </div>
         </div>
       </div>

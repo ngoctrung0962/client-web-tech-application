@@ -30,7 +30,6 @@ function Shop() {
       try {
         const products = await productApi.getAll();
         setProducts(products);
-        console.log(products)
       } catch (error) {
         console.error("error");
       }
@@ -90,7 +89,7 @@ function Shop() {
     //   get value from filter by price component
     const priceMin = document.querySelector("#minamount").value.substring(1);
     const priceMax = document.querySelector("#maxamount").value.substring(1);
-    console.log(priceMin, priceMax);
+    // console.log(priceMin, priceMax);
     //   set filterByPrice state
     setFilterByPrice({
       min: priceMin,
@@ -140,11 +139,11 @@ function Shop() {
   }
 
   return (
-    <section class="shop spad">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3 col-md-3">
-            <div class="shop__sidebar">
+    <section className="shop spad">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-3 col-md-3">
+            <div className="shop__sidebar">
               {/* Categories */}
               <div className="sidebar__categories">
                 <div className="section-title">
@@ -153,7 +152,7 @@ function Shop() {
                 <div className="categories__accordion">
                   <div className="accordion" id="accordionExample">
                     {spans.map((individualSpan, index) => (
-                      <div className="card">
+                      <div key={index} className="card">
                         <div className="card-heading active">
                           <a
                             key={index}
@@ -263,7 +262,7 @@ function Shop() {
               </Fragment>
 
               {/* Pagination */}
-              <div class="col-lg-12 text-center pagination_center">
+              <div className="col-lg-12 text-center pagination_center">
                 <Pagination
                   className="pagination__option"
                   currentPage={currentPage}

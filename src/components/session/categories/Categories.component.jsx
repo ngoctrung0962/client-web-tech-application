@@ -15,7 +15,7 @@ function Categories() {
                     incidid-unt labore edolore magna aliquapendisse ultrices
                     gravida.
                   </p>
-                  <NavLink className="Header_Categories" to="/shop.html">
+                  <NavLink className="Header_Categories" to="/shop">
                     Shop now
                   </NavLink>
                 </div>
@@ -33,7 +33,7 @@ function Categories() {
                     incidid-unt labore edolore magna aliquapendisse ultrices
                     gravida.
                   </p>
-                  <NavLink className="Header_Categories" to="/shop.html">
+                  <NavLink className="Header_Categories" to="/shop">
                     Shop now
                   </NavLink>
                 </div>

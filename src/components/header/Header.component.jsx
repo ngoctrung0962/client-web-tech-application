@@ -27,8 +27,8 @@ function Header(props) {
         <div className="row">
           <div className="col-xl-3 col-lg-2">
             <div className="header__logo">
-              <Link to="./index.html">
-                <img src={require('../header/logo.png')} alt="" />
+              <Link to="/">
+                <img src={require('../header/logo.png')} alt="true" />
               </Link>
             </div>
           </div>
