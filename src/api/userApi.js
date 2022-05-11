@@ -13,8 +13,12 @@ const userApi = {
         const url = `/users/${username}`
         return axiosClient.put(url, data);
     },
-    resetPass(user){
+    resetPass(user) {
         const ob = {}
+    },
+    login(data) {
+        const url = `/login`
+        return axiosClient.post(url, data)
     }
 
 }
