@@ -23,6 +23,7 @@ function Shop() {
   const [value, setValue] = useState(4);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [filterByPrice, setFilterByPrice] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +31,10 @@ function Shop() {
       try {
         const products = await productApi.getAll();
         setProducts(products);
+        setFilteredProducts(products);
+        const minPrice = await productApi.getMinPrice();
+        const maxPrice = await productApi.getMaxPrice();
+        setFilterByPrice({ ...filterByPrice, min: minPrice, max: maxPrice });
       } catch (error) {
         console.error("error");
       }
@@ -58,13 +63,12 @@ function Shop() {
     setActive(individualSpan.id);
     setCategory(individualSpan.text);
     filterFunction(individualSpan.text);
+    setCurrentPage(1);
   };
   // filtered products state
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   // filter function
-  console.log(products);
-
   const filterFunction = (text) => {
     if (products.length > 0) {
       const filter = products.filter((product) => {
@@ -76,18 +80,12 @@ function Shop() {
           product.price <= filterByPrice.max
         );
       });
-      console.log(filter);
       setFilteredProducts(filter);
     } else {
       console.log("no products to filter");
     }
   };
 
-  //   function handleFillterByPrice
-  const [filterByPrice, setFilterByPrice] = useState({
-    min: 2000000,
-    max: 50000000,
-  });
   // Callback filterFunction when filterByPrice changed
   useEffect(() => {
     filterFunction(category);
@@ -167,7 +165,7 @@ function Shop() {
                             id={individualSpan.id}
                             onClick={() => handleChange(individualSpan)}
                             className={
-                              individualSpan.id === active ? active : ""
+                              individualSpan.id === active ? "active" : ""
                             }
                           >
                             {individualSpan.text}
@@ -222,7 +220,6 @@ function Shop() {
                           backgroundImage: `url(${individualFilteredProduct.image})`,
                         }}
                       >
-                        <div className="label new">New</div>
                         <ul className="product__hover">
                           <li>
                             <a
@@ -291,7 +288,7 @@ function Shop() {
                 <Pagination
                   className="pagination__option"
                   currentPage={currentPage}
-                  totalCount={products.length}
+                  totalCount={filteredProducts.length}
                   pageSize={PageSize}
                   onPageChange={(page) => setCurrentPage(page)}
                 />

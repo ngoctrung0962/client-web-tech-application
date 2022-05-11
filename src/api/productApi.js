@@ -31,9 +31,20 @@ const productApi = {
     },
     //get top 8 products newest
     getTop8ProductsNewest() {
-        const url = `/products/top8newest`
+        const url = `/products/newest/8`
         return axiosClient.get(url);
-    }
+    },
+    //get min price
+    getMinPrice() {
+        const url = `/products/price/min`
+        return axiosClient.get(url);
+    },
+    //get max price
+    getMaxPrice() {
+        const url = `/products/price/max`
+        return axiosClient.get(url);
+    },
+
 
 }
 
