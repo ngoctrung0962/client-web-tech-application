@@ -174,20 +174,30 @@ Created: Colorib
         var rangeSlider = $(".price-range"),
             minamount = $("#minamount"),
             maxamount = $("#maxamount"),
+            
+            // console.log(rangeSlider.data('min'), rangeSlider.data('max'));
             minPrice = rangeSlider.data('min'),
             maxPrice = rangeSlider.data('max');
+            // minPrice = Intl.NumberFormat('de-DE').format(rangeSlider.data('min')),
+            // maxPrice = Intl.NumberFormat('de-DE').format(rangeSlider.data('max'));
+            console.log(minPrice, maxPrice);
+
         rangeSlider.slider({
             range: true,
             min: minPrice,
             max: maxPrice,
             values: [minPrice, maxPrice],
             slide: function (event, ui) {
-                minamount.val('$' + ui.values[0]);
-                maxamount.val('$' + ui.values[1]);
+                minamount.val(ui.values[0]+' VND');
+                console.log(ui.values[0]);
+                maxamount.val(ui.values[1]+' VND');
             }
         });
-        minamount.val('$' + rangeSlider.slider("values", 0));
-        maxamount.val('$' + rangeSlider.slider("values", 1));
+        //format value on slider to currency
+    
+        minamount.val(rangeSlider.slider("values", 0) + ' VND');
+        maxamount.val(rangeSlider.slider("values", 1)+ ' VND');
+        console.log(minamount.val(), maxamount.val());
 
         /*------------------
             Single Product
