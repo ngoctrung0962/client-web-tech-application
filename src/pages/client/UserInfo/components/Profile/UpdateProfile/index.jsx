@@ -16,6 +16,14 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // var formData = new FormData();
+        // formData.append("name", formvalues.name)
+        // formData.append("username", formvalues.username)
+        // formData.append("email", formvalues.email)
+        // formData.append("phoneNumber", formvalues.phoneNumber)
+        // formData.append("address", formvalues.address)
+        // formData.append("dateOfBirth", formvalues.dateOfBirth)
+        // formData.append("gender", formvalues.gender)
         const data = await userApi.update(userdetail.username, formvalues)
         window.alert("Cập nhật thành công")
         setUserdetail(data);

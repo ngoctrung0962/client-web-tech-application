@@ -1950,6 +1950,7 @@ ol {
 .product-details {
 	padding-top: 70px;
 	padding-bottom: 50px;
+	margin-top: 48px;
 }
 
 .product__details__pic {
@@ -3350,6 +3351,7 @@ ol {
 .contact {
 	padding-top: 80px;
 	padding-bottom: 80px;
+	margin-top: 38px;
 }
 
 .contact__address {

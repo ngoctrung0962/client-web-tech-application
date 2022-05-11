@@ -8,7 +8,7 @@ function Footer() {
                     <div className="col-lg-4 col-md-6 col-sm-7">
                         <div className="footer__about">
                             <div className="footer__logo">
-                                <Link to="/"><img src={require('../footer/logo.png')} alt="" /></Link>
+                                <Link onClick={(e) => { window.scrollTo(0, 0) }} to="/"><img src={require('../footer/logo.png')} alt="" /></Link>
                             </div>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                                 cilisis.</p>
@@ -25,8 +25,8 @@ function Footer() {
                         <div className="footer__widget">
                             <h6>Quick links</h6>
                             <ul>
-                                <li><Link to="/contact">Contact</Link></li>
-                                <li><Link to="/shop">Shop</Link></li>
+                                <li><Link onClick={(e) => { window.scrollTo(0, 0) }} to="/contact">Contact</Link></li>
+                                <li><Link onClick={(e) => { window.scrollTo(0, 0) }} to="/shop">Shop</Link></li>
                             </ul>
                         </div>
                     </div>

@@ -206,9 +206,7 @@ function Detail() {
                   </a>
                 </div>
                 <div className="product__details__slider__content  "  >
-                  <div className="product__details__pic__slider owl-carousel " style={{
-                    backgroundImage: `url(${product.image})`,
-                  }} >
+                  <div className="product__details__pic__slider owl-carousel "  >
                     <img data-hash="product-1" className="product__big__img" src={product.image} alt="" />
                     <img data-hash="product-2" className="product__big__img" src={product.image} alt="" />
                     <img data-hash="product-3" className="product__big__img" src={product.image} alt="" />

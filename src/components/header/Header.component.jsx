@@ -36,13 +36,13 @@ function Header(props) {
             <nav className="header__menu">
               <ul>
                 <li>
-                  <Link to="/">Home</Link>
+                  <Link onClick={(e) => { window.scrollTo(0, 0) }} to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/shop">Shop</Link>
+                  <Link onClick={(e) => { window.scrollTo(0, 0) }} to="/shop">Shop</Link>
                 </li>
                 <li>
-                  <Link to="/contact">Contact</Link>
+                  <Link onClick={(e) => { window.scrollTo(0, 0) }} to="/contact">Contact</Link>
                 </li>
               </ul>
             </nav>
