@@ -14,9 +14,11 @@ import Header from "../../../components/header/Header.component";
 import Instagram from "../../../components/instagram/Instagram.component";
 import OffCanvasMenu from "../../../components/offCanvasMenu/OffCanvasMenu.component";
 import Breadcrumb from "../../../components/breadcrumb/breadcrumb.component";
+import { useSelector } from 'react-redux';
 
 function Cart() {
     let navigate = useNavigate();
+    const user = useSelector((state) => state.user.currentUser);
 
     const [listCartState, setListCartSate] = useState([]);
     const [isLoading, setIsLoading] = useState('loading');
@@ -27,18 +29,18 @@ function Cart() {
 
 
     useEffect(async () => {
-        const res = await getListCartApi('nam');
+        const res = await getListCartApi(user.username);
         setIsLoading('idle');
         setListCartSate(res);
     }, [])
 
     useEffect(async () => {
-        const res = await getListCartApi('nam');
+        const res = await getListCartApi(user.username);
         setListCartSate(res);
     }, [updateCart])
 
     useEffect(async () => {
-        const res = await getListCartApi('nam');
+        const res = await getListCartApi(user.username);
         setListCartSate(res);
     }, [deleteCart])
 
