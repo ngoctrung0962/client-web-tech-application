@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import userApi from '../../../../../api/userApi';
 
 function UserInfoPage() {
-    const user = useSelector((state) => state.user.currentUser)
+    const user = useSelector((state) => state.user.currentUser);
 
     const [loading, setLoading] = useState(true)
     const [userdetail, setUserdetail] = useState({})
@@ -24,7 +24,8 @@ function UserInfoPage() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await userApi.get(`${user.username}`);
+                const res = await userApi.get(user.username);
+                console.log(res);
                 setUserdetail(res)
                 window.scrollTo(0, 0)
             } catch (error) {

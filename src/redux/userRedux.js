@@ -19,15 +19,22 @@ export const login = async (dispatch, data, username) => {
     // }
 
     if (data.AccessToken && data.RefreshToken) {
-        localStorage.setItem(Storagekey.ACCESS_TOKEN, data.AccessToken)
-        localStorage.setItem(Storagekey.REFRESH_TOKEN, data.RefreshToken)
-        const userdata = await userApi.get(username)
-        dispatch(loginSuccess(userdata))
-        localStorage.setItem(Storagekey.USER, JSON.stringify(userdata))
+        const isdone = await saveToken(data.AccessToken, data.RefreshToken)
+        if (isdone) {
+            const userdata = await userApi.get(username)
+            dispatch(loginSuccess(userdata))
+            localStorage.setItem(Storagekey.USER, JSON.stringify(userdata))
+        }
     } else {
         dispatch(loginFailure());
     }
 };
+
+const saveToken = (accessToken, refreshToken) => {
+    localStorage.setItem(Storagekey.ACCESS_TOKEN, accessToken)
+    localStorage.setItem(Storagekey.REFRESH_TOKEN, refreshToken)
+    return true
+}
 
 export const register = async (dispatch, data) => {
     dispatch(RegisterStart());
@@ -50,7 +57,6 @@ const userSlice = createSlice({
         loginStart: (state) => {
             state.isFetching = true;
             state.error = false;
-
         },
         loginSuccess: (state, action) => {
             state.isFetching = false;

@@ -272,11 +272,11 @@ function Shop() {
                         </Box>
                         <div className="product__price">
                           {individualFilteredProduct &&
-                          individualFilteredProduct.price
+                            individualFilteredProduct.price
                             ? individualFilteredProduct.price.toLocaleString(
-                                "it-IT",
-                                { style: "currency", currency: "VND" }
-                              )
+                              "it-IT",
+                              { style: "currency", currency: "VND" }
+                            )
                             : null}
                         </div>
                       </div>
