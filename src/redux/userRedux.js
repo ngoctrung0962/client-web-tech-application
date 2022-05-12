@@ -4,20 +4,6 @@ import Storagekey from "../constants/storagekey";
 
 export const login = async (dispatch, data, username) => {
     dispatch(loginStart());
-
-    // const userFake = {
-    //     username: "Trung",
-    //     password: "123"
-    // }
-
-    // if (data.username === userFake.username && data.password === userFake.password) {
-    //     dispatch(loginSuccess(userFake));
-    //     localStorage.setItem(Storagekey.USER, JSON.stringify(data))
-    // }
-    // else {
-    //     dispatch(loginFailure());
-    // }
-
     if (data.AccessToken && data.RefreshToken) {
         const isdone = await saveToken(data.AccessToken, data.RefreshToken)
         if (isdone) {
