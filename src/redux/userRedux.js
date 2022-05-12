@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Navigate } from "react-router-dom";
 import userApi from "../api/userApi";
 import Storagekey from "../constants/storagekey";
 
 export const login = async (dispatch, data, username) => {
     dispatch(loginStart());
-    if (data.AccessToken && data.RefreshToken) {
+    if (data.AccessToken && data.RefreshToken && data.role === "ROLE_USER") {
         const isdone = await saveToken(data.AccessToken, data.RefreshToken)
         if (isdone) {
             const userdata = await userApi.get(username)
@@ -66,6 +67,7 @@ const userSlice = createSlice({
         Logout(state) {
             localStorage.clear();
             state.currentUser = null;
+            window.alert("Good bye!")
         }
     },
 });
