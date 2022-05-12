@@ -44,8 +44,21 @@ const productApi = {
         const url = `/products/price/max`
         return axiosClient.get(url);
     },
-
-
+    //get top seller
+    getTopSeller() {
+        const url = `/products/topseller`
+        return axiosClient.get(url);
+    },
+    //get top featured
+    getTopFeatured() {
+        const url = `/products/topfeature`
+        return axiosClient.get(url);
+    },
+    //get hot trend
+    getHotTrend() {
+        const url = `/products/hottrend`
+        return axiosClient.get(url);
+    },
 }
 
 export default productApi;
