@@ -4,6 +4,7 @@ import { formatVND, showNotification } from '../../../utils/MyUtils';
 import swal from 'sweetalert2';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 
 import Preloder from '../../../components/proloder/Preloder.component'
 import { getListCartApi, deleteCartApi, insertCartApi, updateCartApi } from '../../../api/cartApi'
@@ -14,12 +15,11 @@ import Header from "../../../components/header/Header.component";
 import Instagram from "../../../components/instagram/Instagram.component";
 import OffCanvasMenu from "../../../components/offCanvasMenu/OffCanvasMenu.component";
 import Breadcrumb from "../../../components/breadcrumb/breadcrumb.component";
-import { useSelector } from 'react-redux';
+
 
 function Cart() {
     let navigate = useNavigate();
-    const user = useSelector((state) => state.user.currentUser);
-
+    const user = useSelector(state => state.user.currentUser);
     const [listCartState, setListCartSate] = useState([]);
     const [isLoading, setIsLoading] = useState('loading');
     const [updateCart, setUpdateCart] = useState('');
@@ -27,12 +27,20 @@ function Cart() {
     const [coupon, setCoupon] = useState('');
     const [discount, setDiscount] = useState(0);
 
-
     useEffect(async () => {
+        if (user === null)
+            navigate('/signin')
+        console.log(user);
         const res = await getListCartApi(user.username);
         setIsLoading('idle');
         setListCartSate(res);
     }, [])
+
+    //check info user before access to cart
+    useEffect(async () => {
+        if (user === null)
+            navigate('/signin')
+    }, [user])
 
     useEffect(async () => {
         const res = await getListCartApi(user.username);
@@ -46,7 +54,7 @@ function Cart() {
 
     const updateHandler = async (item, newQuantity) => {
         if (newQuantity == 0) {
-            const res = await deleteCartApi(item.id.productId);
+            const res = await deleteCartApi(user.username, item.id.productId);
             setDeleteCart(res);
             console.log(res);
         }
@@ -55,7 +63,7 @@ function Cart() {
                 const product = {
                     quantity: newQuantity,
                 };
-                const res = await updateCartApi(item.id.productId, product);
+                const res = await updateCartApi(user.username, item.id.productId, product);
                 setUpdateCart(res);
             }
             else {
@@ -70,41 +78,50 @@ function Cart() {
     }
 
     const deleteHandler = async (itemID) => {
-        const res = await deleteCartApi(itemID);
+        const res = await deleteCartApi(user.username, itemID);
         setDeleteCart(res);
     };
 
     const showCartItem = (listCart) => {
         let listDom = null;
-        if (listCart.length > 0 && listCart) {
-            listDom = listCart.map((item, index) => {
-                return (
-                    <CartItem
-                        key={index}
-                        item={item}
-                        updateHandler={updateHandler}
-                        deleteHandler={deleteHandler} />
-                )
-            })
+        if (listCart !== undefined) {
+            if (listCart.length > 0) {
+                listDom = listCart.map((item, index) => {
+                    return (
+                        <CartItem
+                            key={index}
+                            item={item}
+                            updateHandler={updateHandler}
+                            deleteHandler={deleteHandler} />
+                    )
+                })
+            }
+
         }
         return listDom;
     }
 
     const showTotalPrice = (listCart) => {
         let sum = 0;
-        if (listCart.length > 0) {
-            sum = listCart.reduce((total, cur) => total + cur.quantity * cur.product.price, 0);
+        if (listCart !== undefined) {
+            console.log(listCart)
+            if (listCart.length > 0)
+                sum = listCart.reduce((total, cur) => total + cur.quantity * cur.product.price, 0);
         }
         return formatVND(sum);
     }
 
     const showPriceWithCoupon = (listCart) => {
         let sum = 0;
-        if (listCart.length > 0) {
-            sum = listCart.reduce((total, cur) => total + cur.quantity * cur.product.price, 0);
+        if (listCart !== undefined) {
+            if (listCart.length > 0)
+                sum = listCart.reduce((total, cur) => total + cur.quantity * cur.product.price, 0);
         }
         sum = sum - discount;
-        return formatVND(sum);
+        if(sum >= 0)
+            return formatVND(sum);
+        else
+            return formatVND(0);
     }
 
     //function set state for coupon

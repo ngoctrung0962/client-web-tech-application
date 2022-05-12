@@ -6,7 +6,8 @@ import { insertCartApi } from "../../../api/cartApi";
 import swal from "sweetalert2";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
-import { formatVND } from "../../../utils/MyUtils";
+import { formatVND, showNotification } from "../../../utils/MyUtils"  ;
+
 import CategoriesShop from "./CategoriesShop.component";
 import FilterByPrice from "./FilterByPrice.component";
 import FileList from "./FilterList.component";
@@ -23,7 +24,7 @@ function Shop() {
   const [value, setValue] = useState(4);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [filterByPrice, setFilterByPrice] = useState({});
+  const [filterByPrice, setFilterByPrice] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,13 +35,21 @@ function Shop() {
         setFilteredProducts(products);
         const minPrice = await productApi.getMinPrice();
         const maxPrice = await productApi.getMaxPrice();
-        setFilterByPrice({ ...filterByPrice, min: minPrice, max: maxPrice });
+        //console.log(minPrice, maxPrice);
+        const ob = {
+          min: minPrice,
+          max: maxPrice
+        }
+        setFilterByPrice(ob);
+        //console.log(filterByPrice);
       } catch (error) {
         console.error("error");
       }
       setLoading(false);
     };
+
     fetchData();
+    console.log(filterByPrice)
   }, []);
 
   // categories list rendering using span tag
@@ -58,6 +67,7 @@ function Shop() {
   useEffect(() => {
     filterFunction(category);
   }, [category]);
+
   // handle change ... it will set category and active states
   const handleChange = (individualSpan) => {
     setActive(individualSpan.id);
@@ -125,22 +135,19 @@ function Shop() {
     e.preventDefault();
     if (item.quantity === 0) {
       //notify not enough quantity
-      swal.fire({
-        icon: "warning",
-        title: "HUHU OH NO !!!",
-        text: "Not enough products, my friends",
-        confirmButtonText: "Choose others",
-        allowOutsideClick: false,
-      });
-    } else {
+      showNotification("warning", "HUHU OH NO !!!", "Not enough products, my friends", "Choose others");
+    }
+    else {
       const cartItem = {
         id: {
-          username: `${user.username}`,
+          username: user.username,
           productId: item.productId,
         },
         quantity: 1,
       };
+      console.log(cartItem);
       const res = await insertCartApi(cartItem);
+      console.log(res);
       if (res.status === 200) {
         navigate("/cart");
       }

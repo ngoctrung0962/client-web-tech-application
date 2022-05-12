@@ -1,10 +1,11 @@
 
 import { callApi, apiContainData} from '../utils/callApi'
+import Storagekey from "../constants/storagekey";
 
-export const getListCartApi = async (idUser) => {
+export const getListCartApi = async (username) => {
   try {
 
-    const res = await callApi(`cart-details/nam`, "GET")
+    const res = await callApi(`cart-details/${username}`, "GET")
     return res.data
   } catch (error) {
     console.log(error);
@@ -21,9 +22,9 @@ export const insertCartApi = async (item) => {
   }
 }
 
-export const deleteCartApi = async (itemID) => {
+export const deleteCartApi = async (username, itemID) => {
   try {
-    const res = await callApi(`cart-details/nam/${itemID}`, "DELETE");
+    const res = await callApi(`cart-details/${username}/${itemID}`, "DELETE");
     return res.data
 
   } catch (error) {
@@ -31,9 +32,9 @@ export const deleteCartApi = async (itemID) => {
   }
 }
 
-export const updateCartApi = async (itemId, data) => {
+export const updateCartApi = async ( username,itemId, data) => {
   try {
-    const res = await apiContainData(`cart-details/nam/${itemId}`, "PUT", data);
+    const res = await apiContainData(`cart-details/${username}/${itemId}`, "PUT", data);
     return res.data
 
   } catch (error) {
