@@ -15,7 +15,7 @@ import Header from "../../../components/header/Header.component";
 import Instagram from "../../../components/instagram/Instagram.component";
 import OffCanvasMenu from "../../../components/offCanvasMenu/OffCanvasMenu.component";
 import Breadcrumb from "../../../components/breadcrumb/breadcrumb.component";
-import { useSelector } from 'react-redux';
+
 
 function Cart() {
     let navigate = useNavigate();
@@ -29,8 +29,7 @@ function Cart() {
 
     useEffect(async () => {
         if (user === null)
-            showNotification("error", "Login Request", "You must login before access this page", "Login",
-                () => navigate("/signin"));
+            navigate('/signin')
         console.log(user);
         const res = await getListCartApi(user.username);
         setIsLoading('idle');
@@ -40,8 +39,7 @@ function Cart() {
     //check info user before access to cart
     useEffect(async () => {
         if (user === null)
-            showNotification("error", "Login Request", "You must login before access this page", "Coutinue shop",
-                () => navigate("/shop"));
+            navigate('/signin')
     }, [user])
 
     useEffect(async () => {
@@ -120,7 +118,10 @@ function Cart() {
                 sum = listCart.reduce((total, cur) => total + cur.quantity * cur.product.price, 0);
         }
         sum = sum - discount;
-        return formatVND(sum);
+        if(sum >= 0)
+            return formatVND(sum);
+        else
+            return formatVND(0);
     }
 
     //function set state for coupon
