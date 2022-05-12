@@ -6,7 +6,7 @@ import { insertCartApi } from "../../../api/cartApi";
 import swal from "sweetalert2";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
-import { formatVND, showNotification } from "../../../utils/MyUtils"  ;
+import { formatVND, showNotification } from "../../../utils/MyUtils";
 
 import CategoriesShop from "./CategoriesShop.component";
 import FilterByPrice from "./FilterByPrice.component";
@@ -24,7 +24,7 @@ function Shop() {
   const [value, setValue] = useState(4);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [filterByPrice, setFilterByPrice] = useState('');
+  const [filterByPrice, setFilterByPrice] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,8 +38,8 @@ function Shop() {
         //console.log(minPrice, maxPrice);
         const ob = {
           min: minPrice,
-          max: maxPrice
-        }
+          max: maxPrice,
+        };
         setFilterByPrice(ob);
         //console.log(filterByPrice);
       } catch (error) {
@@ -49,7 +49,7 @@ function Shop() {
     };
 
     fetchData();
-    console.log(filterByPrice)
+    console.log(filterByPrice);
   }, []);
   console.log(filterByPrice.min, filterByPrice.max);
 
@@ -135,9 +135,13 @@ function Shop() {
     e.preventDefault();
     if (item.quantity === 0) {
       //notify not enough quantity
-      showNotification("warning", "HUHU OH NO !!!", "Not enough products, my friends", "Choose others");
-    }
-    else {
+      showNotification(
+        "warning",
+        "HUHU OH NO !!!",
+        "Not enough products, my friends",
+        "Choose others"
+      );
+    } else {
       const cartItem = {
         id: {
           username: user.username,
@@ -279,11 +283,11 @@ function Shop() {
                         </Box>
                         <div className="product__price">
                           {individualFilteredProduct &&
-                            individualFilteredProduct.price
+                          individualFilteredProduct.price
                             ? individualFilteredProduct.price.toLocaleString(
-                              "it-IT",
-                              { style: "currency", currency: "VND" }
-                            )
+                                "it-IT",
+                                { style: "currency", currency: "VND" }
+                              )
                             : null}
                         </div>
                       </div>

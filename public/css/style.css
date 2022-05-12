@@ -843,10 +843,11 @@ ol {
 
 .banner__slider.owl-carousel .owl-dots {
 	position: absolute;
-	left: 0;
-	top: 430px;
+	left: -100px;
+	top: 0px;
 	width: 100%;
 	text-align: center;
+	display: inline-flex;
 }
 
 .banner__slider.owl-carousel .Banner_Slider {
@@ -858,7 +859,7 @@ ol {
 	width: 12px;
 	background: #a1a1a1;
 	border-radius: 50%;
-	margin-right: 10px;
+	margin-right: 0px;
 }
 
 .banner__slider.owl-carousel .owl-dots button.active {
@@ -897,7 +898,9 @@ ol {
 }
 
 .trend__item__pic img {
-	width: 100%;
+	/* width: 100%; */
+	width: 92px;
+	height: 92px;
 	border-radius: 8px;
 }
 
