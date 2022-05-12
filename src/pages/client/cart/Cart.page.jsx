@@ -15,6 +15,7 @@ import Header from "../../../components/header/Header.component";
 import Instagram from "../../../components/instagram/Instagram.component";
 import OffCanvasMenu from "../../../components/offCanvasMenu/OffCanvasMenu.component";
 import Breadcrumb from "../../../components/breadcrumb/breadcrumb.component";
+import { useSelector } from 'react-redux';
 
 function Cart() {
     let navigate = useNavigate();
