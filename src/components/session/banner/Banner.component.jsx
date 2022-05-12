@@ -17,16 +17,16 @@ function Banner() {
                 <div className="banner__text">
                   <span className="Banner_Slider">The Best Choose</span>
                   <h1 className="Banner_Slider">Shop Tech</h1>
-                  <a className="Banner_Slider" href="./shop.html">
+                  <Link onClick={(e) => { window.scrollTo(0, 0) }} className="Banner_Slider" to="/shop">
                     Shop now
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="banner__item">
                 <div className="banner__text">
                   <span className="Banner_Slider">The Best Choose</span>
                   <h1 className="Banner_Slider">Shop Tech</h1>
-                  <Link className="Banner_Slider" to="/shop">
+                  <Link onClick={(e) => { window.scrollTo(0, 0) }} className="Banner_Slider" to="/shop">
                     Shop now
                   </Link>
                 </div>
@@ -35,9 +35,9 @@ function Banner() {
                 <div className="banner__text">
                   <span className="Banner_Slider">The Chloe Collection</span>
                   <h1 className="Banner_Slider">The Project Jacket</h1>
-                  <a className="Banner_Slider" href="./shop.html">
+                  <Link onClick={(e) => { window.scrollTo(0, 0) }} className="Banner_Slider" to="/shop">
                     Shop now
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

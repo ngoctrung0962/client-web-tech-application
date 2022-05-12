@@ -6,7 +6,7 @@ import {useState} from 'react'
 function CartItem (props){
 
   //const [item, setItem] = useState(props.item);
-
+  
   const updateHandler = (item, newQuantity) =>{
     props.updateHandler(item, newQuantity);
   }

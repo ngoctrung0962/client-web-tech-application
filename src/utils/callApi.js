@@ -1,9 +1,14 @@
 import axios from 'axios';
+import Storagekey from "../constants/storagekey";
 
 export const callApi = (endpoint, method = 'GET') =>{
     return  axios({
         method: method,
         url: `http://localhost:8080/api/technological_appliances/${endpoint}`,
+        headers: {
+            "Content-type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem(Storagekey.ACCESS_TOKEN) || ""}`
+        },
     })
     .catch(error => console.log(error))
 }
@@ -20,9 +25,9 @@ export const apiContainData = (endpoint, method = 'PUT', data) =>{
         data: data,
         //header: headers
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-            }
+            "Content-type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem(Storagekey.ACCESS_TOKEN) || ""}`
+        },
     })
     .catch(error => console.log(error))
 }

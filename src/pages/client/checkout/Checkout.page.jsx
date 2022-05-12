@@ -122,7 +122,7 @@ function Checkout() {
                 "deliveryId": delivery
             },
             "status": "preparing",
-            "couponId": 1,
+            "couponId": null,
             "discountPrice": coupon.discount
         }
         

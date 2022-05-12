@@ -2,27 +2,26 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login } from '../../../redux/userRedux';
-import userApi from '../../../api/userApi';
-
-
+import { login } from "../../../redux/userRedux";
+import userApi from "../../../api/userApi";
 
 function SignIn() {
-    const errorlogin = useSelector(state => state.user.error)
-    const nav = useNavigate();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
-    const { isFetching, error } = useSelector((state) => state.user);
-    const handleClick = async (e) => {
-        e.preventDefault();
-        var formData = new FormData();
-        formData.append("username", username)
-        formData.append("password", password)
-        console.log(formData)
-        const data = await userApi.login(formData)
-        login(dispatch, data, username);
-    };
+  const errorlogin = useSelector((state) => state.user.error);
+  const nav = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
+  
+  const handleClick = async (e) => {
+    e.preventDefault();
+    var formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+    console.log(formData);
+    const data = await userApi.login(formData);
+    login(dispatch, data, username);
+  };
 
   return (
     <div
