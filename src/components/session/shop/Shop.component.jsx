@@ -42,6 +42,7 @@ function Shop() {
     };
     fetchData();
   }, []);
+  console.log(filterByPrice.min, filterByPrice.max);
 
   // categories list rendering using span tag
   const [spans] = useState([
@@ -70,6 +71,7 @@ function Shop() {
 
   // filter function
   const filterFunction = (text) => {
+    console.log(products);
     if (products.length > 0) {
       const filter = products.filter((product) => {
         return (
@@ -106,8 +108,6 @@ function Shop() {
       max: priceMax,
     });
   };
-
-
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
