@@ -15,10 +15,7 @@ import Reset from './pages/authentication/resetpass/ResetPass.page';
 
 import { Navigate } from "react-router-dom";
 import UserInfoPage from './pages/client/UserInfo/page/ProfilePage/UserInfo.page';
-import { DetailAccount } from './pages/client/UserInfo/components/Profile/DetailAccount';
-import { History } from './pages/client/UserInfo/components/Profile/History';
-import { UpdateProfile } from './pages/client/UserInfo/components/Profile/UpdateProfile';
-import { UpdatePassword } from './pages/client/UserInfo/components/Profile/UpdatePassword';
+
 
 
 

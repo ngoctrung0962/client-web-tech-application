@@ -24,7 +24,7 @@ function Shop() {
   const [value, setValue] = useState(4);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [filterByPrice, setFilterByPrice] = useState("");
+  const [filterByPrice, setFilterByPrice] = useState({ min: 1, max: 2 });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,9 +49,8 @@ function Shop() {
     };
 
     fetchData();
-    console.log(filterByPrice);
   }, []);
-  console.log(filterByPrice.min, filterByPrice.max);
+  console.log("TAN", filterByPrice.min, filterByPrice.max);
 
   // categories list rendering using span tag
   const [spans] = useState([
@@ -114,6 +113,7 @@ function Shop() {
     console.log(priceMin, priceMax);
     //   set filterByPrice state
     setFilterByPrice({
+      ...filterByPrice,
       min: priceMin,
       max: priceMax,
     });
@@ -283,11 +283,11 @@ function Shop() {
                         </Box>
                         <div className="product__price">
                           {individualFilteredProduct &&
-                          individualFilteredProduct.price
+                            individualFilteredProduct.price
                             ? individualFilteredProduct.price.toLocaleString(
-                                "it-IT",
-                                { style: "currency", currency: "VND" }
-                              )
+                              "it-IT",
+                              { style: "currency", currency: "VND" }
+                            )
                             : null}
                         </div>
                       </div>
