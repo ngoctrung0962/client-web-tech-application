@@ -45,8 +45,8 @@ function Banner() {
               </div>
               <div className="banner__item">
                 <div className="banner__text">
-                  <span className="Banner_Slider">The Chloe Collection</span>
-                  <h1 className="Banner_Slider">The Project Jacket</h1>
+                  <span className="Banner_Slider">The Best Choose</span>
+                  <h1 className="Banner_Slider">Shop Tech</h1>
                   <Link
                     onClick={(e) => {
                       window.scrollTo(0, 0);

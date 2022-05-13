@@ -1794,7 +1794,7 @@ ol {
 	margin-bottom: 0;
 }
 
-.filter-range-wrap .range-slider .price-input:after {
+/* .filter-range-wrap .range-slider .price-input:after {
 	position: absolute;
 	left: 135px;
 	top: 12px;
@@ -1802,7 +1802,7 @@ ol {
 	width: 5px;
 	background: #0d0d0d;
 	content: "";
-}
+} */
 
 .filter-range-wrap .range-slider .price-input input {
 	font-size: 13.5px;

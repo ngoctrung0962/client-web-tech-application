@@ -180,7 +180,6 @@ Created: Colorib
             maxPrice = rangeSlider.data('max');
             // minPrice = Intl.NumberFormat('de-DE').format(rangeSlider.data('min')),
             // maxPrice = Intl.NumberFormat('de-DE').format(rangeSlider.data('max'));
-            console.log(minPrice, maxPrice);
 
         rangeSlider.slider({
             range: true,
@@ -189,7 +188,6 @@ Created: Colorib
             values: [minPrice, maxPrice],
             slide: function (event, ui) {
                 minamount.val(ui.values[0]+' VND');
-                console.log(ui.values[0]);
                 maxamount.val(ui.values[1]+' VND');
             }
         });
@@ -197,7 +195,6 @@ Created: Colorib
     
         minamount.val(rangeSlider.slider("values", 0) + ' VND');
         maxamount.val(rangeSlider.slider("values", 1)+ ' VND');
-        console.log(minamount.val(), maxamount.val());
 
         /*------------------
             Single Product

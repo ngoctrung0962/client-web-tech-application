@@ -5,9 +5,9 @@ import { Fragment } from "react";
 import { insertCartApi } from "../../../api/cartApi";
 import swal from "sweetalert2";
 import Rating from "@material-ui/lab/Rating";
+import Slider from "@mui/material/Slider";
 import Box from "@material-ui/core/Box";
 import { formatVND, showNotification } from "../../../utils/MyUtils";
-
 import CategoriesShop from "./CategoriesShop.component";
 import FilterByPrice from "./FilterByPrice.component";
 import FileList from "./FilterList.component";
@@ -24,7 +24,8 @@ function Shop() {
   const [value, setValue] = useState(4);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [filterByPrice, setFilterByPrice] = useState("");
+  const [filterByPrice, setFilterByPrice] = useState({ min: 0, max: 20000 });
+  const [priceShow, setPriceShow] = useState([0, 20000]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +42,7 @@ function Shop() {
           max: maxPrice,
         };
         setFilterByPrice(ob);
+        setPriceShow(ob);
         //console.log(filterByPrice);
       } catch (error) {
         console.error("error");
@@ -51,7 +53,6 @@ function Shop() {
     fetchData();
     console.log(filterByPrice);
   }, []);
-  console.log(filterByPrice.min, filterByPrice.max);
 
   // categories list rendering using span tag
   const [spans] = useState([
@@ -104,18 +105,15 @@ function Shop() {
   }, [filterByPrice]);
 
   const handelFillterByPrice = () => {
-    //   get value number from input
-    const priceMin = document
-      .querySelector("#minamount")
-      .value.replace(/[^0-9]/g, "");
-    const priceMax = document
-      .querySelector("#maxamount")
-      .value.replace(/[^0-9]/g, "");
-    console.log(priceMin, priceMax);
+    //   get value number from slider
+    const value = document.getElementById("minprice").innerText;
+    const priceMin = value.split(".").join("");
+    const value2 = document.getElementById("maxprice").innerText;
+    const priceMax = value2.split(".").join("");
     //   set filterByPrice state
     setFilterByPrice({
-      min: priceMin,
-      max: priceMax,
+      min: Number(priceMin),
+      max: Number(priceMax),
     });
   };
 
@@ -158,6 +156,22 @@ function Shop() {
     }
   };
 
+  // Range slider
+  const [valueSlider, setValueSlider] = useState([
+    Number(filterByPrice.min),
+    Number(filterByPrice.max),
+  ]);
+  const handleChangeSlider = (event, newValue) => {
+    setValueSlider(newValue);
+    //change dom min and max price
+    document.querySelector("#minprice").innerHTML = Intl.NumberFormat(
+      "de-DE"
+    ).format(newValue[0]);
+    document.querySelector("#maxprice").innerHTML = Intl.NumberFormat(
+      "de-DE"
+    ).format(newValue[1]);
+  };
+
   return (
     <section className="shop spad">
       <div className="container">
@@ -196,16 +210,27 @@ function Shop() {
                   <h4>Shop by price</h4>
                 </div>
                 <div className="filter-range-wrap">
-                  <div
-                    className="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                    data-min={filterByPrice.min}
-                    data-max={filterByPrice.max}
-                  />
-                  <div className="range-slider">
-                    <div className="price-input">
-                      <p>Price:</p>
-                      <input type="text" id="minamount" />
-                      <input type="text" id="maxamount" />
+                  <div>
+                    <Slider
+                      max={priceShow.max}
+                      min={priceShow.min}
+                      value={valueSlider}
+                      onChange={handleChangeSlider}
+                      valueLabelDisplay="auto"
+                    />
+                    <div className="range-slider">
+                      <div className="price-input">
+                        <p>Price:</p>
+                        <span> </span>
+                        <span id="minprice">
+                          {Intl.NumberFormat("de-DE").format(filterByPrice.min)}
+                        </span>
+                        <span>{" VND "} - </span>
+                        <span id="maxprice">
+                          {Intl.NumberFormat("de-DE").format(filterByPrice.max)}
+                        </span>
+                        <span>{" VND "}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
