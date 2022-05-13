@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "./styles.css";
 function Categories() {
   return (
@@ -9,15 +9,19 @@ function Categories() {
             <div className="col-lg-6 p-0">
               <div className="categories__item categories__large__item  setbackground">
                 <div className="categories__text">
-                  <h1 className="Header_Categories">LapTop</h1>
+                  <h1 className="Header_Categories">Laptop</h1>
                   <p className="Header_Categories">
                     Sitamet, consectetur adipiscing elit, sed do eiusmod tempor
                     incidid-unt labore edolore magna aliquapendisse ultrices
                     gravida.
                   </p>
-                  <NavLink className="Header_Categories" to="/shop">
+                  <Link
+                    className="Header_Categories"
+                    to="/shop"
+                    state={{ category: "Laptop" }}
+                  >
                     Shop now
-                  </NavLink>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -27,15 +31,19 @@ function Categories() {
                 data-setbg="/img/categories/IphoneHeader.jpg"
               >
                 <div className="categories__text">
-                  <h1 className="Header_Categories">Smart phone</h1>
+                  <h1 className="Header_Categories">Smart Phone</h1>
                   <p className="Header_Categories">
                     Sitamet, consectetur adipiscing elit, sed do eiusmod tempor
                     incidid-unt labore edolore magna aliquapendisse ultrices
                     gravida.
                   </p>
-                  <NavLink className="Header_Categories" to="/shop">
+                  <Link
+                    className="Header_Categories"
+                    to="/shop"
+                    state={{ category: "SmartPhone" }}
+                  >
                     Shop now
-                  </NavLink>
+                  </Link>
                 </div>
               </div>
             </div>

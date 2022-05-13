@@ -7,14 +7,14 @@ function Discount() {
         <div className="row">
           <div className="col-lg-6 p-0">
             <div className="discount__pic">
-              <img src="img/discount.jpg" alt="true" />
+              <img src="img/discount_laptop.jpg" alt="true" />
             </div>
           </div>
           <div className="col-lg-6 p-0">
             <div className="discount__text">
               <div className="discount__text__title">
                 <span>Discount</span>
-                <h2>Summer 2022</h2>
+                <h2>Student back to school 2022</h2>
                 <h5>
                   <span>Sale</span> 50%
                 </h5>
