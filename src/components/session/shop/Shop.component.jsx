@@ -2,33 +2,40 @@
 import React, { useState, useEffect, useMemo } from "react";
 import productApi from "../../../api/productApi";
 import { Fragment } from "react";
-import { insertCartApi } from "../../../api/cartApi";
+import { insertCartApi, getListCartApi } from "../../../api/cartApi";
 import swal from "sweetalert2";
 import Rating from "@material-ui/lab/Rating";
 import Slider from "@mui/material/Slider";
 import Box from "@material-ui/core/Box";
-import { formatVND, showNotification } from "../../../utils/MyUtils";
+import { formatVND, showNotification, checkQuantity } from "../../../utils/MyUtils";
+import {getAllCarts} from '../../../redux/cartRedux';
+
 import CategoriesShop from "./CategoriesShop.component";
 import FilterByPrice from "./FilterByPrice.component";
 import FileList from "./FilterList.component";
 import Products from "./Products.component";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "./Pagination.component";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useSelector,useDispatch } from "react-redux";
 
 let PageSize = 9;
 
 function Shop() {
   const user = useSelector((state) => state.user.currentUser);
+  const listCartRedux = useSelector((state) => state.cart.listCart);
   let navigate = useNavigate();
+  let dispatch = useDispatch();
+
   const [value, setValue] = useState(4);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [listCart, setListCart] = useState('');
+
   const [filterByPrice, setFilterByPrice] = useState({ min: 0, max: 20000 });
   const [priceShow, setPriceShow] = useState([0, 20000]);
 
   useEffect(() => {
+    
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -37,14 +44,19 @@ function Shop() {
         setFilteredProducts(products);
         const minPrice = await productApi.getMinPrice();
         const maxPrice = await productApi.getMaxPrice();
-        //console.log(minPrice, maxPrice);
         const ob = {
           min: minPrice,
           max: maxPrice,
         };
         setFilterByPrice(ob);
         setPriceShow(ob);
-        //console.log(filterByPrice);
+        if (user) {
+          const res = await getListCartApi(user.username);
+          setListCart(res);
+        }
+        
+        //await getAllCarts(dispatch, user.username);
+        
       } catch (error) {
         console.error("error");
       }
@@ -88,7 +100,6 @@ function Shop() {
 
   // filter function
   const filterFunction = (text) => {
-    console.log(products);
     if (products.length > 0) {
       const filter = products.filter((product) => {
         return (
@@ -135,31 +146,39 @@ function Shop() {
     return products.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, filteredProducts, products]);
 
+  ///handle button add to cart
   const addToCart = async (e, item) => {
     e.preventDefault();
-    if (item.quantity === 0) {
-      //notify not enough quantity
-      showNotification(
-        "warning",
-        "HUHU OH NO !!!",
-        "Not enough products, my friends",
-        "Choose others"
-      );
-    } else {
-      const cartItem = {
-        id: {
-          username: user.username,
-          productId: item.productId,
-        },
-        quantity: 1,
-      };
-      console.log(cartItem);
-      const res = await insertCartApi(cartItem);
-      console.log(res);
-      if (res.status === 200) {
-        navigate("/cart");
+    if (!user) {
+      navigate('/signin')
+    }
+    else {
+      if (item.quantity === 0) {
+        showNotification("warning", "HUHU OH NO !!!", "Not enough products, my friends", "Choose others");
+      }
+      else {
+        const cartItem = {
+          id: {
+            username: user.username,
+            productId: item.productId,
+          },
+          quantity: 1,
+        };
+        const resultCheck = await checkQuantity(cartItem, item.quantity, listCart);
+        if (resultCheck) {
+          const res = await insertCartApi(cartItem);
+          if (res.status === 200) {
+            navigate("/cart");
+          }
+          else
+            showNotification("error", "Oh No", "Not enough, try again", "Ok");
+        }
+        else {
+          showNotification("error", "Oh No", "Not enough, try again", "Ok");
+        }
       }
     }
+
   };
 
   // Range slider
@@ -279,12 +298,11 @@ function Shop() {
                             </a>
                           </li>
                           <li>
-                            <Link to="/cart">
+                            <Link to="/cart" onClick={(e) =>
+                              addToCart(e, individualFilteredProduct)
+                            }>
                               <span
                                 className="icon_bag_alt"
-                                onClick={(e) =>
-                                  addToCart(e, individualFilteredProduct)
-                                }
                               />
                             </Link>
                           </li>

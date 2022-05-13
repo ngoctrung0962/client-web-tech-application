@@ -2855,6 +2855,13 @@ ol {
 	line-height: 40px;
 }
 
+.not-checked-item {
+	margin-left: 10px;
+  }
+  .checked-item {
+	text-decoration: line-through;
+  }
+
 .checkout__order__total ul li span {
 	color: #ca1515;
 	float: right;

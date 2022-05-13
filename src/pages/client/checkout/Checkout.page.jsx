@@ -39,10 +39,11 @@ function Checkout() {
         await setCoupon(location.state.coupon);
         setIsLoading(false);
         //console.log(location.state.coupon);
+        console.log(delivery)
     }, []);
 
     useEffect(async () => {
-        if(user === null){
+        if (user === null) {
             navigate('/signin')
         }
     }, [user])
@@ -92,17 +93,20 @@ function Checkout() {
         return listDom;
     }
 
+    var isChecked = (item) => delivery === item.deliveryId ? "checked-item" : "not-checked-item";
+
     const showDeliveries = (listDelivery) => {
-        console.log(listDelivery);
         let listDom = null;
         if (listDelivery.length > 0) {
             listDom = listDelivery.map((item, index) => {
                 return (
-                    <label htmlFor="check-payment">
-                        {item.name}
-                        <input type="checkbox" id="check-payment" onClick={() => setDelivery(item.deliveryId)} />
-                        <span className="checkmark" />
-                    </label>
+                    <div key={index}>
+                        <input value={item.deliveryId}
+                            type="radio"
+                            checked = {item.deliveryId === delivery}
+                            onChange={() => setDelivery(item.deliveryId)} />
+                        <span className={isChecked(item.deliveryId)}>{item.name}</span>
+                    </div>
                 )
             })
         }
@@ -122,7 +126,7 @@ function Checkout() {
         const { firstname, lastname, country, address, town, phone, email } = e.target.elements
         const day = new Date();
         const today = day.toISOString();
-
+        //const giftcode = coupon ? `couponId : ${coupon.couponId}` : '';
         const order = {
             "user": {
                 "username": user.username
@@ -136,10 +140,13 @@ function Checkout() {
                 "deliveryId": delivery
             },
             "status": "preparing",
-            "couponId": `${coupon ? coupon.couponId : null}`,
             "discountPrice": `${coupon ? coupon.discount : 0}`
         }
 
+        if (coupon !== undefined || coupon !== null || coupon !== '')
+            order.couponId = coupon.couponId
+
+        console.log(order)
         const listOrderDetails = listCart.map((item) => {
             return {
                 "id": {
@@ -153,11 +160,17 @@ function Checkout() {
         })
 
         const res = await insertOrderApi(order, listOrderDetails);
+        console.log(res);
         if (res.status == 200) {
             showNotification('success', 'Great!!',
                 'Your Orders will be delivered as soon as possible', 'Continue Shopping',
                 () => navigate('/shop'))
         }
+    }
+
+    const checkDelivery = (item) => {
+        setDelivery(item.deliveryId)
+        console.log(delivery)
     }
 
     return (
@@ -243,9 +256,9 @@ function Checkout() {
                                                 <li>Total payment <span>{totalPayment(listCart)}</span></li>
                                             </ul>
                                         </div>
-                                        <div className="checkout__order__widget">
-                                            {showDeliveries(listDelivery)}
-                                        </div>
+                                        {/* <div className="checkout__order__widget">
+                                        </div> */}
+                                        {showDeliveries(listDelivery)}
                                         <button type="submit" className="site-btn">Place oder</button>
                                     </div>
                                 </div>
