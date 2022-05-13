@@ -6,29 +6,31 @@ import { Navigate } from 'react-router-dom';
 
 
 export const UpdateProfile = ({ userdetail, setUserdetail }) => {
-
-    const initValue = { name: userdetail.name, username: userdetail.username, email: userdetail.email, phoneNumber: userdetail.phoneNumber, address: userdetail.address, dateOfBirth: userdetail.dateOfBirth, gender: userdetail.gender }
-    const [formvalues, setFormvalues] = useState(initValue);
-
+    const [formvalues, setFormvalues] = useState({ name: "", username: "", email: "", phoneNumber: "", address: "", dateOfBirth: "", gender: "" });
+    useEffect(() => {
+        setFormvalues({
+            name: userdetail && userdetail.name,
+            username: userdetail && userdetail.username,
+            email: userdetail && userdetail.email,
+            phoneNumber: userdetail && userdetail.phoneNumber,
+            address: userdetail && userdetail.address,
+            dateOfBirth: userdetail && userdetail.dateOfBirth,
+            gender: userdetail && userdetail.gender,
+        })
+    }, [userdetail])
+    console.log("v", formvalues)
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormvalues({ ...formvalues, [name]: value });
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // var formData = new FormData();
-        // formData.append("name", formvalues.name)
-        // formData.append("username", formvalues.username)
-        // formData.append("email", formvalues.email)
-        // formData.append("phoneNumber", formvalues.phoneNumber)
-        // formData.append("address", formvalues.address)
-        // formData.append("dateOfBirth", formvalues.dateOfBirth)
-        // formData.append("gender", formvalues.gender)
         const data = await userApi.update(userdetail.username, formvalues)
         console.log("e", formvalues)
         window.alert("Cập nhật thành công")
         setUserdetail(data);
     }
+
 
 
 

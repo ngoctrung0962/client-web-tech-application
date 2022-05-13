@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import { insertCartApi, getListCartApi } from "../../../api/cartApi";
 import swal from "sweetalert2";
 import Rating from "@material-ui/lab/Rating";
+import Slider from "@mui/material/Slider";
 import Box from "@material-ui/core/Box";
 import { formatVND, showNotification, checkQuantity } from "../../../utils/MyUtils";
 import {getAllCarts} from '../../../redux/cartRedux';
@@ -28,9 +29,10 @@ function Shop() {
   const [value, setValue] = useState(4);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [filterByPrice, setFilterByPrice] = useState('');
   const [listCart, setListCart] = useState('');
 
+  const [filterByPrice, setFilterByPrice] = useState({ min: 0, max: 20000 });
+  const [priceShow, setPriceShow] = useState([0, 20000]);
 
   useEffect(() => {
     
@@ -42,13 +44,12 @@ function Shop() {
         setFilteredProducts(products);
         const minPrice = await productApi.getMinPrice();
         const maxPrice = await productApi.getMaxPrice();
-        //console.log(minPrice, maxPrice);
         const ob = {
           min: minPrice,
-          max: maxPrice
-        }
+          max: maxPrice,
+        };
         setFilterByPrice(ob);
-        //console.log(filterByPrice);
+        setPriceShow(ob);
         if (user) {
           const res = await getListCartApi(user.username);
           setListCart(res);
@@ -63,20 +64,26 @@ function Shop() {
     };
 
     fetchData();
-    console.log(filterByPrice)
   }, []);
 
   // categories list rendering using span tag
   const [spans] = useState([
     { id: "All", text: "All products" },
     { id: "Laptop", text: "Laptop" },
-    { id: "SmartPhone", text: "Smart Phone" },
+    { id: "SmartPhone", text: "SmartPhone" },
   ]);
-  // active class state
-  const [active, setActive] = useState("All");
 
   // category state
-  const [category, setCategory] = useState("All products");
+  const location = useLocation();
+  const tranformCategory = location.state ? location.state.category : null;
+  const [category, setCategory] = useState(
+    tranformCategory ? tranformCategory : "All products"
+  );
+  // active class state
+  const [active, setActive] = useState(
+    tranformCategory ? tranformCategory : "All"
+  );
+
   useEffect(() => {
     filterFunction(category);
   }, [category]);
@@ -115,23 +122,17 @@ function Shop() {
   }, [filterByPrice]);
 
   const handelFillterByPrice = () => {
-    //   get value number from input
-    const priceMin = document
-      .querySelector("#minamount")
-      .value.replace(/[^0-9]/g, "");
-    const priceMax = document
-      .querySelector("#maxamount")
-      .value.replace(/[^0-9]/g, "");
-    console.log(priceMin, priceMax);
+    //   get value number from slider
+    const value = document.getElementById("minprice").innerText;
+    const priceMin = value.split(".").join("");
+    const value2 = document.getElementById("maxprice").innerText;
+    const priceMax = value2.split(".").join("");
     //   set filterByPrice state
     setFilterByPrice({
-      min: priceMin,
-      max: priceMax,
+      min: Number(priceMin),
+      max: Number(priceMax),
     });
   };
-
-
-
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -148,8 +149,6 @@ function Shop() {
   ///handle button add to cart
   const addToCart = async (e, item) => {
     e.preventDefault();
-    
-    //console.log(listCartRedux);
     if (!user) {
       navigate('/signin')
     }
@@ -166,7 +165,6 @@ function Shop() {
           quantity: 1,
         };
         const resultCheck = await checkQuantity(cartItem, item.quantity, listCart);
-        console.log(resultCheck);
         if (resultCheck) {
           const res = await insertCartApi(cartItem);
           if (res.status === 200) {
@@ -181,6 +179,22 @@ function Shop() {
       }
     }
 
+  };
+
+  // Range slider
+  const [valueSlider, setValueSlider] = useState([
+    Number(filterByPrice.min),
+    Number(filterByPrice.max),
+  ]);
+  const handleChangeSlider = (event, newValue) => {
+    setValueSlider(newValue);
+    //change dom min and max price
+    document.querySelector("#minprice").innerHTML = Intl.NumberFormat(
+      "de-DE"
+    ).format(newValue[0]);
+    document.querySelector("#maxprice").innerHTML = Intl.NumberFormat(
+      "de-DE"
+    ).format(newValue[1]);
   };
 
   return (
@@ -221,16 +235,27 @@ function Shop() {
                   <h4>Shop by price</h4>
                 </div>
                 <div className="filter-range-wrap">
-                  <div
-                    className="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                    data-min={filterByPrice.min}
-                    data-max={filterByPrice.max}
-                  />
-                  <div className="range-slider">
-                    <div className="price-input">
-                      <p>Price:</p>
-                      <input type="text" id="minamount" />
-                      <input type="text" id="maxamount" />
+                  <div>
+                    <Slider
+                      max={priceShow.max}
+                      min={priceShow.min}
+                      value={valueSlider}
+                      onChange={handleChangeSlider}
+                      valueLabelDisplay="auto"
+                    />
+                    <div className="range-slider">
+                      <div className="price-input">
+                        <p>Price:</p>
+                        <span> </span>
+                        <span id="minprice">
+                          {Intl.NumberFormat("de-DE").format(filterByPrice.min)}
+                        </span>
+                        <span>{" VND "} - </span>
+                        <span id="maxprice">
+                          {Intl.NumberFormat("de-DE").format(filterByPrice.max)}
+                        </span>
+                        <span>{" VND "}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -307,11 +332,11 @@ function Shop() {
                         </Box>
                         <div className="product__price">
                           {individualFilteredProduct &&
-                            individualFilteredProduct.price
+                          individualFilteredProduct.price
                             ? individualFilteredProduct.price.toLocaleString(
-                              "it-IT",
-                              { style: "currency", currency: "VND" }
-                            )
+                                "it-IT",
+                                { style: "currency", currency: "VND" }
+                              )
                             : null}
                         </div>
                       </div>
