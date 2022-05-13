@@ -15,6 +15,7 @@ import Products from "./Products.component";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "./Pagination.component";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 let PageSize = 9;
 
@@ -58,14 +59,20 @@ function Shop() {
   const [spans] = useState([
     { id: "All", text: "All products" },
     { id: "Laptop", text: "Laptop" },
-    { id: "SmartPhone", text: "Smart Phone" },
+    { id: "SmartPhone", text: "SmartPhone" },
   ]);
 
-  // active class state
-  const [active, setActive] = useState("All");
-
   // category state
-  const [category, setCategory] = useState("All products");
+  const location = useLocation();
+  const tranformCategory = location.state ? location.state.category : null;
+  const [category, setCategory] = useState(
+    tranformCategory ? tranformCategory : "All products"
+  );
+  // active class state
+  const [active, setActive] = useState(
+    tranformCategory ? tranformCategory : "All"
+  );
+
   useEffect(() => {
     filterFunction(category);
   }, [category]);
