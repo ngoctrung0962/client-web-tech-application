@@ -61,6 +61,7 @@ function App() {
           element={<Checkout />}
         />
         <Route path='/' element={<Home />} />
+        <Route path='/forgot' element={<Forgot />} />
       </Routes>
     </div>
   );

@@ -1,13 +1,18 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { login, loginFailure } from '../../../redux/userRedux';
 import userApi from '../../../api/userApi';
+import styled from "styled-components";
 
 
 
 function SignIn() {
+  const StyledLink = styled(Link)`
+  color: #7B68EE;
+  text-decoration: underline;
+`;
   const errorlogin = useSelector(state => state.user.error)
   const nav = useNavigate();
   const [username, setUsername] = useState("");
@@ -64,11 +69,8 @@ function SignIn() {
             />
             <i className="zmdi zmdi-lock" />
           </div>
-          {error ? (
-            <h5 style={{ color: "red" }}>Username or password wrong!</h5>
-          ) : (
-            ""
-          )}
+          {error ? (<h5 style={{ color: "red" }}>Username or password wrong!</h5>) : ("")}
+          <StyledLink to="/forgot">Forgot password</StyledLink>
           <div className="d-flex row">
             <button onClick={() => nav(-1)} className="btn-back">
               <i className="zmdi zmdi-arrow-left" />
@@ -83,6 +85,7 @@ function SignIn() {
               <i className="zmdi zmdi-arrow-right" />
             </button>
           </div>
+
         </form>
       </div>
     </div>
