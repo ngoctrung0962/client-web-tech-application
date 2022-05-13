@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login } from '../../../redux/userRedux';
+import { login, loginFailure } from '../../../redux/userRedux';
 import userApi from '../../../api/userApi';
 
 
@@ -14,15 +14,21 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
-  
+
   const handleClick = async (e) => {
     e.preventDefault();
     var formData = new FormData();
     formData.append("username", username)
     formData.append("password", password)
     console.log(formData)
-    const data = await userApi.login(formData)
-    login(dispatch, data, username);
+
+    try {
+      const data = await userApi.login(formData)
+      login(dispatch, data, username);
+      window.alert("Login success!")
+    } catch (error) {
+      dispatch(loginFailure())
+    }
   };
 
   return (
@@ -59,7 +65,7 @@ function SignIn() {
             <i className="zmdi zmdi-lock" />
           </div>
           {error ? (
-            <h5 style={{ color: "red" }}>Username or password do not match</h5>
+            <h5 style={{ color: "red" }}>Username or password wrong!</h5>
           ) : (
             ""
           )}

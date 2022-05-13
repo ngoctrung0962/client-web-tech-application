@@ -174,7 +174,7 @@ Created: Colorib
         var rangeSlider = $(".price-range"),
             minamount = $("#minamount"),
             maxamount = $("#maxamount"),
-            
+
             // console.log(rangeSlider.data('min'), rangeSlider.data('max'));
             minPrice = rangeSlider.data('min'),
             maxPrice = rangeSlider.data('max');
@@ -192,7 +192,7 @@ Created: Colorib
             }
         });
         //format value on slider to currency
-    
+
         minamount.val(rangeSlider.slider("values", 0) + ' VND');
         maxamount.val(rangeSlider.slider("values", 1)+ ' VND');
 

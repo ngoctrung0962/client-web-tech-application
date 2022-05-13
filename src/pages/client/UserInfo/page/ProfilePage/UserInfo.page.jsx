@@ -25,7 +25,6 @@ function UserInfoPage() {
             setLoading(true);
             try {
                 const res = await userApi.get(user.username);
-                console.log(res);
                 setUserdetail(res)
                 window.scrollTo(0, 0)
             } catch (error) {
@@ -34,11 +33,14 @@ function UserInfoPage() {
             setLoading(false)
         }
         fetchData();
+        console.log("hahah")
     }, [user.username])
+
 
     const change = (data) => {
         setUserdetail(data)
     }
+    console.log(userdetail)
     return (
         <div className='profilepage'>
             <div className='profilepage__container'>
