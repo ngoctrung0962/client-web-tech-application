@@ -2,13 +2,32 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Menu, MenuItem } from "@material-ui/core"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Logout } from '../../redux/userRedux';
+
 function Header(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const updateCart = useSelector ((state) => state.cart.updateItem);
+  const deleteCart = useSelector (state => state.cart.deleteItem);
+  const insertCart = useSelector (state => state.cart.addItem);
+  const listCart = useSelector(state => state.cart.listCart);
+
+  const [count, setCount] = useState (0);
+  useEffect (() => {
+    if(user){
+      const count = listCart.length;
+      setCount(count);
+    }
+  }, [updateCart, deleteCart, insertCart, listCart]);
+  
+  useEffect (() => {
+    if(!user){
+      setCount(0);
+    }
+  },[user])
   const handleMenuClick = (e) => {
     setAnchorEl(e.currentTarget);
   }
@@ -62,7 +81,7 @@ function Header(props) {
                 <li>
                   <Link to="/cart">
                     <span className="icon_bag_alt" />
-                    <div className="tip">2</div>
+                    <div className="tip">{count}</div>
                   </Link>
                 </li>
 

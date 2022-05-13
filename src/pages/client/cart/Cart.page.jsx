@@ -1,39 +1,37 @@
 import React, { Fragment } from 'react';
-import CartItem from '../../../components/session/shopcart/CartItem.component'
-import { formatVND, showNotification } from '../../../utils/MyUtils';
-import swal from 'sweetalert2';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
-import Preloder from '../../../components/proloder/Preloder.component'
-import { getListCartApi, deleteCartApi, insertCartApi, updateCartApi } from '../../../api/cartApi'
+import { formatVND, showNotification } from '../../../utils/MyUtils';
 import { getDiscountApi } from '../../../api/discountApi';
+import { getAllCarts, deleteCartRedux, updateCartRedux } from '../../../redux/cartRedux'
 
+import CartItem from '../../../components/session/shopcart/CartItem.component'
+import Preloder from '../../../components/proloder/Preloder.component'
 import Footer from "../../../components/footer/Footer.component";
 import Header from "../../../components/header/Header.component";
 import Instagram from "../../../components/instagram/Instagram.component";
 import OffCanvasMenu from "../../../components/offCanvasMenu/OffCanvasMenu.component";
 import Breadcrumb from "../../../components/breadcrumb/breadcrumb.component";
 
-
 function Cart() {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const user = useSelector(state => state.user.currentUser);
-    const [listCartState, setListCartSate] = useState([]);
+    const listCart = useSelector(state => state.cart.listCart);
+    const updateRedux = useSelector(state => state.cart.updateItem);
+    const deleteRedux = useSelector(state => state.cart.deleteItem);
+
     const [isLoading, setIsLoading] = useState('loading');
-    const [updateCart, setUpdateCart] = useState('');
-    const [deleteCart, setDeleteCart] = useState('');
     const [coupon, setCoupon] = useState('');
     const [discount, setDiscount] = useState(0);
 
+    //prepare list cart 
     useEffect(async () => {
-        if (user === null)
-            navigate('/signin')
-        console.log(user);
-        const res = await getListCartApi(user.username);
+        user === null ? navigate('/signin') : await getAllCarts(dispatch, user.username);
         setIsLoading('idle');
-        setListCartSate(res);
     }, [])
 
     //check info user before access to cart
@@ -43,46 +41,32 @@ function Cart() {
     }, [user])
 
     useEffect(async () => {
-        const res = await getListCartApi(user.username);
-        setListCartSate(res);
-    }, [updateCart])
-
-    useEffect(async () => {
-        const res = await getListCartApi(user.username);
-        setListCartSate(res);
-    }, [deleteCart])
+        await getAllCarts(dispatch, user.username);
+    }, [deleteRedux, updateRedux])
 
     const updateHandler = async (item, newQuantity) => {
         if (newQuantity == 0) {
-            const res = await deleteCartApi(user.username, item.id.productId);
-            setDeleteCart(res);
-            console.log(res);
+            await deleteCartRedux(dispatch, user.username, item.id.productId);
         }
         else {
             if (newQuantity <= item.product.quantity) {
                 const product = {
                     quantity: newQuantity,
                 };
-                const res = await updateCartApi(user.username, item.id.productId, product);
-                setUpdateCart(res);
+                await updateCartRedux(dispatch, user.username, item.id.productId, product);
             }
             else {
-                swal.fire({
-                    icon: 'error',
-                    title: 'Oops...!!',
-                    text: 'Sorry guys, The product is not enough to provide',
-                    allowOutsideClick: false
-                })
+                showNotification("error", "Oops...!!", "Sorry guys, The product is not enough to provide", "OK")
             }
         }
     }
 
     const deleteHandler = async (itemID) => {
-        const res = await deleteCartApi(user.username, itemID);
-        setDeleteCart(res);
+        const res = await deleteCartRedux(dispatch, user.username, itemID);
     };
 
     const showCartItem = (listCart) => {
+        console.log(listCart);
         let listDom = null;
         if (listCart !== undefined) {
             if (listCart.length > 0) {
@@ -104,7 +88,6 @@ function Cart() {
     const showTotalPrice = (listCart) => {
         let sum = 0;
         if (listCart !== undefined) {
-            console.log(listCart)
             if (listCart.length > 0)
                 sum = listCart.reduce((total, cur) => total + cur.quantity * cur.product.price, 0);
         }
@@ -118,7 +101,7 @@ function Cart() {
                 sum = listCart.reduce((total, cur) => total + cur.quantity * cur.product.price, 0);
         }
         sum = sum - discount;
-        if(sum >= 0)
+        if (sum >= 0)
             return formatVND(sum);
         else
             return formatVND(0);
@@ -131,7 +114,7 @@ function Cart() {
         const res = await getDiscountApi(discount);
         if (res === undefined) {
 
-            showNotification('error', 'HUHU SORRY', 'we dont have this coupon, try again', 'OK, I understand');
+            showNotification('error', 'HUHU SORRY', 'we dont have this coupon, try again', 'OK');
             setDiscount(0);
             setCoupon('');
         }
@@ -139,7 +122,7 @@ function Cart() {
             const expiredDay = new Date(res.expiredTime).toISOString();
             const currentDay = new Date().toISOString();
             if (currentDay > expiredDay) {
-                showNotification('error', 'OOP..!!!', 'Oh no, The discount code has expired', 'OK, I understand');
+                showNotification('error', 'OOP..!!!', 'Oh no, The discount code has expired', 'OK');
             }
             else {
                 setCoupon(res);
@@ -151,7 +134,7 @@ function Cart() {
 
     const redirectToCheckout = (e) => {
         e.preventDefault();
-        if (listCartState.length == 0) {
+        if (listCart.length == 0) {
             showNotification('error', 'OH NO!!', 'You dont have any items, shopping now my friends', 'Shooping now!',
                 () => navigate('/shop'))
         }
@@ -160,7 +143,7 @@ function Cart() {
                 {
                     state: {
                         coupon: coupon,
-                        listCarts: listCartState
+                        listCarts: listCart
                     }
                 });
         }
@@ -171,7 +154,6 @@ function Cart() {
             <OffCanvasMenu />
             <Header />
             <Breadcrumb />
-
             <section className="shop-cart spad">
                 <div className="container">
                     <div className="row">
@@ -188,7 +170,7 @@ function Cart() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {isLoading === 'loading' ? <Preloder /> : showCartItem(listCartState)}
+                                        {isLoading === 'loading' ? <Preloder /> : showCartItem(listCart)}
                                     </tbody>
                                 </table>
                             </div>
@@ -215,9 +197,9 @@ function Cart() {
                             <div className="cart__total__procced">
                                 <h6>Cart total</h6>
                                 <ul>
-                                    <li>Merchandise <span>{isLoading === 'loading' ? '0' : showTotalPrice(listCartState)}</span></li>
+                                    <li>Merchandise <span>{isLoading === 'loading' ? '0' : showTotalPrice(listCart)}</span></li>
                                     {coupon ? <li>Discount <span>{`-${formatVND(discount)}`}</span></li> : ''}
-                                    <li>Total payment <span>{isLoading === 'loading' ? '0' : showPriceWithCoupon(listCartState)}</span></li>
+                                    <li>Total payment <span>{isLoading === 'loading' ? '0' : showPriceWithCoupon(listCart)}</span></li>
                                 </ul>
                                 <a href="" className="primary-btn" onClick={redirectToCheckout}>Proceed to checkout</a>
                             </div>

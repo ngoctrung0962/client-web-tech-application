@@ -6,7 +6,9 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Header from '../../../components/header/Header.component';
 import Footer from '../../../components/footer/Footer.component';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
+import { showNotification, checkQuantity } from "../../../utils/MyUtils";
+import { getAllCarts, deleteCartRedux, updateCartRedux, insertCartRedux } from '../../../redux/cartRedux'
 
 import { Fragment } from "react";
 
@@ -15,8 +17,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 
 function Detail() {
+
   const nav = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
+  const listCart = useSelector((state) => state.cart.listCart);
+  const updateCart = useSelector((state) => state.cart.updateItem);
+  const deleteCart = useSelector((state) => state.cart.deleteItem);
+  const insertCart = useSelector((state) => state.cart.addItem);
+
   // Product
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
@@ -40,6 +49,22 @@ function Detail() {
 
   //Add comment 
   const [content, setContent] = useState("");
+  
+//start logic for handle adding cart
+  const [inputQuantity, setInputQuantity] = useState(1);
+  useEffect(async () => {
+    if (user) {
+      await getAllCarts(dispatch, user.username);
+    }
+  }, [])
+
+  useEffect(async () => {
+    if (user) {
+      await getAllCarts(dispatch, user.username);
+    }
+  }, [updateCart, insertCart, deleteCart])
+
+//Endd logic for handle adding cart
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -177,7 +202,37 @@ function Detail() {
     )
   })
 
+  const addToCart = async (e) => {
+    e.preventDefault()
+    if(!user)
+      nav('/signin')
 
+    const input = parseInt(inputQuantity);
+    if (product.quantity === 0) {
+      showNotification("warning", "HUHU OH NO !!!", "Not enough products, my friends", "Choose others");
+    }
+    else {
+      const cartItem = {
+        id: {
+          username: user.username,
+          productId: product.productId,
+        },
+        quantity: input,
+      };
+      const resultCheck = checkQuantity(cartItem, product.quantity, listCart);
+      if (resultCheck) {
+        const res = await insertCartRedux(dispatch, cartItem);
+        console.log(res);
+        if (res !== undefined)
+          showNotification("success", "Great", "Add to cart successful", "Ok");
+        else
+          showNotification("error", "Oh No", "Not enough, try again", "Ok");
+      }
+      else {
+        showNotification("error", "Oh No", "Not enough, try again", "Ok");
+      }
+    }
+  }
 
   return (
     <>
@@ -235,10 +290,10 @@ function Detail() {
                   <div className="quantity">
                     <span>Quantity:</span>
                     <div className="pro-qty">
-                      <input type="text" defaultValue={1} />
+                      <input type="number" defaultValue={1} onChange={(e) => e.target.value === '' ? setInputQuantity(1) : setInputQuantity(e.target.value)} />
                     </div>
                   </div>
-                  <a href="#" className="cart-btn"><span className="icon_bag_alt" /> Add to cart</a>
+                  <a href="" className="cart-btn" onClick={(e) => addToCart(e)}><span className="icon_bag_alt" /> Add to cart</a>
 
                 </div>
                 <div className="product__details__widget">
