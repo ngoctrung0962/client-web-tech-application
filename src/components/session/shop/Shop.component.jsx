@@ -14,7 +14,7 @@ import CategoriesShop from "./CategoriesShop.component";
 import FilterByPrice from "./FilterByPrice.component";
 import FileList from "./FilterList.component";
 import Products from "./Products.component";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Pagination from "./Pagination.component";
 import { useSelector,useDispatch } from "react-redux";
 
@@ -29,7 +29,6 @@ function Shop() {
   const [value, setValue] = useState(4);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [listCart, setListCart] = useState('');
 
   const [filterByPrice, setFilterByPrice] = useState({ min: 0, max: 20000 });
   const [priceShow, setPriceShow] = useState([0, 20000]);
@@ -51,11 +50,8 @@ function Shop() {
         setFilterByPrice(ob);
         setPriceShow(ob);
         if (user) {
-          const res = await getListCartApi(user.username);
-          setListCart(res);
+          await getAllCarts(dispatch, user.username);
         }
-        
-        //await getAllCarts(dispatch, user.username);
         
       } catch (error) {
         console.error("error");
@@ -164,7 +160,7 @@ function Shop() {
           },
           quantity: 1,
         };
-        const resultCheck = await checkQuantity(cartItem, item.quantity, listCart);
+        const resultCheck = await checkQuantity(cartItem, item.quantity, listCartRedux);
         if (resultCheck) {
           const res = await insertCartApi(cartItem);
           if (res.status === 200) {

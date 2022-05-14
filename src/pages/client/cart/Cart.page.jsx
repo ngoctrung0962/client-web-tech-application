@@ -23,7 +23,7 @@ function Cart() {
     const listCart = useSelector(state => state.cart.listCart);
     const updateRedux = useSelector(state => state.cart.updateItem);
     const deleteRedux = useSelector(state => state.cart.deleteItem);
-
+    const insertRedux = useSelector(state => state.cart.addItem);
     const [isLoading, setIsLoading] = useState('loading');
     const [coupon, setCoupon] = useState('');
     const [discount, setDiscount] = useState(0);
@@ -42,7 +42,7 @@ function Cart() {
 
     useEffect(async () => {
         await getAllCarts(dispatch, user.username);
-    }, [deleteRedux, updateRedux])
+    }, [deleteRedux, updateRedux, insertRedux])
 
     const updateHandler = async (item, newQuantity) => {
         if (newQuantity == 0) {
@@ -66,7 +66,6 @@ function Cart() {
     };
 
     const showCartItem = (listCart) => {
-        console.log(listCart);
         let listDom = null;
         if (listCart !== undefined) {
             if (listCart.length > 0) {

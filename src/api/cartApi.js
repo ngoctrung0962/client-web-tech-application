@@ -6,7 +6,9 @@ export const getListCartApi = async (username) => {
   try {
 
     const res = await callApi(`cart-details/${username}`, "GET")
-    return res.data
+    if(res !== undefined)
+      return res.data
+    return null
   } catch (error) {
     console.log(error);
   }

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Menu, MenuItem } from "@material-ui/core"
 import { useState, useEffect } from 'react';
 import { Logout } from '../../redux/userRedux';
+import { getAllCarts } from '../../redux/cartRedux';
 
 function Header(props) {
   const dispatch = useDispatch();
@@ -16,18 +17,32 @@ function Header(props) {
   const listCart = useSelector(state => state.cart.listCart);
 
   const [count, setCount] = useState (0);
-  useEffect (() => {
+
+  useEffect (async () => {
     if(user){
+      await getAllCarts(dispatch, user.username)
       const count = listCart.length;
+      console.log(count)
+      console.log(listCart)
       setCount(count);
     }
-  }, [updateCart, deleteCart, insertCart, listCart]);
-  
+  }, [updateCart, insertCart, deleteCart]);
+
   useEffect (() => {
     if(!user){
       setCount(0);
     }
+    else{
+      getAllCarts(dispatch, user.username)
+      const count = listCart.length;
+      setCount(count);
+    }
   },[user])
+  
+  useEffect(() =>{
+    setCount(listCart.length);
+  }, [listCart])
+
   const handleMenuClick = (e) => {
     setAnchorEl(e.currentTarget);
   }

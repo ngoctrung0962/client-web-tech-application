@@ -144,7 +144,7 @@ function Checkout() {
         }
 
         if (coupon !== undefined || coupon !== null || coupon !== '')
-            order.couponId = coupon.couponId
+            order.couponId = coupon.couponId;
 
         console.log(order)
         const listOrderDetails = listCart.map((item) => {
@@ -166,11 +166,6 @@ function Checkout() {
                 'Your Orders will be delivered as soon as possible', 'Continue Shopping',
                 () => navigate('/shop'))
         }
-    }
-
-    const checkDelivery = (item) => {
-        setDelivery(item.deliveryId)
-        console.log(delivery)
     }
 
     return (
