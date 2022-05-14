@@ -4,30 +4,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { Menu, MenuItem } from "@material-ui/core"
 import { useState, useEffect } from 'react';
 import { Logout } from '../../redux/userRedux';
+import { getAllCarts } from '../../redux/cartRedux';
 
 function Header(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const updateCart = useSelector ((state) => state.cart.updateItem);
-  const deleteCart = useSelector (state => state.cart.deleteItem);
-  const insertCart = useSelector (state => state.cart.addItem);
+  const updateCart = useSelector((state) => state.cart.updateItem);
+  const deleteCart = useSelector(state => state.cart.deleteItem);
+  const insertCart = useSelector(state => state.cart.addItem);
   const listCart = useSelector(state => state.cart.listCart);
 
-  const [count, setCount] = useState (0);
-  useEffect (() => {
-    if(user){
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (user) {
+      getAllCarts(dispatch, user.username)
       const count = listCart.length;
       setCount(count);
     }
   }, [updateCart, deleteCart, insertCart, listCart]);
-  
-  useEffect (() => {
-    if(!user){
+
+  useEffect(() => {
+    if (!user) {
       setCount(0);
     }
-  },[user])
+    else {
+      getAllCarts(dispatch, user.username)
+      const count = listCart.length;
+      setCount(count);
+    }
+  }, [user])
   const handleMenuClick = (e) => {
     setAnchorEl(e.currentTarget);
   }
@@ -39,7 +46,7 @@ function Header(props) {
   }
 
 
-  
+
   return (
     <header className="header">
       <div className="container-fluid">

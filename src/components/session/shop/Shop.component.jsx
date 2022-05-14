@@ -8,7 +8,7 @@ import Rating from "@material-ui/lab/Rating";
 import Slider from "@mui/material/Slider";
 import Box from "@material-ui/core/Box";
 import { formatVND, showNotification, checkQuantity } from "../../../utils/MyUtils";
-import {getAllCarts} from '../../../redux/cartRedux';
+import { getAllCarts } from '../../../redux/cartRedux';
 
 import CategoriesShop from "./CategoriesShop.component";
 import FilterByPrice from "./FilterByPrice.component";
@@ -16,8 +16,8 @@ import FileList from "./FilterList.component";
 import Products from "./Products.component";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "./Pagination.component";
-import { useSelector,useDispatch } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 let PageSize = 9;
 
 function Shop() {
@@ -35,7 +35,7 @@ function Shop() {
   const [priceShow, setPriceShow] = useState([0, 20000]);
 
   useEffect(() => {
-    
+
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -54,9 +54,9 @@ function Shop() {
           const res = await getListCartApi(user.username);
           setListCart(res);
         }
-        
+
         //await getAllCarts(dispatch, user.username);
-        
+
       } catch (error) {
         console.error("error");
       }

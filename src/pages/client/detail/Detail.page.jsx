@@ -6,14 +6,11 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Header from '../../../components/header/Header.component';
 import Footer from '../../../components/footer/Footer.component';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { showNotification, checkQuantity } from "../../../utils/MyUtils";
 import { getAllCarts, deleteCartRedux, updateCartRedux, insertCartRedux } from '../../../redux/cartRedux'
 
 import { Fragment } from "react";
-
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 
 function Detail() {
@@ -49,8 +46,8 @@ function Detail() {
 
   //Add comment 
   const [content, setContent] = useState("");
-  
-//start logic for handle adding cart
+
+  //start logic for handle adding cart
   const [inputQuantity, setInputQuantity] = useState(1);
   useEffect(async () => {
     if (user) {
@@ -64,7 +61,7 @@ function Detail() {
     }
   }, [updateCart, insertCart, deleteCart])
 
-//Endd logic for handle adding cart
+  //Endd logic for handle adding cart
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -204,7 +201,7 @@ function Detail() {
 
   const addToCart = async (e) => {
     e.preventDefault()
-    if(!user)
+    if (!user)
       nav('/signin')
 
     const input = parseInt(inputQuantity);

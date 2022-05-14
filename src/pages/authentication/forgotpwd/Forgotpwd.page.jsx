@@ -65,7 +65,7 @@ function ForgotPassWord() {
                             placeholder="Email"
                             className="form-control"
                             required
-                            onChange={(e) => setPassword(e.target.value)}
+                        // onChange={(e) => setPassword(e.target.value)}
                         />
                         <i className="zmdi zmdi-lock" />
                     </div>
