@@ -29,7 +29,7 @@ const cartSlice = createSlice({
 
 export const getAllCarts = async (dispatch, username) => {
     const res = await getListCartApi(username);
-    if(res !== undefined) {
+    if(res !== undefined && res !== null) {
         dispatch(getCartitems(res));
     }
 }

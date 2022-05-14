@@ -10,8 +10,8 @@ const reviewApi = {
         return axiosClient.get(url);
     },
 
-    add(username, productId, data) {
-        const url = `/reviews/product/${productId}/user/${username}`
+    add(productId, username, data) {
+        const url = `/reviews/${username}/${productId}`
         return axiosClient.post(url, data);
     },
 
