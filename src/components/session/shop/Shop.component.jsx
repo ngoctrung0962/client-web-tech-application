@@ -17,7 +17,6 @@ import Products from "./Products.component";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Pagination from "./Pagination.component";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
 let PageSize = 9;
 
 function Shop() {

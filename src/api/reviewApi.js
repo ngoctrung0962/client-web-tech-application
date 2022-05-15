@@ -1,27 +1,27 @@
 import axiosClient from "./axiosClient"
 
 const reviewApi = {
-    getAll(params) {
+    getAll() {
         const url = '/reviews'
-        return axiosClient.get(url, { params: params });
+        return axiosClient.get(url);
     },
+    // get 10 products first
     get(id) {
         const url = `/reviews/${id}`
         return axiosClient.get(url);
     },
-
-    add(productId, username, data) {
+    add(username, productId, data) {
         const url = `/reviews/${username}/${productId}`
         return axiosClient.post(url, data);
     },
 
-    update(data) {
-        const url = `/reviews/${data.id}`
-        return axiosClient.patch(url, data);
+    update(data, id, username) {
+        const url = `/reviews/${username}/${id}`
+        return axiosClient.put(url, data);
     },
 
-    remove(id) {
-        const url = `/reviews/${id}`
+    remove(username, id) {
+        const url = `/reviews/${username}/${id}`
         return axiosClient.delete(url);
     },
     getreviewbyproductId(productId) {

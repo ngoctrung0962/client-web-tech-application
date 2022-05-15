@@ -16,54 +16,33 @@ function Header(props) {
   const insertCart = useSelector(state => state.cart.addItem);
   const listCart = useSelector(state => state.cart.listCart);
 
-<<<<<<< HEAD
   const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (user) {
-      getAllCarts(dispatch, user.username)
-=======
-  const [count, setCount] = useState (0);
 
-  useEffect (async () => {
-    if(user){
+  useEffect(async () => {
+    if (user) {
       await getAllCarts(dispatch, user.username)
->>>>>>> 943f4d514f2be925df7eafb96c8967ea85ef12f8
       const count = listCart.length;
       console.log(count)
       console.log(listCart)
       setCount(count);
     }
-<<<<<<< HEAD
-  }, [updateCart, deleteCart, insertCart, listCart]);
+  }, [updateCart, insertCart, deleteCart]);
 
   useEffect(() => {
     if (!user) {
       setCount(0);
     }
     else {
-=======
-  }, [updateCart, insertCart, deleteCart]);
-
-  useEffect (() => {
-    if(!user){
-      setCount(0);
-    }
-    else{
->>>>>>> 943f4d514f2be925df7eafb96c8967ea85ef12f8
       getAllCarts(dispatch, user.username)
       const count = listCart.length;
       setCount(count);
     }
-<<<<<<< HEAD
   }, [user])
-=======
-  },[user])
-  
-  useEffect(() =>{
+
+  useEffect(() => {
     setCount(listCart.length);
   }, [listCart])
 
->>>>>>> 943f4d514f2be925df7eafb96c8967ea85ef12f8
   const handleMenuClick = (e) => {
     setAnchorEl(e.currentTarget);
   }

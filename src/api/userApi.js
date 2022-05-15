@@ -19,6 +19,10 @@ const userApi = {
     login(data) {
         const url = `/login`
         return axiosClient.post(url, data)
+    },
+    changepassword(username, data) {
+        const url = `/change-password/${username}`
+        return axiosClient.post(url, data)
     }
 
 }
