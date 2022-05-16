@@ -77,6 +77,8 @@ function Detail() {
     }
   }, [updateCart, insertCart, deleteCart])
 
+
+
   //Endd logic for handle adding cart
 
   const handleChange = (e) => {
@@ -97,12 +99,11 @@ function Detail() {
           rate: valueratingaddreview,
         }
         const resreviews = await reviewApi.add(user.username, productId, (dataSubmit))
-        console.log("list", resreviews)
+
         setReviews(state => [...state, resreviews])
         setContent("")
         setValueratingaddreview(0)
       } catch (error) {
-
       }
     }
     else {
@@ -126,7 +127,8 @@ function Detail() {
     }
     fetchData();
   }, [productId])
-  console.log(product)
+
+
 
   //Load review by productId
   useEffect(() => {
@@ -134,7 +136,6 @@ function Detail() {
       setLoading(true);
       try {
         const res = await reviewApi.getreviewbyproductId(productId);
-        console.log(res)
         setReviews(res);
       } catch (error) {
         console.log(error)
@@ -151,9 +152,8 @@ function Detail() {
       setLoading(true);
       if (brandId) {
         try {
-          const res = await productApi.getproductbybrandId(`${brandId}`);
+          const res = await productApi.getproductbybrandId(brandId, 8);
           setlistProducts(res);
-          console.log(res)
         } catch (error) {
           console.log(error)
         }
@@ -224,7 +224,6 @@ function Detail() {
       )
     }
   })
-  console.log(listProductsbybrandId)
 
   const addToCart = async (e) => {
     e.preventDefault()
@@ -246,7 +245,6 @@ function Detail() {
       const resultCheck = checkQuantity(cartItem, product.quantity, listCart);
       if (resultCheck) {
         const res = await insertCartRedux(dispatch, cartItem, user.username, product.productId);
-        console.log(res);
         if (res !== undefined)
           showNotification("success", "Great", "Add to cart successful", "Ok");
         else

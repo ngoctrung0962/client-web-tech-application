@@ -22,8 +22,6 @@ function Header(props) {
     if (user) {
       await getAllCarts(dispatch, user.username)
       const count = listCart?.length;
-      console.log(count)
-      console.log(listCart)
       setCount(count);
     }
   }, [updateCart, insertCart, deleteCart]);

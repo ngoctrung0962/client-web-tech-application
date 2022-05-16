@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import './style.scss';
 
 export const SlidePhoto = (props) => {
-    console.log("a", props)
     useEffect(() => {
 
     })
@@ -32,7 +31,6 @@ export const SlidePhoto = (props) => {
     ]
     const [imageActive, setImageActive] = useState(data[0].url)
     const handleChangeItemActive = (index) => {
-        console.log(index)
         setImageActive(data[index].url)
     }
     return (
