@@ -161,7 +161,7 @@ function Shop() {
         };
         const resultCheck = await checkQuantity(cartItem, item.quantity, listCartRedux);
         if (resultCheck) {
-          const res = await insertCartApi(cartItem);
+          const res = await insertCartApi(cartItem, user.username, item.productId);
           if (res.status === 200) {
             navigate("/cart");
           }

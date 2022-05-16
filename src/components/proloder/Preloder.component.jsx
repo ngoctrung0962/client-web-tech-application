@@ -1,7 +1,8 @@
 function Preloder() {
     return (
         <div id="preloder">
-            <div className="loader" />
+            <div className="loader" >
+            </div>
         </div>
     )
 }

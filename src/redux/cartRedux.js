@@ -48,8 +48,8 @@ export const updateCartRedux = async (dispatch, username, itemId, item) =>{
         dispatch(updateCartitems(res));
 }
 
-export const insertCartRedux = async (dispatch, item) => {
-    const res = await insertCartApi(item);
+export const insertCartRedux = async (dispatch, item, username, productId) => {
+    const res = await insertCartApi(item, username, productId);
     if(res !== undefined){
         console.log(res);
         dispatch(addCartitems(res.data));

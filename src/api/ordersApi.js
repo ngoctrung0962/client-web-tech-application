@@ -9,15 +9,15 @@ export const getListOrdersApi = async (idUser) =>{
       }
 };
 
-export const  insertOrderApi = async(order, listOrdersDetail) =>{
+export const  insertOrderApi = async(order, username, listOrdersDetail) =>{
     try{
-        const res = await apiContainData(`orders`, 'POST', order);
+        const res = await apiContainData(`orders/${username}`, 'POST', order);
         console.log(res);
         if(res.status === 200){
             listOrdersDetail.map((item) => item.id.orderId = res.data.orderId)
             
             for(let item of listOrdersDetail){
-                const res =  await apiContainData(`order-details`, 'POST', item);
+                const res =  await apiContainData(`order-details/${username}`, 'POST', item);
                 console.log(item);
             }
             
