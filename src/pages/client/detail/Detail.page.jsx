@@ -152,7 +152,7 @@ function Detail() {
       setLoading(true);
       if (brandId) {
         try {
-          const res = await productApi.getproductbybrandId(brandId, 8);
+          const res = await productApi.getproductbybrandId(brandId, 4);
           setlistProducts(res);
         } catch (error) {
           console.log(error)
