@@ -5,28 +5,29 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { login } from '../../../redux/apiCalls';
 import { showNotification } from '../../../utils/MyUtils';
-
+import userApi from '../../../api/userApi';
 function Reset() {
     const location = useLocation();
     const nav = useNavigate();
     const [accountName, setAccountName] = useState("");
     const [newPass, setNewPass] = useState("");
+    const [token, setToken] = useState("");
 
     useEffect(() =>{
-        if(location.state == undefined)
-            nav('/signin')
-        else{
-            const ob = location.state.user;
-            setAccountName(ob);
-        }
+        const query = new URLSearchParams(window.location.search);
+        const token = query.get('token');
+        setToken(token);
+        console.log(token);
         
     },[])
     
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
         if (newPass) {
-            const ob = accountName;
-            
+            const res = await userApi.resetPass(newPass, token);
+            if(res){
+                showNotification('success', 'Great', 'New pass has been applied', 'Signin', ()=> nav('/signin'))
+            }
         }
         else {
             showNotification('error', 'WARNING', 'Please type a new password', 'OK');
@@ -46,7 +47,7 @@ function Reset() {
                     <h3>RESET PASSWORD</h3>
 
                     <div className="form-wrapper">
-                        <span>Account Name:{accountName.username}</span> 
+                        <span>Account Name:{'e=hello'}</span> 
                         <span />
                         <input
                             type="text"

@@ -21,7 +21,7 @@ function Header(props) {
   useEffect(async () => {
     if (user) {
       await getAllCarts(dispatch, user.username)
-      const count = listCart.length;
+      const count = listCart?.length;
       console.log(count)
       console.log(listCart)
       setCount(count);
@@ -31,11 +31,6 @@ function Header(props) {
   useEffect(() => {
     if (!user) {
       setCount(0);
-    }
-    else {
-      getAllCarts(dispatch, user.username)
-      const count = listCart.length;
-      setCount(count);
     }
   }, [user])
 

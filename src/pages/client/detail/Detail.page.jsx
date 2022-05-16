@@ -241,11 +241,11 @@ function Detail() {
           username: user.username,
           productId: product.productId,
         },
-        quantity: input,
+        quantity: input
       };
       const resultCheck = checkQuantity(cartItem, product.quantity, listCart);
       if (resultCheck) {
-        const res = await insertCartRedux(dispatch, cartItem);
+        const res = await insertCartRedux(dispatch, cartItem, user.username, product.productId);
         console.log(res);
         if (res !== undefined)
           showNotification("success", "Great", "Add to cart successful", "Ok");

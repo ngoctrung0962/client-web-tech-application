@@ -126,7 +126,6 @@ function Checkout() {
         const { firstname, lastname, country, address, town, phone, email } = e.target.elements
         const day = new Date();
         const today = day.toISOString();
-        //const giftcode = coupon ? `couponId : ${coupon.couponId}` : '';
         const order = {
             "user": {
                 "username": user.username
@@ -159,7 +158,7 @@ function Checkout() {
             }
         })
 
-        const res = await insertOrderApi(order, listOrderDetails);
+        const res = await insertOrderApi(order, user.username, listOrderDetails);
         console.log(res);
         if (res.status == 200) {
             showNotification('success', 'Great!!',

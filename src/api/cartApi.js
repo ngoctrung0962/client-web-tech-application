@@ -14,9 +14,9 @@ export const getListCartApi = async (username) => {
   }
 };
 
-export const insertCartApi = async (item) => {
+export const insertCartApi = async (item, username, productId) => {
   try {
-    const res = await apiContainData(`cart-details/`, 'POST', item);
+    const res = await apiContainData(`cart-details/${username}/${productId}`, 'POST', item);
     return res;
   }
   catch (error) {

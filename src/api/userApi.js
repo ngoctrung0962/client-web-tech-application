@@ -23,8 +23,15 @@ const userApi = {
     changepassword(username, data) {
         const url = `/change-password/${username}`
         return axiosClient.post(url, data)
+    },
+    forgotPassword(username, email){
+        const url = `/forgot-password/${username}?email=${email}`;
+        return axiosClient.post(url);
+    },
+    resetPass(newPass, token) {
+        const url = `/reset-password?token=${token}&password=${newPass}`;
+        return axiosClient.post(url);
     }
-
 }
 
 export default userApi;

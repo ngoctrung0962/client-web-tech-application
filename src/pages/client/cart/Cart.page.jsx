@@ -45,8 +45,9 @@ function Cart() {
     }, [deleteRedux, updateRedux, insertRedux])
 
     const updateHandler = async (item, newQuantity) => {
-        if (newQuantity == 0) {
+        if (newQuantity === 0) {
             await deleteCartRedux(dispatch, user.username, item.id.productId);
+            //await getAllCarts(dispatch, user.username);
         }
         else {
             if (newQuantity <= item.product.quantity) {
@@ -62,7 +63,8 @@ function Cart() {
     }
 
     const deleteHandler = async (itemID) => {
-        const res = await deleteCartRedux(dispatch, user.username, itemID);
+        console.log(itemID);
+        await deleteCartRedux(dispatch, user.username, itemID);
     };
 
     const showCartItem = (listCart) => {
@@ -111,6 +113,7 @@ function Cart() {
         e.preventDefault();
         const discount = e.target.elements.codeDiscount.value;
         const res = await getDiscountApi(discount);
+        console.log(res)
         if (res === undefined) {
 
             showNotification('error', 'HUHU SORRY', 'we dont have this coupon, try again', 'OK');
