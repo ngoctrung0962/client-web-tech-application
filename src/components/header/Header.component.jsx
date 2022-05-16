@@ -22,8 +22,6 @@ function Header(props) {
     if (user) {
       await getAllCarts(dispatch, user.username);
       const count = listCart?.length;
-      console.log(count);
-      console.log(listCart);
       setCount(count);
     }
   }, [updateCart, insertCart, deleteCart]);
@@ -56,7 +54,7 @@ function Header(props) {
             <div className="header__logo">
               <Link to="/">
                 <img
-                  src={require("../header/logo_template.png")}
+                  src={require("../header/LogoTechShop.png")}
                   onClick={(e) => {
                     window.scrollTo(0, 0);
                   }}

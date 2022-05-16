@@ -5,7 +5,7 @@ import Storagekey from "../constants/storagekey";
 
 export const login = async (dispatch, data, username) => {
     dispatch(loginStart());
-    if (data.AccessToken && data.RefreshToken && data.role === "ROLE_USER") {
+    if (data.AccessToken && data.RefreshToken) {
         const isdone = await saveToken(data.AccessToken, data.RefreshToken)
         if (isdone) {
             const userdata = await userApi.get(username)

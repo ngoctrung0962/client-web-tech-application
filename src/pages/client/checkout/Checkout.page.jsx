@@ -30,19 +30,21 @@ function Checkout() {
     const [discount, setDiscount] = useState('');
     const [delivery, setDelivery] = useState('');
 
-    useEffect(async () => {
-        const listDeliveries = await getListDeliveriesApi();
-        setListDelivery(listDeliveries);
-        setDelivery(listDeliveries[0].deliveryId);
-
-        setListCart(location.state.listCarts);
-        await setCoupon(location.state.coupon);
-        setIsLoading(false);
-        //console.log(location.state.coupon);
-        console.log(delivery)
+    useEffect(() => {
+        const fetchData = async () => {
+            const listDeliveries = await getListDeliveriesApi();
+            setListDelivery(listDeliveries);
+            setDelivery(listDeliveries[0].deliveryId);
+            setListCart(location.state.listCarts);
+            await setCoupon(location.state.coupon);
+            setIsLoading(false);
+            //console.log(location.state.coupon);
+            console.log(delivery)
+        };
+        fetchData();
     }, []);
 
-    useEffect(async () => {
+    useEffect(() => {
         if (user === null) {
             navigate('/signin')
         }
@@ -103,7 +105,7 @@ function Checkout() {
                     <div key={index}>
                         <input value={item.deliveryId}
                             type="radio"
-                            checked = {item.deliveryId === delivery}
+                            checked={item.deliveryId === delivery}
                             onChange={() => setDelivery(item.deliveryId)} />
                         <span className={isChecked(item.deliveryId)}>{item.name}</span>
                     </div>
@@ -160,10 +162,14 @@ function Checkout() {
 
         const res = await insertOrderApi(order, user.username, listOrderDetails);
         console.log(res);
-        if (res.status == 200) {
+        if (res.status === 200) {
             showNotification('success', 'Great!!',
                 'Your Orders will be delivered as soon as possible', 'Continue Shopping',
                 () => navigate('/shop'))
+        } else {
+            showNotification('error', 'Oops!!',
+                'Something went wrong', 'Please check quantity',
+                () => navigate('/checkout'))
         }
     }
 

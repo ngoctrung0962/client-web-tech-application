@@ -9,12 +9,28 @@ import Footer from '../../../components/footer/Footer.component';
 import { useSelector, useDispatch } from 'react-redux';
 import { showNotification, checkQuantity } from "../../../utils/MyUtils";
 import { getAllCarts, deleteCartRedux, updateCartRedux, insertCartRedux } from '../../../redux/cartRedux'
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { Fragment } from "react";
+import { SlidePhoto } from '../../../components/slidephoto';
 
 
+const useStyles = makeStyles((theme) => ({
+  margin: {
+    margin: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(0),
+  },
+  color: {
+    color: "red"
+  }
+}));
 function Detail() {
-
+  const classes = useStyles();
   const nav = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
@@ -61,11 +77,18 @@ function Detail() {
     }
   }, [updateCart, insertCart, deleteCart])
 
+
+
   //Endd logic for handle adding cart
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContent(e.target.value)
+  }
+  const handleDeletereview = async (reviewId) => {
+    await reviewApi.remove(user.username, reviewId)
+    const dataFilter = reviews.filter(item => item.reviewId !== reviewId)
+    setReviews(dataFilter)
   }
   const handlesumitAddcomment = async (e) => {
     e.preventDefault();
@@ -76,12 +99,11 @@ function Detail() {
           rate: valueratingaddreview,
         }
         const resreviews = await reviewApi.add(user.username, productId, (dataSubmit))
-        console.log("list", resreviews)
+
         setReviews(state => [...state, resreviews])
         setContent("")
         setValueratingaddreview(0)
       } catch (error) {
-
       }
     }
     else {
@@ -106,6 +128,8 @@ function Detail() {
     fetchData();
   }, [productId])
 
+
+
   //Load review by productId
   useEffect(() => {
     const fetchData = async () => {
@@ -128,9 +152,8 @@ function Detail() {
       setLoading(true);
       if (brandId) {
         try {
-          const res = await productApi.getproductbybrandId(`${brandId}`);
+          const res = await productApi.getproductbybrandId(brandId, 4);
           setlistProducts(res);
-          console.log(res)
         } catch (error) {
           console.log(error)
         }
@@ -150,53 +173,56 @@ function Detail() {
         <div className="col-lg-6 col-md-7 col-sm-8">
           <div className="services__item">
             <img src="https://i.pinimg.com/564x/44/15/ba/4415ba5df0f4bfcee5893d6c441577e0.jpg" alt="" />
-            <p className="commentName">{review.username}</p>
+            <p className="commentName">{review.username}
+              {user && review.username === user.username ?
+
+                <DeleteIcon className='margin' onClick={() => handleDeletereview(review.reviewId)} /> : ""}
+
+            </p>
             <p>{review ? review.content : null}</p>
             <p>{review ? review.time.slice(0, 10) : ""}</p>
             <Box component="fieldset" mb={3} borderColor="transparent">
               <Rating name="read-only" value={review.rate} readOnly />
             </Box>
-            {/* <IconButton aria-label="delete">
-              <DeleteIcon />
-            </IconButton> */}
-
           </div>
         </div>
       </div>
     )
   })
   const listProductsbybrandId = listproducts.map((product) => {
-    return (
-      <div key={product.productId} className="col-lg-3 col-md-4 col-sm-6">
-        <div className="product__item">
-          <div className="product__item__pic set-bg" data-setbg={product ? product.image : null}
-            style={{
-              backgroundImage: `url(${product.image})`
-            }}>
-            <div className="label new">New</div>
-            <ul className="product__hover">
-              <li><a href="img/product/related/rp-1.jpg" className="image-popup"><span className="arrow_expand" /></a></li>
-              <li><a href="#"><span className="icon_heart_alt" /></a></li>
-              <li><a href="#"><span className="icon_bag_alt" /></a></li>
-            </ul>
+    if (product.productId !== productId) {
+      return (
+        <div key={product.productId} className="col-lg-3 col-md-4 col-sm-6">
+          <div className="product__item">
+            <div className="product__item__pic set-bg" data-setbg={product ? product.image : null}
+              style={{
+                backgroundImage: `url(${product.image})`
+              }}>
+              <div className="label new">New</div>
+              <ul className="product__hover">
+                <li><a href="img/product/related/rp-1.jpg" className="image-popup"><span className="arrow_expand" /></a></li>
+                <li><a href="#"><span className="icon_heart_alt" /></a></li>
+                <li><a href="#"><span className="icon_bag_alt" /></a></li>
+              </ul>
+            </div>
+            <div className="product__item__text">
+              <h6><Link to={`/product/${product.productId}`} >{product.name}</Link></h6>
+              {/* <div className="rating">
+                <i className="fa fa-star" />
+                <i className="fa fa-star" />
+                <i className="fa fa-star" />
+                <i className="fa fa-star" />
+                <i className="fa fa-star" />
+              </div> */}
+              <Box component="fieldset" mb={3} borderColor="transparent">
+                <Rating name="read-only" value={value} readOnly />
+              </Box>
+              <div className="product__price">{product.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} </div>
+            </div>
           </div>
-          <div className="product__item__text">
-            <h6><Link to={`/product/${product.productId}`} >{product.name}</Link></h6>
-            {/* <div className="rating">
-              <i className="fa fa-star" />
-              <i className="fa fa-star" />
-              <i className="fa fa-star" />
-              <i className="fa fa-star" />
-              <i className="fa fa-star" />
-            </div> */}
-            <Box component="fieldset" mb={3} borderColor="transparent">
-              <Rating name="read-only" value={value} readOnly />
-            </Box>
-            <div className="product__price">{product.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} </div>
-          </div>
-        </div>
-      </div >
-    )
+        </div >
+      )
+    }
   })
 
   const addToCart = async (e) => {
@@ -219,7 +245,6 @@ function Detail() {
       const resultCheck = checkQuantity(cartItem, product.quantity, listCart);
       if (resultCheck) {
         const res = await insertCartRedux(dispatch, cartItem, user.username, product.productId);
-        console.log(res);
         if (res !== undefined)
           showNotification("success", "Great", "Add to cart successful", "Ok");
         else
@@ -243,7 +268,8 @@ function Detail() {
           <div className="row">
             <div className="col-lg-6">
               <div className="product__details__pic" >
-                <div className="product__details__pic__left product__thumb nice-scroll" >
+                <SlidePhoto imageUrl={product.image} />
+                {/* <div className="product__details__pic__left product__thumb nice-scroll"  >
                   <a className="pt active " href="#product-1" >
                     <img src={product.image} alt="" />
                   </a>
@@ -264,7 +290,7 @@ function Detail() {
                     <img data-hash="product-3" className="product__big__img" src={product.image} alt="" />
                     <img data-hash="product-4" className="product__big__img" src={product.image} alt="" />
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-lg-6">

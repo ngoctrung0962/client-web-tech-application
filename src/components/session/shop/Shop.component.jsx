@@ -172,6 +172,7 @@ function Shop() {
           );
           if (res.status === 200) {
             navigate("/cart");
+            window.scrollTo(0, 0);
           } else
             showNotification("error", "Oh No", "Not enough, try again", "Ok");
         } else {

@@ -25,8 +25,8 @@ const productApi = {
         const url = `/products/${id}`
         return axiosClient.delete(url);
     },
-    getproductbybrandId(brandId) {
-        const url = `/products/brand/${brandId}`
+    getproductbybrandId(brandId, quantity) {
+        const url = `/products/brand/${brandId}/${quantity}`
         return axiosClient.get(url);
     },
     //get top 8 products newest

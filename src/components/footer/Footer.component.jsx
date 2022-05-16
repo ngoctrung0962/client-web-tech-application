@@ -14,7 +14,7 @@ function Footer() {
                   }}
                   to="/"
                 >
-                  <img src={require("../footer/logo.png")} alt="" />
+                  <img src={require("../footer/LogoTechShop.png")} alt="" />
                 </Link>
               </div>
               <p>
