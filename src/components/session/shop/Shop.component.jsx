@@ -7,13 +7,12 @@ import swal from "sweetalert2";
 import Rating from "@material-ui/lab/Rating";
 import Slider from "@mui/material/Slider";
 import Box from "@material-ui/core/Box";
-import { formatVND, showNotification, checkQuantity } from "../../../utils/MyUtils";
-import { getAllCarts } from '../../../redux/cartRedux';
-
-import CategoriesShop from "./CategoriesShop.component";
-import FilterByPrice from "./FilterByPrice.component";
-import FileList from "./FilterList.component";
-import Products from "./Products.component";
+import {
+  formatVND,
+  showNotification,
+  checkQuantity,
+} from "../../../utils/MyUtils";
+import { getAllCarts } from "../../../redux/cartRedux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Pagination from "./Pagination.component";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,7 +32,6 @@ function Shop() {
   const [priceShow, setPriceShow] = useState([0, 20000]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -51,7 +49,6 @@ function Shop() {
         if (user) {
           await getAllCarts(dispatch, user.username);
         }
-
       } catch (error) {
         console.error("error");
       }
@@ -145,13 +142,16 @@ function Shop() {
   const addToCart = async (e, item) => {
     e.preventDefault();
     if (!user) {
-      navigate('/signin')
-    }
-    else {
+      navigate("/signin");
+    } else {
       if (item.quantity === 0) {
-        showNotification("warning", "HUHU OH NO !!!", "Not enough products, my friends", "Choose others");
-      }
-      else {
+        showNotification(
+          "warning",
+          "HUHU OH NO !!!",
+          "Not enough products, my friends",
+          "Choose others"
+        );
+      } else {
         const cartItem = {
           id: {
             username: user.username,
@@ -159,21 +159,26 @@ function Shop() {
           },
           quantity: 1,
         };
-        const resultCheck = await checkQuantity(cartItem, item.quantity, listCartRedux);
+        const resultCheck = await checkQuantity(
+          cartItem,
+          item.quantity,
+          listCartRedux
+        );
         if (resultCheck) {
-          const res = await insertCartApi(cartItem, user.username, item.productId);
+          const res = await insertCartApi(
+            cartItem,
+            user.username,
+            item.productId
+          );
           if (res.status === 200) {
             navigate("/cart");
-          }
-          else
+          } else
             showNotification("error", "Oh No", "Not enough, try again", "Ok");
-        }
-        else {
+        } else {
           showNotification("error", "Oh No", "Not enough, try again", "Ok");
         }
       }
     }
-
   };
 
   // Range slider
@@ -293,12 +298,13 @@ function Shop() {
                             </a>
                           </li>
                           <li>
-                            <Link to="/cart" onClick={(e) =>
-                              addToCart(e, individualFilteredProduct)
-                            }>
-                              <span
-                                className="icon_bag_alt"
-                              />
+                            <Link
+                              to="/cart"
+                              onClick={(e) =>
+                                addToCart(e, individualFilteredProduct)
+                              }
+                            >
+                              <span className="icon_bag_alt" />
                             </Link>
                           </li>
                         </ul>
@@ -327,11 +333,11 @@ function Shop() {
                         </Box>
                         <div className="product__price">
                           {individualFilteredProduct &&
-                            individualFilteredProduct.price
+                          individualFilteredProduct.price
                             ? individualFilteredProduct.price.toLocaleString(
-                              "it-IT",
-                              { style: "currency", currency: "VND" }
-                            )
+                                "it-IT",
+                                { style: "currency", currency: "VND" }
+                              )
                             : null}
                         </div>
                       </div>
