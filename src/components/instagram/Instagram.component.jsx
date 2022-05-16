@@ -13,7 +13,7 @@ function Instagram() {
             >
               <div className="instagram__text">
                 <i className="fa fa-instagram" />
-                <a href="#">@ ashion_shop</a>
+                <a href="#">@ tech_shop</a>
               </div>
             </div>
           </div>
@@ -22,12 +22,12 @@ function Instagram() {
               className="instagram__item set-bg"
               data-setbg="img/instagram/insta-2.jpg"
               style={{
-                backgroundImage: `url("img/instagram/insta-1.jpg") `,
+                backgroundImage: `url("img/instagram/insta-2.jpg") `,
               }}
             >
               <div className="instagram__text">
                 <i className="fa fa-instagram" />
-                <a href="#">@ ashion_shop</a>
+                <a href="#">@ tech_shop</a>
               </div>
             </div>
           </div>
@@ -36,12 +36,12 @@ function Instagram() {
               className="instagram__item set-bg"
               data-setbg="img/instagram/insta-3.jpg"
               style={{
-                backgroundImage: `url("img/instagram/insta-1.jpg") `,
+                backgroundImage: `url("img/instagram/insta-3.jpg") `,
               }}
             >
               <div className="instagram__text">
                 <i className="fa fa-instagram" />
-                <a href="#">@ ashion_shop</a>
+                <a href="#">@ tech_shop</a>
               </div>
             </div>
           </div>
@@ -50,12 +50,12 @@ function Instagram() {
               className="instagram__item set-bg"
               data-setbg="img/instagram/insta-4.jpg"
               style={{
-                backgroundImage: `url("img/instagram/insta-1.jpg") `,
+                backgroundImage: `url("img/instagram/insta-4.jpg") `,
               }}
             >
               <div className="instagram__text">
                 <i className="fa fa-instagram" />
-                <a href="#">@ ashion_shop</a>
+                <a href="#">@ tech_shop</a>
               </div>
             </div>
           </div>
@@ -64,12 +64,12 @@ function Instagram() {
               className="instagram__item set-bg"
               data-setbg="img/instagram/insta-5.jpg"
               style={{
-                backgroundImage: `url("img/instagram/insta-1.jpg") `,
+                backgroundImage: `url("img/instagram/insta-5.jpg") `,
               }}
             >
               <div className="instagram__text">
                 <i className="fa fa-instagram" />
-                <a href="#">@ ashion_shop</a>
+                <a href="#">@ tech_shop</a>
               </div>
             </div>
           </div>
@@ -78,12 +78,12 @@ function Instagram() {
               className="instagram__item set-bg"
               data-setbg="img/instagram/insta-6.jpg"
               style={{
-                backgroundImage: `url("img/instagram/insta-1.jpg") `,
+                backgroundImage: `url("img/instagram/insta-6.jpg") `,
               }}
             >
               <div className="instagram__text">
                 <i className="fa fa-instagram" />
-                <a href="#">@ ashion_shop</a>
+                <a href="#">@ tech_shop</a>
               </div>
             </div>
           </div>
