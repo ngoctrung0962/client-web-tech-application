@@ -69,6 +69,7 @@ function Cart() {
 
     const showCartItem = (listCart) => {
         let listDom = null;
+        console.log(listCart)
         if (listCart !== undefined) {
             if (listCart.length > 0) {
                 listDom = listCart.map((item, index) => {

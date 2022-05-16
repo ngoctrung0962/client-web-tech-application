@@ -32,6 +32,9 @@ function Checkout() {
 
     useEffect(() => {
         const fetchData = async () => {
+            if(!location.state?.listCarts){
+                navigate('/cart')
+            }
             const listDeliveries = await getListDeliveriesApi();
             setListDelivery(listDeliveries);
             setDelivery(listDeliveries[0].deliveryId);

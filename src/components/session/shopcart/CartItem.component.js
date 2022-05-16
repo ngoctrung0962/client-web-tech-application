@@ -24,7 +24,7 @@ function CartItem (props){
     
       <tr key={props.item.id}>
         <td className="cart__product__item">
-          <img src="img/shop-cart/iphone7plus_32gb.jpg" alt="" />
+          <img src={props.item.product.image} alt="" style={{width: '50px', height:'50px'}} />
           <div className="cart__product__item__title">
             <h6>{props.item.product.name}</h6>
             <div className="rating">
