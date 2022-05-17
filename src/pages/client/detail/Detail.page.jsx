@@ -86,9 +86,15 @@ function Detail() {
     setContent(e.target.value)
   }
   const handleDeletereview = async (reviewId) => {
-    await reviewApi.remove(user.username, reviewId)
-    const dataFilter = reviews.filter(item => item.reviewId !== reviewId)
-    setReviews(dataFilter)
+    try {
+      await reviewApi.remove(user.username, reviewId)
+      const dataFilter = reviews.filter(item => item.reviewId !== reviewId)
+      setReviews(dataFilter)
+      showNotification('success', 'Xóa bình luận thành công', '', 'OK')
+    } catch (error) {
+
+    }
+
   }
   const handlesumitAddcomment = async (e) => {
     e.preventDefault();

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, loginFailure } from '../../../redux/userRedux';
 import userApi from '../../../api/userApi';
 import styled from "styled-components";
+import { showNotification } from "../../../utils/MyUtils";
 
 
 
@@ -30,7 +31,7 @@ function SignIn() {
     try {
       const data = await userApi.login(formData)
       login(dispatch, data, username);
-      window.alert("Login success!")
+      showNotification('success', 'Login success!', 'Chúc bạn mua hàng vui vẻ!', 'OK')
     } catch (error) {
       dispatch(loginFailure())
     }

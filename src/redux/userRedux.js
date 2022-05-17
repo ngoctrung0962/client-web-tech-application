@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Navigate } from "react-router-dom";
 import userApi from "../api/userApi";
 import Storagekey from "../constants/storagekey";
+import { showNotification } from "../utils/MyUtils";
 
 export const login = async (dispatch, data, username) => {
     dispatch(loginStart());
@@ -67,7 +68,7 @@ const userSlice = createSlice({
         Logout(state) {
             localStorage.clear();
             state.currentUser = null;
-            window.alert("Good bye!")
+            showNotification('success', 'Goodbye', '', 'OK')
         }
     },
 });

@@ -87,7 +87,7 @@ function Header(props) {
                   <span className="icon_search search-switch" />
                 </li>
                 <li>
-                  <Link to="/cart">
+                  <Link onClick={() => { window.scrollTo(0, 0) }} to="/cart">
                     <span className="icon_bag_alt" />
                     <div className="tip">{count}</div>
                   </Link>
