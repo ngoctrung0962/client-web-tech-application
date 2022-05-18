@@ -27,15 +27,15 @@ function SignUp() {
 
       if (!res.status || res.status === 200) {
 
-        showNotification('success', 'Đăng kí thành công !', 'Vui lòng đăng nhập lại', 'OK')
+        showNotification('success', 'Sign up success !', 'Please log in again', 'OK')
         nav("/signin")
       }
       else {
-        showNotification('error', 'Đăng kí thất bại !', `Lỗi: ${res.message}`, 'OK')
+        showNotification('error', 'Sign up fail !', `Error: ${res.message}`, 'OK')
       }
     }
     else {
-      showNotification('error', 'Đăng kí thất bại !', `Lỗi: Confirm pass không đúng`, 'OK')
+      showNotification('error', 'Sign up fail !', "Error: Confirm password doesn't match", 'OK')
     }
 
   };
@@ -50,7 +50,7 @@ function SignUp() {
           <img src="img/signup/ip13.jpg" alt="Image Sign Up" />
         </div>
         <form onSubmit={handleSubmit} >
-          <h3>Registration Form</h3>
+          <h3>Sign Up Form</h3>
           <div className="form-wrapper">
             <input
               id="name"
@@ -153,7 +153,7 @@ function SignUp() {
               Back
             </button>
             <button type="submit" className="btn-Register">
-              Register
+              SIGN UP
               <i className="zmdi zmdi-arrow-right" />
             </button>
           </div>

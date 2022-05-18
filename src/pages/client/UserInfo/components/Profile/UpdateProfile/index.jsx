@@ -29,10 +29,10 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
         try {
             const data = await userApi.update(userdetail.username, formvalues)
             console.log("e", formvalues)
-            showNotification('success', 'Great', 'Cập nhật thành công', 'OK')
+            showNotification('success', 'Great', 'Update information success', 'OK')
             setUserdetail(data);
         } catch (error) {
-            showNotification('error', 'Oh no', 'Cập nhật thất bại', 'OK')
+            showNotification('error', 'Oh no', 'Update information fail', 'OK')
         }
 
     }
@@ -41,12 +41,12 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
         <div className='updateprofile'>
             <div className='updateprofile__container'>
                 <div className='updateprofile__title'>
-                    <p className='updateprofile__title--p'>CHỈNH SỬA THÔNG TIN CÁ NHÂN </p>
+                    <p className='updateprofile__title--p'>Update Profile</p>
                 </div>
                 <form onSubmit={handleSubmit} className='updateprofile__form'>
                     <div className='updateprofile__form--item'>
                         <div className='updateprofile__form--title'>
-                            <p>Họ và tên</p>
+                            <p>Full name</p>
                         </div>
                         <div className='updateprofile__form--input'>
                             <input
@@ -60,7 +60,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
                     </div>
                     <div className='updateprofile__form--item'>
                         <div className='updateprofile__form--title'>
-                            <p>Số điện thoại</p>
+                            <p>Phone number</p>
                         </div>
                         <div className='updateprofile__form--input'>
                             <input
@@ -73,7 +73,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
                     </div>
                     <div className='updateprofile__form--date'>
                         <div className='updateprofile__form--title'>
-                            <span>Ngày tháng năm sinh:</span>
+                            <span>Date of Birth</span>
                         </div>
                         <div className='updateprofile__form--date-dropdown'>
                             <input
@@ -87,7 +87,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
                     </div>
                     <div className='updateprofile__form--sex'>
                         <div className='updateprofile__form--title'>
-                            <span>Giới tính:</span>
+                            <span>Gender:</span>
                         </div>
                         <div className='updateprofile__form--sex-dropdown'>
                             <select value={formvalues.gender} option={formvalues.gender} onChange={handleChange} id="gender" name="gender">
@@ -112,7 +112,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
                     </div>
                     <div className='updateprofile__form--item'>
                         <div className='updateprofile__form--title'>
-                            <p>Địa chỉ</p>
+                            <p>Address</p>
                         </div>
                         <div className='updateprofile__form--input'>
                             <input
@@ -124,7 +124,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
                         </div>
                     </div>
                     <button type='submit' className='updateprofile__form--button'>
-                        <span>Cập nhật</span>
+                        <span>Update</span>
                     </button>
                 </form>
             </div>
