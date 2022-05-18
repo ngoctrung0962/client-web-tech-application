@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import userApi from '../../../../../../api/userApi';
 import { Logout } from '../../../../../../redux/userRedux';
+import { showNotification } from '../../../../../../utils/MyUtils';
 import './style.scss'
 
 export const UpdatePassword = ({ userdetail }) => {
@@ -24,7 +25,7 @@ export const UpdatePassword = ({ userdetail }) => {
             try {
                 const res = await userApi.changepassword(userdetail.username, formData)
                 console.log(res)
-                window.alert("Change password success! Please login again")
+                showNotification('success', 'Great', 'Change password success! Please login again', 'OK')
                 dispatch(Logout())
                 setErrorconfirm("")
                 setErroroldpass("")

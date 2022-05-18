@@ -150,51 +150,64 @@ function Product() {
                 key={product.id}
                 className="col-lg-3 col-md-4 col-sm-6 mix women"
               >
-                <div className="product__item">
-                  <div
-                    className="product__item__pic set-bg"
-                    data-setbg={product.image}
-                    // set style background-image
-                    style={{ backgroundImage: `url(${product.image})` }}
-                  >
-                    <div className="label new">New</div>
-                    <ul className="product__hover">
-                      <li>
-                        <a href={product.image} className="image-popup">
-                          <span className="arrow_expand" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <span className="icon_heart_alt" />
-                        </a>
-                      </li>
-                      <li>
-                        <Link onClick={(e) => e} to="/cart">
-                          <span className="icon_bag_alt" />
+                <Link to={`/product/${product.productId}`}>
+                  <div className="product__item">
+                    <div
+                      className="product__item__pic set-bg"
+                      data-setbg={product.image}
+                      // set style background-image
+                      style={{ backgroundImage: `url(${product.image})` }}
+                    >
+                      <div className="label new">New</div>
+                      <ul className="product__hover">
+                        <li>
+                          <a href={product.image} className="image-popup">
+                            <span className="arrow_expand" />
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <span className="icon_heart_alt" />
+                          </a>
+                        </li>
+                        <li>
+                          <Link onClick={(e) => e} to="/cart">
+                            <span className="icon_bag_alt" />
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="product__item__text">
+                      <h6>
+                        <Link to={`/product/${product.productId}`}>
+                          {product.name}
                         </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="product__item__text">
-                    <h6>
-                      <Link to={`/product/${product.productId}`}>
-                        {product.name}
-                      </Link>
-                    </h6>
-                    <Box component="fieldset" mb={3} borderColor="transparent">
-                      <Rating name="read-only" value={value} readOnly />
-                    </Box>
-                    <div className="product__price">
-                      {product && product.price
-                        ? product.price.toLocaleString("it-IT", {
-                            style: "currency",
-                            currency: "VND",
-                          })
-                        : null}
+                      </h6>
+                      {/* <div className="rating">
+                      <i className="fa fa-star" />
+                      <i className="fa fa-star" />
+                      <i className="fa fa-star" />
+                      <i className="fa fa-star" />
+                      <i className="fa fa-star" />
+                    </div> */}
+                      <Box
+                        component="fieldset"
+                        mb={3}
+                        borderColor="transparent"
+                      >
+                        <Rating name="read-only" value={value} readOnly />
+                      </Box>
+                      <div className="product__price">
+                        {product && product.price
+                          ? product.price.toLocaleString("it-IT", {
+                              style: "currency",
+                              currency: "VND",
+                            })
+                          : null}
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </div>
             ))
           ) : (

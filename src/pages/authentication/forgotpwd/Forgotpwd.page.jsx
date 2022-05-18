@@ -2,15 +2,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { Fragment, useState } from "react";
 import LoadingOverlay from 'react-loading-overlay-ts';
 import Preloder from '../../../components/proloder/Preloder.component'
-import {showNotification} from '../../../utils/MyUtils';
+import { showNotification } from '../../../utils/MyUtils';
 import { useDispatch, useSelector } from "react-redux";
 import { login, loginFailure } from '../../../redux/userRedux';
 import userApi from '../../../api/userApi';
 import styled from "styled-components";
 
+import { makeStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 
 function ForgotPassWord() {
+    const classes = useStyles();
     const StyledLink = styled(Link)`
   color: #7B68EE;
   text-decoration: underline;
@@ -26,28 +38,42 @@ function ForgotPassWord() {
 
     const handleClick = async (e) => {
         e.preventDefault();
+        setIsSending(true)
         //console.log(formData.getAll())
         try {
             const res = await userApi.forgotPassword(username, email);
-            if(res){
+            if (res) {
                 showNotification('success', 'Great', 'We sent you mail to reset your password', 'OK');
             }
         } catch (error) {
             dispatch(loginFailure())
         }
+        setIsSending(false)
     };
 
+    const showloading = () => {
+        if (isSending === true) {
+            return (
+                <>
+
+                </>
+            )
+        }
+        else {
+            return ("")
+        }
+    }
     return (
         <Fragment>
-
             <div
                 className="wrapper"
                 style={{ backgroundImage: 'url("img/signup/bg-tech.jpg")' }}
             >
+
                 <div className="inner">
 
                     <div className="image-holder">
-                        
+
                         <img src="img/signup/ip13.jpg" >
                         </img>
                     </div>
@@ -88,12 +114,15 @@ function ForgotPassWord() {
                                 Send
                                 <i className="zmdi zmdi-arrow-right" />
                             </button>
+
                         </div>
 
                     </form>
 
                 </div>
+
             </div>
+
         </Fragment>
 
     );

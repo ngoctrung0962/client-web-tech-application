@@ -86,9 +86,15 @@ function Detail() {
     setContent(e.target.value)
   }
   const handleDeletereview = async (reviewId) => {
-    await reviewApi.remove(user.username, reviewId)
-    const dataFilter = reviews.filter(item => item.reviewId !== reviewId)
-    setReviews(dataFilter)
+    try {
+      await reviewApi.remove(user.username, reviewId)
+      const dataFilter = reviews.filter(item => item.reviewId !== reviewId)
+      setReviews(dataFilter)
+      showNotification('success', 'Xóa bình luận thành công', '', 'OK')
+    } catch (error) {
+
+    }
+
   }
   const handlesumitAddcomment = async (e) => {
     e.preventDefault();
@@ -316,7 +322,10 @@ function Detail() {
                       <input type="number" defaultValue={1} onChange={(e) => e.target.value === '' ? setInputQuantity(1) : setInputQuantity(e.target.value)} />
                     </div>
                   </div>
-                  <a href="" className="cart-btn" onClick={(e) => addToCart(e)}><span className="icon_bag_alt" /> Add to cart</a>
+                  {product && product.quantity > 0 ? 
+                  <a disabled={product.quantity < 1} href="" className="cart-btn" onClick={(e) => addToCart(e)}><span className="icon_bag_alt" /> Add to cart</a> : 
+                  <a className="cart-btn sold-out" ><span className="icon_bag_alt" /> Sold out</a>}
+
 
                 </div>
                 <div className="product__details__widget">

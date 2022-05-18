@@ -3,6 +3,7 @@ import userApi from '../../../../../../api/userApi';
 import { useSelector } from 'react-redux';
 import './style.scss'
 import { Navigate } from 'react-router-dom';
+import { showNotification } from '../../../../../../utils/MyUtils';
 
 
 export const UpdateProfile = ({ userdetail, setUserdetail }) => {
@@ -25,14 +26,16 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await userApi.update(userdetail.username, formvalues)
-        console.log("e", formvalues)
-        window.alert("Cập nhật thành công")
-        setUserdetail(data);
+        try {
+            const data = await userApi.update(userdetail.username, formvalues)
+            console.log("e", formvalues)
+            showNotification('success', 'Great', 'Cập nhật thành công', 'OK')
+            setUserdetail(data);
+        } catch (error) {
+            showNotification('error', 'Oh no', 'Cập nhật thất bại', 'OK')
+        }
+
     }
-
-
-
 
     return (
         <div className='updateprofile'>

@@ -7,6 +7,7 @@ import swal from "sweetalert2";
 import Rating from "@material-ui/lab/Rating";
 import Slider from "@mui/material/Slider";
 import Box from "@material-ui/core/Box";
+
 import {
   formatVND,
   showNotification,
@@ -278,73 +279,70 @@ function Shop() {
                       key={individualFilteredProduct.productId}
                       className="col-lg-4 col-md-6"
                     >
-                      <div className="product__item">
-                        <div
-                          className="product__item__pic set-bg"
-                          data-setbg={individualFilteredProduct.image}
-                          style={{
-                            backgroundImage: `url(${individualFilteredProduct.image})`,
-                          }}
-                        >
-                          <ul className="product__hover">
-                            <li>
-                              <a
-                                href={individualFilteredProduct.image}
-                                className="image-popup"
-                              >
-                                <span className="arrow_expand" />
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <span className="icon_heart_alt" />
-                              </a>
-                            </li>
-                            <li>
-                              <Link
-                                to="/cart"
-                                onClick={(e) =>
-                                  addToCart(e, individualFilteredProduct)
-                                }
-                              >
-                                <span className="icon_bag_alt" />
-                              </Link>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="product__item__text">
-                          <h6>
-                            <Link
-                              to={`/product/${individualFilteredProduct.productId}`}
-                            >
-                              {individualFilteredProduct.name}
-                            </Link>
-                          </h6>
-                          {/* <div className="rating">
-                          <i className="fa fa-star" />
-                          <i className="fa fa-star" />
-                          <i className="fa fa-star" />
-                          <i className="fa fa-star" />
-                          <i className="fa fa-star" />
-                        </div> */}
-                          <Box
-                            component="fieldset"
-                            mb={3}
-                            borderColor="transparent"
+                      <Link
+                        to={`/product/${individualFilteredProduct.productId}`}
+                      >
+                        <div className="product__item">
+                          <div
+                            className="product__item__pic set-bg"
+                            data-setbg={individualFilteredProduct.image}
+                            style={{
+                              backgroundImage: `url(${individualFilteredProduct.image})`,
+                            }}
                           >
-                            <Rating name="read-only" value={value} readOnly />
-                          </Box>
-                          <div className="product__price">
-                            {individualFilteredProduct &&
-                            individualFilteredProduct.price
-                              ? individualFilteredProduct.price.toLocaleString(
-                                  "it-IT",
-                                  { style: "currency", currency: "VND" }
-                                )
-                              : null}
+                            <ul className="product__hover">
+                              <li>
+                                <a
+                                  href={individualFilteredProduct.image}
+                                  className="image-popup"
+                                >
+                                  <span className="arrow_expand" />
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#">
+                                  <span className="icon_heart_alt" />
+                                </a>
+                              </li>
+                              <li>
+                                <Link
+                                  to="/cart"
+                                  onClick={(e) =>
+                                    addToCart(e, individualFilteredProduct)
+                                  }
+                                >
+                                  <span className="icon_bag_alt" />
+                                </Link>
+                              </li>
+                            </ul>
+                          </div>
+                          <div className="product__item__text">
+                            <h6>
+                              <Link
+                                to={`/product/${individualFilteredProduct.productId}`}
+                              >
+                                {individualFilteredProduct.name}
+                              </Link>
+                            </h6>
+                            <Box
+                              component="fieldset"
+                              mb={3}
+                              borderColor="transparent"
+                            >
+                              <Rating name="read-only" value={value} readOnly />
+                            </Box>
+                            <div className="product__price">
+                              {individualFilteredProduct &&
+                              individualFilteredProduct.price
+                                ? individualFilteredProduct.price.toLocaleString(
+                                    "it-IT",
+                                    { style: "currency", currency: "VND" }
+                                  )
+                                : null}
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     </div>
                   ))
                 ) : (
