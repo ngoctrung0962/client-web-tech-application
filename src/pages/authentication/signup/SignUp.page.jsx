@@ -1,16 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import userApi from "../../../api/userApi";
+import { showNotification } from "../../../utils/MyUtils";
 function SignUp() {
-  const initValue = { firstname: "", lastname: "", username: "", email: "", phonenumber: "", address: "", gender: "male", password: "", confirmpassword: "" }
+  const initValue = { name: "", username: "", email: "", phoneNumber: "", dateOfBirth: "", address: "", gender: true, password: "" }
   const [formvalues, setFormvalues] = useState(initValue);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormvalues({ ...formvalues, [name]: value });
   }
   const nav = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formvalues)
+
+    const res = await userApi.register(
+      formvalues.username,
+      formvalues.password,
+      formvalues
+    );
+    console.log(res)
+    if (!res.status || res.status === 200) {
+
+      showNotification('success', 'Đăng kí thành công !', 'Vui lòng đăng nhập lại', 'OK')
+      nav("/signin")
+    }
+    else {
+      showNotification('error', 'Đăng kí thất bại !', `Lỗi: ${res.message}`, 'OK')
+    }
   };
 
   return (
@@ -24,26 +41,18 @@ function SignUp() {
         </div>
         <form onSubmit={handleSubmit} >
           <h3>Registration Form</h3>
-          <div className="form-group">
+          <div className="form-wrapper">
             <input
-              id="firstname"
-              name="firstname"
+              id="name"
+              name="name"
               type="text"
-              placeholder="First Name"
+              placeholder="Full Name"
               className="form-control"
-              value={formvalues.firstname}
+              value={formvalues.name}
               onChange={handleChange}
               required
             />
-            <input
-              id="lastname"
-              name="lastname"
-              type="text"
-              placeholder="Last Name"
-              className="form-control"
-              onChange={handleChange}
-              required
-            />
+
           </div>
           <div className="form-wrapper">
             <input
@@ -71,8 +80,20 @@ function SignUp() {
           </div>
           <div className="form-wrapper">
             <input
-              id="phonenumber"
-              name="phonenumber"
+              id="dateOfBirth"
+              name="dateOfBirth"
+              type="date"
+              placeholder="date of birth"
+              className="form-control"
+              onChange={handleChange}
+              required
+            />
+
+          </div>
+          <div className="form-wrapper">
+            <input
+              id="phoneNumber"
+              name="phoneNumber"
               type="text"
               placeholder="Phone Number"
               className="form-control"
@@ -86,11 +107,10 @@ function SignUp() {
             <i className="zmdi zmdi-pin" />
           </div>
           <div className="form-wrapper">
-            <select value="male" onChange={handleChange} name="gender" id="gender" className="form-control" >
+            <select onChange={handleChange} name="gender" id="gender" className="form-control" >
               <option disabled>Gender</option>
-              <option value="male" >Male</option>
-              <option value="femal">Female</option>
-              <option value="other">Other</option>
+              <option value={true} >Male</option>
+              <option value={false}>Female</option>
             </select>
             <i className="zmdi zmdi-caret-down" style={{ fontSize: 17 }} />
           </div>
@@ -106,7 +126,7 @@ function SignUp() {
             />
             <i className="zmdi zmdi-lock" />
           </div>
-          <div className="form-wrapper">
+          {/* <div className="form-wrapper">
             <input
               id="confirmpassword"
               name="confirmpassword"
@@ -117,7 +137,7 @@ function SignUp() {
               required
             />
             <i className="zmdi zmdi-lock" />
-          </div>
+          </div> */}
           <div className="d-flex row">
             <button onClick={() => { nav(-1) }} className="btn-back">
               <i className="zmdi zmdi-arrow-left" />

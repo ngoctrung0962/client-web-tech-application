@@ -1,9 +1,15 @@
 import axiosClient from "./axiosClient"
 
 const userApi = {
-    register(data) {
-        const url = '/Users/Register'
-        return axiosClient.post(url, data);
+    register(username, password, data) {
+        const header = {
+            'username': username,
+            'password': password
+        }
+        const url = `/register`
+        return axiosClient.post(url, data, {
+            headers: header
+        })
     },
     get(username) {
         const url = `/users/${username}`
@@ -24,7 +30,7 @@ const userApi = {
         const url = `/change-password/${username}`
         return axiosClient.post(url, data)
     },
-    forgotPassword(username, email){
+    forgotPassword(username, email) {
         const url = `/forgot-password/${username}?email=${email}`;
         return axiosClient.post(url);
     },
