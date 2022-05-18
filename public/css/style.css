@@ -4044,3 +4044,7 @@ ol {
 		font-size: 24px;
 	}
 }
+
+.sold-out:hover {
+	cursor: not-allowed;
+}
