@@ -9,25 +9,35 @@ function SignUp() {
     const { name, value } = e.target;
     setFormvalues({ ...formvalues, [name]: value });
   }
+  const [confirmpassword, setConfirmpassword] = useState("")
+  const handleChangeConfirm = () => {
+
+  }
   const nav = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formvalues)
+    if (formvalues.password === confirmpassword) {
+      const res = await userApi.register(
+        formvalues.username,
+        formvalues.password,
+        formvalues
+      );
+      console.log(res)
 
-    const res = await userApi.register(
-      formvalues.username,
-      formvalues.password,
-      formvalues
-    );
-    console.log(res)
-    if (!res.status || res.status === 200) {
+      if (!res.status || res.status === 200) {
 
-      showNotification('success', 'Đăng kí thành công !', 'Vui lòng đăng nhập lại', 'OK')
-      nav("/signin")
+        showNotification('success', 'Đăng kí thành công !', 'Vui lòng đăng nhập lại', 'OK')
+        nav("/signin")
+      }
+      else {
+        showNotification('error', 'Đăng kí thất bại !', `Lỗi: ${res.message}`, 'OK')
+      }
     }
     else {
-      showNotification('error', 'Đăng kí thất bại !', `Lỗi: ${res.message}`, 'OK')
+      showNotification('error', 'Đăng kí thất bại !', `Lỗi: Confirm pass không đúng`, 'OK')
     }
+
   };
 
   return (
@@ -126,18 +136,17 @@ function SignUp() {
             />
             <i className="zmdi zmdi-lock" />
           </div>
-          {/* <div className="form-wrapper">
+          <div className="form-wrapper">
             <input
-              id="confirmpassword"
-              name="confirmpassword"
+
               type="password"
               placeholder="Confirm Password"
               className="form-control"
-              onChange={handleChange}
+              onChange={(e) => setConfirmpassword(e.target.value)}
               required
             />
             <i className="zmdi zmdi-lock" />
-          </div> */}
+          </div>
           <div className="d-flex row">
             <button onClick={() => { nav(-1) }} className="btn-back">
               <i className="zmdi zmdi-arrow-left" />
