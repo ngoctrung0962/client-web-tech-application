@@ -7,13 +7,12 @@ import swal from "sweetalert2";
 import Rating from "@material-ui/lab/Rating";
 import Slider from "@mui/material/Slider";
 import Box from "@material-ui/core/Box";
-import { formatVND, showNotification, checkQuantity } from "../../../utils/MyUtils";
-import { getAllCarts } from '../../../redux/cartRedux';
-
-import CategoriesShop from "./CategoriesShop.component";
-import FilterByPrice from "./FilterByPrice.component";
-import FileList from "./FilterList.component";
-import Products from "./Products.component";
+import {
+  formatVND,
+  showNotification,
+  checkQuantity,
+} from "../../../utils/MyUtils";
+import { getAllCarts } from "../../../redux/cartRedux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Pagination from "./Pagination.component";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,7 +32,6 @@ function Shop() {
   const [priceShow, setPriceShow] = useState([0, 20000]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -51,7 +49,6 @@ function Shop() {
         if (user) {
           await getAllCarts(dispatch, user.username);
         }
-
       } catch (error) {
         console.error("error");
       }
@@ -145,13 +142,16 @@ function Shop() {
   const addToCart = async (e, item) => {
     e.preventDefault();
     if (!user) {
-      navigate('/signin')
-    }
-    else {
+      navigate("/signin");
+    } else {
       if (item.quantity === 0) {
-        showNotification("warning", "HUHU OH NO !!!", "Not enough products, my friends", "Choose others");
-      }
-      else {
+        showNotification(
+          "warning",
+          "HUHU OH NO !!!",
+          "Not enough products, my friends",
+          "Choose others"
+        );
+      } else {
         const cartItem = {
           id: {
             username: user.username,
@@ -159,22 +159,27 @@ function Shop() {
           },
           quantity: 1,
         };
-        const resultCheck = await checkQuantity(cartItem, item.quantity, listCartRedux);
+        const resultCheck = await checkQuantity(
+          cartItem,
+          item.quantity,
+          listCartRedux
+        );
         if (resultCheck) {
-          const res = await insertCartApi(cartItem, user.username, item.productId);
+          const res = await insertCartApi(
+            cartItem,
+            user.username,
+            item.productId
+          );
           if (res.status === 200) {
             navigate("/cart");
-            window.scrollTo(0, 0)
-          }
-          else
+            window.scrollTo(0, 0);
+          } else
             showNotification("error", "Oh No", "Not enough, try again", "Ok");
-        }
-        else {
+        } else {
           showNotification("error", "Oh No", "Not enough, try again", "Ok");
         }
       }
     }
-
   };
 
   // Range slider
@@ -271,72 +276,76 @@ function Shop() {
                     key={individualFilteredProduct.productId}
                     className="col-lg-4 col-md-6"
                   >
-                    <div className="product__item">
-                      <div
-                        className="product__item__pic set-bg"
-                        data-setbg={individualFilteredProduct.image}
-                        style={{
-                          backgroundImage: `url(${individualFilteredProduct.image})`,
-                        }}
-                      >
-                        <ul className="product__hover">
-                          <li>
-                            <a
-                              href={individualFilteredProduct.image}
-                              className="image-popup"
+                    <Link to={`/product/${individualFilteredProduct.productId}`}>
+                      <div className="product__item">
+                        <div
+                          className="product__item__pic set-bg"
+                          data-setbg={individualFilteredProduct.image}
+                          style={{
+                            backgroundImage: `url(${individualFilteredProduct.image})`,
+                          }}
+                        >
+                          <ul className="product__hover">
+                            <li>
+                              <a
+                                href={individualFilteredProduct.image}
+                                className="image-popup"
+                              >
+                                <span className="arrow_expand" />
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <span className="icon_heart_alt" />
+                              </a>
+                            </li>
+                            <li>
+                              <Link
+                                to="/cart"
+                                onClick={(e) =>
+                                  addToCart(e, individualFilteredProduct)
+                                }
+                              >
+                                <span className="icon_bag_alt" />
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="product__item__text">
+                          <h6>
+                            <Link
+                              to={`/product/${individualFilteredProduct.productId}`}
                             >
-                              <span className="arrow_expand" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="icon_heart_alt" />
-                            </a>
-                          </li>
-                          <li>
-                            <Link to="/cart" onClick={(e) =>
-                              addToCart(e, individualFilteredProduct)
-                            }>
-                              <span
-                                className="icon_bag_alt"
-                              />
+                              {individualFilteredProduct.name}
                             </Link>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="product__item__text">
-                        <h6>
-                          <Link
-                            to={`/product/${individualFilteredProduct.productId}`}
-                          >
-                            {individualFilteredProduct.name}
-                          </Link>
-                        </h6>
-                        {/* <div className="rating">
+                          </h6>
+                          {/* <div className="rating">
                           <i className="fa fa-star" />
                           <i className="fa fa-star" />
                           <i className="fa fa-star" />
                           <i className="fa fa-star" />
                           <i className="fa fa-star" />
                         </div> */}
-                        <Box
-                          component="fieldset"
-                          mb={3}
-                          borderColor="transparent"
-                        >
-                          <Rating name="read-only" value={value} readOnly />
-                        </Box>
-                        <div className="product__price">
-                          {individualFilteredProduct &&
-                            individualFilteredProduct.price
-                            ? individualFilteredProduct.price.toLocaleString(
-                              "it-IT",
-                              { style: "currency", currency: "VND" }
-                            )
-                            : null}
+                          <Box
+                            component="fieldset"
+                            mb={3}
+                            borderColor="transparent"
+                          >
+                            <Rating name="read-only" value={value} readOnly />
+                          </Box>
+                          <div className="product__price">
+                            {individualFilteredProduct &&
+                              individualFilteredProduct.price
+                              ? individualFilteredProduct.price.toLocaleString(
+                                "it-IT",
+                                { style: "currency", currency: "VND" }
+                              )
+                              : null}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
+
                   </div>
                 ))}
               </Fragment>
