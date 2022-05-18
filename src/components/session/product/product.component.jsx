@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import productApi from "../../../api/productApi";
 import { Fragment } from "react";
-import {showNotification, checkQuantity} from '../../../utils/MyUtils';
+import { showNotification, checkQuantity } from "../../../utils/MyUtils";
 import { Link, useNavigate } from "react-router-dom";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 import { useSelector, useDispatch } from "react-redux";
 import { insertCartRedux } from "../../../redux/cartRedux";
 function Product() {
-
-  const user = useSelector(state => state.user.currentUser);
-  const listCartRedux = useSelector(state => state.cart.listCart);
+  const user = useSelector((state) => state.user.currentUser);
+  const listCartRedux = useSelector((state) => state.cart.listCart);
   const dispatch = useDispatch();
   const [value, setValue] = useState(4);
   const [loading, setLoading] = useState(true);
@@ -23,6 +22,7 @@ function Product() {
       try {
         const products = await productApi.getTop8ProductsNewest();
         setProducts(products);
+        setFilteredProducts(products);
       } catch (error) {
         console.error("error");
       }
@@ -35,14 +35,14 @@ function Product() {
   const [spans] = useState([
     { id: "All", text: "All products" },
     { id: "Laptop", text: "Laptop" },
-    { id: "SmartPhone", text: "Smart Phone" },
+    { id: "SmartPhone", text: "SmartPhone" },
   ]);
 
   // active class state
   const [active, setActive] = useState("All");
 
   // category state
-  const [category, setCategory] = useState("All products");
+  const [category, setCategory] = useState([]);
   useEffect(() => {
     filterFunction(category);
   }, [category]);
@@ -53,7 +53,7 @@ function Product() {
     filterFunction(individualSpan.text);
   };
   // filtered products state
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   // filter function
   // console.log(products);
@@ -77,13 +77,16 @@ function Product() {
   const addToCart = async (e, item) => {
     e.preventDefault();
     if (!user) {
-      navigate('/signin')
-    }
-    else {
+      navigate("/signin");
+    } else {
       if (item.quantity === 0) {
-        showNotification("warning", "HUHU OH NO !!!", "Not enough products, my friends", "Choose others");
-      }
-      else {
+        showNotification(
+          "warning",
+          "HUHU OH NO !!!",
+          "Not enough products, my friends",
+          "Choose others"
+        );
+      } else {
         const cartItem = {
           id: {
             username: user.username,
@@ -91,22 +94,28 @@ function Product() {
           },
           quantity: 1,
         };
-        const resultCheck = await checkQuantity(cartItem, item.quantity, listCartRedux);
+        const resultCheck = await checkQuantity(
+          cartItem,
+          item.quantity,
+          listCartRedux
+        );
         if (resultCheck) {
-          const res = await insertCartRedux(dispatch, cartItem, user.username, item.productId);
-          console.log(res)
+          const res = await insertCartRedux(
+            dispatch,
+            cartItem,
+            user.username,
+            item.productId
+          );
+          console.log(res);
           if (res === 200) {
-            showNotification("success", "Great", "Add to cart ssuccess", 'Ok');
-          }
-          else
+            showNotification("success", "Great", "Add to cart ssuccess", "Ok");
+          } else
             showNotification("error", "Oh No", "Not enough, try again", "Ok");
-        }
-        else {
+        } else {
           showNotification("error", "Oh No", "Not enough, try again", "Ok");
         }
       }
     }
-
   };
 
   return (
@@ -135,8 +144,8 @@ function Product() {
           </div>
         </div>
         <div className="row property__gallery">
-          {filteredProducts.length > 0
-            ? filteredProducts.map((product) => (
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
               <div
                 key={product.id}
                 className="col-lg-3 col-md-4 col-sm-6 mix women"
@@ -161,7 +170,7 @@ function Product() {
                         </a>
                       </li>
                       <li>
-                        <Link onClick={(e) => (e)} to='/cart'>
+                        <Link onClick={(e) => e} to="/cart">
                           <span className="icon_bag_alt" />
                         </Link>
                       </li>
@@ -173,95 +182,26 @@ function Product() {
                         {product.name}
                       </Link>
                     </h6>
-                    {/* <div className="rating">
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                    </div> */}
-                    <Box
-                      component="fieldset"
-                      mb={3}
-                      borderColor="transparent"
-                    >
+                    <Box component="fieldset" mb={3} borderColor="transparent">
                       <Rating name="read-only" value={value} readOnly />
                     </Box>
                     <div className="product__price">
                       {product && product.price
                         ? product.price.toLocaleString("it-IT", {
-                          style: "currency",
-                          currency: "VND",
-                        })
+                            style: "currency",
+                            currency: "VND",
+                          })
                         : null}
                     </div>
                   </div>
                 </div>
               </div>
             ))
-            : products.map((product) => (
-              <div
-                key={product.id}
-                className="col-lg-3 col-md-4 col-sm-6 mix women"
-              >
-                <div className="product__item">
-                  <div
-                    className="product__item__pic set-bg"
-                    data-setbg={product.image}
-                    // set style background-image
-                    style={{ backgroundImage: `url(${product.image})` }}
-                  >
-                    <div className="label new">New</div>
-                    <ul className="product__hover">
-                      <li>
-                        <a href={product.image} className="image-popup">
-                          <span className="arrow_expand" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <span className="icon_heart_alt" />
-                        </a>
-                      </li>
-                      <li>
-                        <Link onClick = {(e) => addToCart(e, product)} to="/cart">
-                          <span className="icon_bag_alt" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="product__item__text">
-                    <h6>
-                      <Link to={`/product/${product.productId}`}>
-                        {product.name}
-                      </Link>
-                    </h6>
-                    {/* <div className="rating">
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                    </div> */}
-                    <Box
-                      component="fieldset"
-                      mb={3}
-                      borderColor="transparent"
-                    >
-                      <Rating name="read-only" value={value} readOnly />
-                    </Box>
-                    <div className="product__price">
-                      {product && product.price
-                        ? product.price.toLocaleString("it-IT", {
-                          style: "currency",
-                          currency: "VND",
-                        })
-                        : null}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          ) : (
+            <div>
+              <h3>No products</h3>
+            </div>
+          )}
         </div>
       </div>
     </section>
