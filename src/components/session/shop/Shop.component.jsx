@@ -293,9 +293,9 @@ function Shop() {
                         <div className="product__item">
                           <div
                             className="product__item__pic set-bg"
-                            data-setbg={individualFilteredProduct.image}
+                            data-setbg={JSON.parse(individualFilteredProduct.image).image1}
                             style={{
-                              backgroundImage: `url(${individualFilteredProduct.image})`,
+                              backgroundImage: `url(${JSON.parse(individualFilteredProduct.image).image1})`,
                             }}
                           >
                             {individualFilteredProduct && individualFilteredProduct.quantity < 1 ? <div className="label soldout">Sold out</div> : ""}

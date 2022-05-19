@@ -92,7 +92,7 @@ function Detail() {
       setReviews(dataFilter)
       showNotification('success', 'Delete review success', '', 'OK')
     } catch (error) {
-
+      showNotification('error', 'Delete review fail', '', 'OK')
     }
 
   }
@@ -158,7 +158,7 @@ function Detail() {
       setLoading(true);
       if (brandId) {
         try {
-          const res = await productApi.getproductbybrandId(brandId, 5);
+          const res = await productApi.getproductbybrandId(brandId, 2);
           setlistProducts(res);
         } catch (error) {
           console.log(error)
@@ -169,7 +169,7 @@ function Detail() {
     }
     fetchData();
   }, [brandId])
-
+  console.log("product", product)
   // Tổng review cho product
   let quantityrv = reviews.length;
 
@@ -203,7 +203,7 @@ function Detail() {
             <div className="product__item">
               <div className="product__item__pic set-bg" data-setbg={product ? product.image : null}
                 style={{
-                  backgroundImage: `url(${product.image})`
+                  backgroundImage: `url(${product.image ? JSON.parse(product.image).image1 : ""})`
                 }}>
                 {product && product.quantity < 1 ? <div className="label soldout">Sold out</div> : <div className="label new">New</div>}
 
@@ -277,7 +277,7 @@ function Detail() {
           <div className="row">
             <div className="col-lg-6">
               <div className="product__details__pic" >
-                <SlidePhoto imageUrl={product.image} />
+                <SlidePhoto imageUrl={product && product.image ? JSON.parse(product.image) : ""} />
                 {/* <div className="product__details__pic__left product__thumb nice-scroll"  >
                   <a className="pt active " href="#product-1" >
                     <img src={product.image} alt="" />
@@ -435,7 +435,7 @@ function Detail() {
                 <h5>RELATED PRODUCTS</h5>
               </div>
             </div>
-            {listProductsbybrandId}
+            {listProductsbybrandId ? listProductsbybrandId : ""}
 
           </div>
         </div>

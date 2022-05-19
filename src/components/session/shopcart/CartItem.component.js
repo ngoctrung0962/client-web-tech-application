@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { formatVND } from '../../../utils/MyUtils'
 import { useState } from 'react'
 import { Link } from "react-router-dom";
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
 function CartItem(props) {
 
@@ -25,16 +27,21 @@ function CartItem(props) {
 
     <tr key={props.item.id}>
       <td className="cart__product__item">
-        <img src={props.item.product.image} alt="" style={{ width: '50px', height: '50px' }} />
+        <Link to={`/product/${props.item.product.productId}`}>
+          <img src={JSON.parse(props.item.product.image).image1} alt="" style={{ width: '100px', height: 'auto' }} />
+        </Link>
         <div className="cart__product__item__title">
           <Link to={`/product/${props.item.product.productId}`}><h6>{props.item.product.name}</h6></Link>
-          <div className="rating">
+          {/* <div className="rating">
             <i className="fa fa-star" />
             <i className="fa fa-star" />
             <i className="fa fa-star" />
             <i className="fa fa-star" />
             <i className="fa fa-star" />
-          </div>
+          </div> */}
+          <Box component="fieldset" mb={3} borderColor="transparent">
+            <Rating name="read-only" value={4} readOnly />
+          </Box>
         </div>
       </td>
       <td className="cart__price">{Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.product.price)}</td>

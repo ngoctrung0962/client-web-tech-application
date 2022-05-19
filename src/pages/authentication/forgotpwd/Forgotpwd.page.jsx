@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Fragment, useState,  } from "react";
+import { Fragment, useState, } from "react";
 import LoadingOverlay from 'react-loading-overlay-ts';
 import Preloder from '../../../components/proloder/Preloder.component'
 import { showNotification } from '../../../utils/MyUtils';
@@ -10,6 +10,7 @@ import styled from "styled-components";
 
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Loading from "../../../components/loading/Loading";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,34 +38,35 @@ function ForgotPassWord() {
     const { isFetching, error } = useSelector((state) => state.user);
 
     const handleClick = async (e) => {
+        console.log(isSending)
         e.preventDefault();
         setIsSending(true)
         //console.log(formData.getAll())
-        try {
-            const res = await userApi.forgotPassword(username, email);
-            if (res) {
-                showNotification('success', 'Great', 'We sent you mail to reset your password', 'OK');
-            }
-        } catch (error) {
-            dispatch(loginFailure())
-        }
-        setIsSending(false)
-    };
-
-    const showloading = () => {
-        if (isSending === true) {
-            return (
-                <>
-
-                </>
-            )
+        // try {
+        //     const res = await userApi.forgotPassword(username, email);
+        //     if (res) {
+        //         showNotification('success', 'Great', 'We sent you mail to reset your password', 'OK');
+        //         setIsSending(false)
+        //     }
+        // } catch (error) {
+        //     dispatch(loginFailure())
+        //     setIsSending(false)
+        // }
+        const res = await userApi.forgotPassword(username, email);
+        if (!res.status || res.status === 200) {
+            showNotification('success', 'Great', 'We sent you mail to reset your password', 'OK');
+            setIsSending(false)
         }
         else {
-            return ("")
+            showNotification('error', 'Send mail fail !', `Error: ${res.message}`, 'OK')
+            setIsSending(false)
         }
+
     }
+    console.log(isSending)
     return (
-        <Fragment>
+        <div>
+
             <div
                 className="wrapper"
                 style={{ backgroundImage: 'url("img/signup/bg-tech.jpg")' }}
@@ -78,6 +80,7 @@ function ForgotPassWord() {
                         </img>
                     </div>
                     <form onSubmit={handleClick}>
+
                         <h3>Forgot password</h3>
 
                         <div className="form-wrapper">
@@ -106,6 +109,7 @@ function ForgotPassWord() {
                                 <i className="zmdi zmdi-arrow-left" />
                                 Back
                             </button>
+
                             <button
                                 type="submit"
                                 disabled={isFetching}
@@ -114,6 +118,8 @@ function ForgotPassWord() {
                                 Send
                                 <i className="zmdi zmdi-arrow-right" />
                             </button>
+                            {isSending === true ? <Loading /> : ""}
+
 
                         </div>
 
@@ -123,8 +129,7 @@ function ForgotPassWord() {
 
             </div>
 
-        </Fragment>
-
+        </div>
     );
 }
 

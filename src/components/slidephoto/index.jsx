@@ -12,19 +12,19 @@ export const SlidePhoto = (props) => {
 
     const data = [
         {
-            url: `${props.imageUrl}`,
+            url: `${props.imageUrl.image1}`,
             value: -1
         },
         {
-            url: `${props.imageUrl}`,
+            url: `${props.imageUrl.image2}`,
             value: 0
         },
         {
-            url: `${props.imageUrl}`,
+            url: `${props.imageUrl.image3}`,
             value: 1
         },
         {
-            url: `${props.imageUrl}`,
+            url: `${props.imageUrl.image4}`,
             value: 0
         },
 
@@ -40,7 +40,7 @@ export const SlidePhoto = (props) => {
                     {data.map((item, index) => {
                         return (
                             <div key={index} className='slidephoto__item' onClick={(e) => handleChangeItemActive(index)}>
-                                <img className='slidephoto__item--photo' src={item.url} alt="true" />
+                                <img className='slidephoto__item--photo' src={item.url} alt={props.imageUrl} />
                             </div>
                         )
                     })};
