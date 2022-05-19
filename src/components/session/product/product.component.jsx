@@ -7,6 +7,8 @@ import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 import { useSelector, useDispatch } from "react-redux";
 import { insertCartRedux } from "../../../redux/cartRedux";
+import categoryApi from "../../../api/categoryApi";
+
 function Product() {
   const user = useSelector((state) => state.user.currentUser);
   const listCartRedux = useSelector((state) => state.cart.listCart);
@@ -23,6 +25,10 @@ function Product() {
         const products = await productApi.getTop8ProductsNewest();
         setProducts(products);
         setFilteredProducts(products);
+        //get category
+        const categories = await categoryApi.getAll();
+        spans.push({ categoryId: "All", name: "All products" });
+        spans.push(...categories);
       } catch (error) {
         console.error("error");
       }
@@ -32,11 +38,7 @@ function Product() {
   }, []);
 
   // categories list rendering using span tag
-  const [spans] = useState([
-    { id: "All", text: "All products" },
-    { id: "Laptop", text: "Laptop" },
-    { id: "SmartPhone", text: "SmartPhone" },
-  ]);
+  const [spans, setSpans] = useState([]);
 
   // active class state
   const [active, setActive] = useState("All");
@@ -48,9 +50,9 @@ function Product() {
   }, [category]);
   // handle change ... it will set category and active states
   const handleChange = (individualSpan) => {
-    setActive(individualSpan.id);
-    setCategory(individualSpan.text);
-    filterFunction(individualSpan.text);
+    setActive(individualSpan.categoryId);
+    setCategory(individualSpan.categoryId);
+    filterFunction(individualSpan.categoryId);
   };
   // filtered products state
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -58,16 +60,15 @@ function Product() {
   // filter function
   // console.log(products);
 
-  const filterFunction = (text) => {
+  const filterFunction = (id) => {
     if (products.length > 0) {
       const filter = products.filter((product) => {
         return (
-          product.category.name === text ||
-          text === "All products" ||
-          category === "All products"
+          product.category.categoryId === id ||
+          id === "All" ||
+          category === "All"
         );
       });
-      console.log(filter);
       setFilteredProducts(filter);
     } else {
       console.log("no products to filter");
@@ -132,11 +133,11 @@ function Product() {
               {spans.map((span) => {
                 return (
                   <li
-                    key={span.id}
-                    className={span.id === active ? "active" : ""}
+                    key={span.categoryId}
+                    className={span.categoryId === active ? "active" : ""}
                     onClick={() => handleChange(span)} // handle change
                   >
-                    {span.text}
+                    {span.name}
                   </li>
                 );
               })}

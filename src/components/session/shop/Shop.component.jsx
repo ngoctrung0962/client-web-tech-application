@@ -7,6 +7,7 @@ import swal from "sweetalert2";
 import Rating from "@material-ui/lab/Rating";
 import Slider from "@mui/material/Slider";
 import Box from "@material-ui/core/Box";
+import categoryApi from "../../../api/categoryApi";
 
 import {
   formatVND,
@@ -47,6 +48,10 @@ function Shop() {
         };
         setFilterByPrice(ob);
         setPriceShow(ob);
+        //get category
+        const categories = await categoryApi.getAll();
+        spans.push({ categoryId: "All", name: "All products" });
+        spans.push(...categories);
         if (user) {
           await getAllCarts(dispatch, user.username);
         }
@@ -60,17 +65,18 @@ function Shop() {
   }, []);
 
   // categories list rendering using span tag
-  const [spans] = useState([
-    { id: "All", text: "All products" },
-    { id: "Laptop", text: "Laptop" },
-    { id: "SmartPhone", text: "SmartPhone" },
-  ]);
+  // const [spans] = useState([
+  //   { id: "All", text: "All products" },
+  //   { id: "Laptop", text: "Laptop" },
+  //   { id: "SmartPhone", text: "SmartPhone" },
+  // ]);
+  const [spans, setSpans] = useState([]);
 
   // category state
   const location = useLocation();
   const tranformCategory = location.state ? location.state.category : null;
   const [category, setCategory] = useState(
-    tranformCategory ? tranformCategory : "All products"
+    tranformCategory ? tranformCategory : "All"
   );
   // active class state
   const [active, setActive] = useState(
@@ -83,22 +89,22 @@ function Shop() {
 
   // handle change ... it will set category and active states
   const handleChange = (individualSpan) => {
-    setActive(individualSpan.id);
-    setCategory(individualSpan.text);
-    filterFunction(individualSpan.text);
+    setActive(individualSpan.categoryId);
+    setCategory(individualSpan.categoryId);
+    filterFunction(individualSpan.categoryId);
     setCurrentPage(1);
   };
   // filtered products state
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   // filter function
-  const filterFunction = (text) => {
+  const filterFunction = (id) => {
     if (products.length > 0) {
       const filter = products.filter((product) => {
         return (
-          (product.category.name === text ||
-            text === "All products" ||
-            category === "All products") &&
+          (product.category.categoryId === id ||
+            id === "All" ||
+            category === "All") &&
           product.price >= filterByPrice.min &&
           product.price <= filterByPrice.max
         );
@@ -217,13 +223,15 @@ function Shop() {
                       <div key={index} className="card">
                         <div className="card-heading active">
                           <a
-                            id={individualSpan.id}
+                            id={individualSpan.categoryId}
                             onClick={() => handleChange(individualSpan)}
                             className={
-                              individualSpan.id === active ? "active" : ""
+                              individualSpan.categoryId === active
+                                ? "active"
+                                : ""
                             }
                           >
-                            {individualSpan.text}
+                            {individualSpan.name}
                           </a>
                         </div>
                       </div>

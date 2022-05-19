@@ -18,7 +18,7 @@ function Categories() {
                   <Link
                     className="Header_Categories"
                     to="/shop"
-                    state={{ category: "Laptop" }}
+                    state={{ category: "C01" }}
                   >
                     Shop now
                   </Link>
@@ -40,7 +40,7 @@ function Categories() {
                   <Link
                     className="Header_Categories"
                     to="/shop"
-                    state={{ category: "SmartPhone" }}
+                    state={{ category: "C02" }}
                   >
                     Shop now
                   </Link>
