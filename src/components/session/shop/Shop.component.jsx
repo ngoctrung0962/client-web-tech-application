@@ -293,16 +293,29 @@ function Shop() {
                         <div className="product__item">
                           <div
                             className="product__item__pic set-bg"
-                            data-setbg={individualFilteredProduct.image}
+                            data-setbg={
+                              JSON.parse(individualFilteredProduct.image).image1
+                            }
                             style={{
-                              backgroundImage: `url(${individualFilteredProduct.image})`,
+                              backgroundImage: `url(${
+                                JSON.parse(individualFilteredProduct.image)
+                                  .image1
+                              })`,
                             }}
                           >
-                            {individualFilteredProduct && individualFilteredProduct.quantity < 1 ? <div className="label soldout">Sold out</div> : ""}
+                            {individualFilteredProduct &&
+                            individualFilteredProduct.quantity < 1 ? (
+                              <div className="label soldout">Sold out</div>
+                            ) : (
+                              ""
+                            )}
                             <ul className="product__hover">
                               <li>
                                 <a
-                                  href={individualFilteredProduct.image}
+                                  href={
+                                    JSON.parse(individualFilteredProduct.image)
+                                      .image1
+                                  }
                                   className="image-popup"
                                 >
                                   <span className="arrow_expand" />
@@ -342,11 +355,11 @@ function Shop() {
                             </Box>
                             <div className="product__price">
                               {individualFilteredProduct &&
-                                individualFilteredProduct.price
+                              individualFilteredProduct.price
                                 ? individualFilteredProduct.price.toLocaleString(
-                                  "it-IT",
-                                  { style: "currency", currency: "VND" }
-                                )
+                                    "it-IT",
+                                    { style: "currency", currency: "VND" }
+                                  )
                                 : null}
                             </div>
                           </div>
