@@ -155,7 +155,7 @@ function Product() {
                   <div className="product__item">
                     <div
                       className="product__item__pic set-bg"
-                      data-setbg={product.image.image1}
+                      data-setbg={JSON.parse(product.image).image1}
                       // set style background-image
                       style={{
                         backgroundImage: `url(${
