@@ -31,7 +31,7 @@ function SignIn() {
     try {
       const data = await userApi.login(formData)
       login(dispatch, data, username);
-      showNotification('success', 'Login success!', 'Chúc bạn mua hàng vui vẻ!', 'OK')
+      showNotification('success', 'Login success!', 'Wish you a happy purchase!', 'OK')
     } catch (error) {
       dispatch(loginFailure())
     }
@@ -72,6 +72,7 @@ function SignIn() {
           </div>
           {error ? (<h5 style={{ color: "red" }}>Username or password wrong!</h5>) : ("")}
           <StyledLink to="/forgot">Forgot password</StyledLink>
+          <StyledLink style={{ float: "right" }} to="/signup"> Sign up </StyledLink>
           <div className="d-flex row">
             <button onClick={() => nav(-1)} className="btn-back">
               <i className="zmdi zmdi-arrow-left" />

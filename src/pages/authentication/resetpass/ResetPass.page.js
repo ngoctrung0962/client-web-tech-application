@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 
 import { useDispatch, useSelector } from "react-redux";
@@ -11,27 +11,35 @@ function Reset() {
     const nav = useNavigate();
     const [accountName, setAccountName] = useState("");
     const [newPass, setNewPass] = useState("");
+    const [confirmpass, setConfirmPass] = useState("");
     const [token, setToken] = useState("");
 
-    useEffect(() =>{
+    useEffect(() => {
         const query = new URLSearchParams(window.location.search);
         const token = query.get('token');
         setToken(token);
         console.log(token);
-        
-    },[])
-    
+
+    }, [])
+
     const handleClick = async (e) => {
         e.preventDefault();
-        if (newPass) {
-            const res = await userApi.resetPass(newPass, token);
-            if(res){
-                showNotification('success', 'Great', 'New pass has been applied', 'Signin', ()=> nav('/signin'))
+        if (newPass !== confirmpass) {
+            showNotification('error', 'WARNING', "Confirm password doesn't match!", 'OK');
+        }
+        else
+            if (newPass) {
+                const res = await userApi.resetPass(newPass, token);
+                if (!res.status || res.status === 200) {
+                    showNotification('success', 'Great', 'New pass has been applied', 'Signin', () => nav('/signin'))
+                }
+                else {
+                    showNotification('error', 'Thay đổi password thất bại !', `Lỗi: ${res.message}`, 'OK')
+                }
             }
-        }
-        else {
-            showNotification('error', 'WARNING', 'Please type a new password', 'OK');
-        }
+            else {
+                showNotification('error', 'WARNING', 'Please type a new password', 'OK');
+            }
     };
 
     return (
@@ -47,19 +55,27 @@ function Reset() {
                     <h3>RESET PASSWORD</h3>
 
                     <div className="form-wrapper">
-                        <span>Account Name:{'e=hello'}</span> 
-                        <span />
                         <input
-                            type="text"
-                            placeholder="new password"
+                            type="password"
+                            placeholder="New password"
                             className="form-control"
                             required
                             onChange={(e) => setNewPass(e.target.value)}
                         />
                         <i className="zmdi zmdi-account" />
+                    </div>
+                    <div className="form-wrapper">
+
+                        <input
+                            type="password"
+                            placeholder="Confirm password"
+                            className="form-control"
+                            required
+                            onChange={(e) => setConfirmPass(e.target.value)}
+                        />
+                        <i className="zmdi zmdi-account" />
 
                     </div>
-
                     {/* {error ? <h5 style={{ color: "red" }}>Username or password do not match</h5> : ""} */}
                     <div className="d-flex row">
                         {/* <button onClick={(e) => requestOtp(e)} className="btn-back">

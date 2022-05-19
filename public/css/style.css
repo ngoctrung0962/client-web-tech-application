@@ -1522,6 +1522,9 @@ ol {
 .product__item__pic .label.new {
 	background: #36a300;
 }
+.product__item__pic .label.soldout {
+	background: red;
+}
 
 .product__item__pic .label.stockout {
 	background: #111111;

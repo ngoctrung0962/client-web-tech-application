@@ -90,7 +90,7 @@ function Detail() {
       await reviewApi.remove(user.username, reviewId)
       const dataFilter = reviews.filter(item => item.reviewId !== reviewId)
       setReviews(dataFilter)
-      showNotification('success', 'Xóa bình luận thành công', '', 'OK')
+      showNotification('success', 'Delete review success', '', 'OK')
     } catch (error) {
 
     }
@@ -158,7 +158,7 @@ function Detail() {
       setLoading(true);
       if (brandId) {
         try {
-          const res = await productApi.getproductbybrandId(brandId, 4);
+          const res = await productApi.getproductbybrandId(brandId, 5);
           setlistProducts(res);
         } catch (error) {
           console.log(error)
@@ -195,37 +195,40 @@ function Detail() {
       </div>
     )
   })
-  const listProductsbybrandId = listproducts.map((product) => {
+  const listProductsbybrandId = listproducts.map((product, index) => {
     if (product.productId !== productId) {
       return (
-        <div key={product.productId} className="col-lg-3 col-md-4 col-sm-6">
-          <div className="product__item">
-            <div className="product__item__pic set-bg" data-setbg={product ? product.image : null}
-              style={{
-                backgroundImage: `url(${product.image})`
-              }}>
-              <div className="label new">New</div>
-              <ul className="product__hover">
-                <li><a href="img/product/related/rp-1.jpg" className="image-popup"><span className="arrow_expand" /></a></li>
-                <li><a href="#"><span className="icon_heart_alt" /></a></li>
-                <li><a href="#"><span className="icon_bag_alt" /></a></li>
-              </ul>
-            </div>
-            <div className="product__item__text">
-              <h6><Link to={`/product/${product.productId}`} >{product.name}</Link></h6>
-              {/* <div className="rating">
+        <div key={index} className="col-lg-3 col-md-4 col-sm-6">
+          <Link to={`/product/${product.productId}`}>
+            <div className="product__item">
+              <div className="product__item__pic set-bg" data-setbg={product ? product.image : null}
+                style={{
+                  backgroundImage: `url(${product.image})`
+                }}>
+                {product && product.quantity < 1 ? <div className="label soldout">Sold out</div> : <div className="label new">New</div>}
+
+                <ul className="product__hover">
+                  <li><a href="img/product/related/rp-1.jpg" className="image-popup"><span className="arrow_expand" /></a></li>
+                  <li><a href="#"><span className="icon_heart_alt" /></a></li>
+                  <li><a href="#"><span className="icon_bag_alt" /></a></li>
+                </ul>
+              </div>
+              <div className="product__item__text">
+                <h6><Link to={`/product/${product.productId}`} >{product.name}</Link></h6>
+                {/* <div className="rating">
                 <i className="fa fa-star" />
                 <i className="fa fa-star" />
                 <i className="fa fa-star" />
                 <i className="fa fa-star" />
                 <i className="fa fa-star" />
               </div> */}
-              <Box component="fieldset" mb={3} borderColor="transparent">
-                <Rating name="read-only" value={value} readOnly />
-              </Box>
-              <div className="product__price">{product.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} </div>
+                <Box component="fieldset" mb={3} borderColor="transparent">
+                  <Rating name="read-only" value={value} readOnly />
+                </Box>
+                <div className="product__price">{product.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} </div>
+              </div>
             </div>
-          </div>
+          </Link>
         </div >
       )
     }
@@ -322,9 +325,9 @@ function Detail() {
                       <input type="number" defaultValue={1} onChange={(e) => e.target.value === '' ? setInputQuantity(1) : setInputQuantity(e.target.value)} />
                     </div>
                   </div>
-                  {product && product.quantity > 0 ? 
-                  <a disabled={product.quantity < 1} href="" className="cart-btn" onClick={(e) => addToCart(e)}><span className="icon_bag_alt" /> Add to cart</a> : 
-                  <a className="cart-btn sold-out" ><span className="icon_bag_alt" /> Sold out</a>}
+                  {product && product.quantity > 0 ?
+                    <a disabled={product.quantity < 1} href="" className="cart-btn" onClick={(e) => addToCart(e)}><span className="icon_bag_alt" /> Add to cart</a> :
+                    <a className="cart-btn sold-out" ><span className="icon_bag_alt" /> Sold out</a>}
 
 
                 </div>
