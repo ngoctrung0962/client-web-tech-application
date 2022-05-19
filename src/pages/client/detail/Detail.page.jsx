@@ -153,23 +153,24 @@ function Detail() {
 
   //load listProduct by brandId
   useEffect(() => {
-
     const fetchData = async () => {
       setLoading(true);
       if (brandId) {
         try {
-          const res = await productApi.getproductbybrandId(brandId, 1);
-          setlistProducts(res);
+          const res = await productApi.getproductbybrandId(brandId, 2);
+          if (!res.status || res.status === 200) {
+            setlistProducts(res);
+          }
         } catch (error) {
           console.log(error)
         }
       }
-
       setLoading(false)
     }
     fetchData();
   }, [brandId])
   console.log("product", product)
+  console.log("productbybrand", listproducts)
   // Tổng review cho product
   let quantityrv = reviews.length;
 
