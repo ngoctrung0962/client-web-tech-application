@@ -37,7 +37,7 @@ function Trend() {
                 <div className="trend__item" key={index}>
                   <Link to={`/product/${product.productId}`}>
                     <div className="trend__item__pic">
-                      <img src={product.image} alt="true" />
+                      <img src={JSON.parse(product.image).image1} alt="true" />
                     </div>
                     <div className="trend__item__text">
                       <h6>{product.name}</h6>
@@ -71,7 +71,7 @@ function Trend() {
                 <div className="trend__item" key={index}>
                   <Link to={`/product/${product.productId}`}>
                     <div className="trend__item__pic">
-                      <img src={product.image} alt="true" />
+                      <img src={JSON.parse(product.image).image1} alt="true" />
                     </div>
                     <div className="trend__item__text">
                       <h6>{product.name}</h6>
@@ -105,7 +105,7 @@ function Trend() {
                 <div className="trend__item" key={index}>
                   <Link to={`/product/${product.productId}`}>
                     <div className="trend__item__pic">
-                      <img src={product.image} alt="true" />
+                      <img src={JSON.parse(product.image).image1} alt="true" />
                     </div>
                     <div className="trend__item__text">
                       <h6>{product.name}</h6>
