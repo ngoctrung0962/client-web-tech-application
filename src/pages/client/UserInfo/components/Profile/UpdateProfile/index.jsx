@@ -41,12 +41,12 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
         <div className='updateprofile'>
             <div className='updateprofile__container'>
                 <div className='updateprofile__title'>
-                    <p className='updateprofile__title--p'>Update Profile</p>
+                    <p className='updateprofile__title--p'>Chỉnh sửa thông tin tài khoản</p>
                 </div>
                 <form onSubmit={handleSubmit} className='updateprofile__form'>
                     <div className='updateprofile__form--item'>
                         <div className='updateprofile__form--title'>
-                            <p>Full name</p>
+                            <p>Họ và tên</p>
                         </div>
                         <div className='updateprofile__form--input'>
                             <input
@@ -60,7 +60,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
                     </div>
                     <div className='updateprofile__form--item'>
                         <div className='updateprofile__form--title'>
-                            <p>Phone number</p>
+                            <p>Số điện thoại</p>
                         </div>
                         <div className='updateprofile__form--input'>
                             <input
@@ -73,7 +73,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
                     </div>
                     <div className='updateprofile__form--date'>
                         <div className='updateprofile__form--title'>
-                            <span>Date of Birth</span>
+                            <span>Ngày sinh</span>
                         </div>
                         <div className='updateprofile__form--date-dropdown'>
                             <input
@@ -87,7 +87,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
                     </div>
                     <div className='updateprofile__form--sex'>
                         <div className='updateprofile__form--title'>
-                            <span>Gender:</span>
+                            <span>Giới tính</span>
                         </div>
                         <div className='updateprofile__form--sex-dropdown'>
                             <select value={formvalues.gender} option={formvalues.gender} onChange={handleChange} id="gender" name="gender">
@@ -112,7 +112,7 @@ export const UpdateProfile = ({ userdetail, setUserdetail }) => {
                     </div>
                     <div className='updateprofile__form--item'>
                         <div className='updateprofile__form--title'>
-                            <p>Address</p>
+                            <p>Địa chỉ</p>
                         </div>
                         <div className='updateprofile__form--input'>
                             <input
