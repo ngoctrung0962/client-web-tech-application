@@ -11,7 +11,7 @@ function Product() {
   const user = useSelector((state) => state.user.currentUser);
   const listCartRedux = useSelector((state) => state.cart.listCart);
   const dispatch = useDispatch();
-  const [value, setValue] = useState(4);
+  const [value, setValue] = useState(5);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -160,8 +160,8 @@ function Product() {
                       style={{
                         backgroundImage: `url(${JSON.parse(product.image).image1
                           })`,
-                          backgroundSize: "contain",
-                          backgroundPosition: "center"
+                        backgroundSize: "contain",
+                        backgroundPosition: "center"
                       }}
                     >
                       <div className="label new">New</div>

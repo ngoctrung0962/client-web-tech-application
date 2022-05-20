@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import productApi from "../../../api/productApi";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
 function Trend() {
   const [topSellers, setTopSeller] = useState([]);
@@ -41,13 +43,16 @@ function Trend() {
                     </div>
                     <div className="trend__item__text">
                       <h6>{product.name}</h6>
-                      <div className="rating">
+                      <Box component="fieldset" mb={3} borderColor="transparent">
+                        <Rating name="read-only" value={5} readOnly />
+                      </Box>
+                      {/* <div className="rating">
                         <i className="fa fa-star" />
                         <i className="fa fa-star" />
                         <i className="fa fa-star" />
                         <i className="fa fa-star" />
                         <i className="fa fa-star" />
-                      </div>
+                      </div> */}
                       <div className="product__price">
                         {product && product.price
                           ? product.price.toLocaleString("it-IT", {
@@ -76,11 +81,13 @@ function Trend() {
                     <div className="trend__item__text">
                       <h6>{product.name}</h6>
                       <div className="rating">
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
+                        <Box
+                          component="fieldset"
+                          mb={3}
+                          borderColor="transparent"
+                        >
+                          <Rating name="read-only" value={5} readOnly />
+                        </Box>
                       </div>
                       <div className="product__price">
                         {product && product.price
@@ -110,11 +117,13 @@ function Trend() {
                     <div className="trend__item__text">
                       <h6>{product.name}</h6>
                       <div className="rating">
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
+                        <Box
+                          component="fieldset"
+                          mb={3}
+                          borderColor="transparent"
+                        >
+                          <Rating name="read-only" value={5} readOnly />
+                        </Box>
                       </div>
                       <div className="product__price">
                         {product && product.price

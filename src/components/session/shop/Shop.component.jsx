@@ -26,7 +26,7 @@ function Shop() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
 
-  const [value, setValue] = useState(4);
+  const [value, setValue] = useState(5);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
 
