@@ -29,9 +29,14 @@ function SignIn() {
     console.log(formData)
 
     try {
-      const data = await userApi.login(formData)
-      login(dispatch, data, username);
-      showNotification('success', 'Login success!', 'Wish you a happy purchase!', 'OK')
+      const res = await userApi.login(formData)
+      if (!res.status || res.status === 200) {
+        login(dispatch, res, username);
+        showNotification('success', 'Login success!', 'Wish you a happy purchase!', 'OK')
+      } else {
+        dispatch(loginFailure())
+        showNotification('error', 'Login failed!', 'Please check your username and password!', 'OK')
+      }
     } catch (error) {
       dispatch(loginFailure())
     }

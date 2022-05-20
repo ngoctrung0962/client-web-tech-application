@@ -160,6 +160,8 @@ function Product() {
                       style={{
                         backgroundImage: `url(${JSON.parse(product.image).image1
                           })`,
+                          backgroundSize: "contain",
+                          backgroundPosition: "center"
                       }}
                     >
                       <div className="label new">New</div>
