@@ -298,7 +298,7 @@ function Shop() {
                             }
                             style={{
                               backgroundImage: `url(${JSON.parse(individualFilteredProduct.image)
-                                  .image1
+                                .image1
                                 })`,
                             }}
                           >

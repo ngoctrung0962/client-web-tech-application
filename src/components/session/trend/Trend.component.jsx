@@ -34,7 +34,7 @@ function Trend() {
                 <h4>Hot Trend</h4>
               </div>
               {hottrends.map((product, index) => (
-                <div className="trend__item" key={index}>
+                <div key={index} className="trend__item" >
                   <Link to={`/product/${product.productId}`}>
                     <div className="trend__item__pic">
                       <img src={JSON.parse(product.image).image1} alt="true" />
@@ -51,9 +51,9 @@ function Trend() {
                       <div className="product__price">
                         {product && product.price
                           ? product.price.toLocaleString("it-IT", {
-                              style: "currency",
-                              currency: "VND",
-                            })
+                            style: "currency",
+                            currency: "VND",
+                          })
                           : null}
                       </div>
                     </div>
@@ -85,9 +85,9 @@ function Trend() {
                       <div className="product__price">
                         {product && product.price
                           ? product.price.toLocaleString("it-IT", {
-                              style: "currency",
-                              currency: "VND",
-                            })
+                            style: "currency",
+                            currency: "VND",
+                          })
                           : null}
                       </div>
                     </div>
@@ -102,7 +102,7 @@ function Trend() {
                 <h4>Feature</h4>
               </div>
               {topFeatures.map((product, index) => (
-                <div className="trend__item" key={index}>
+                <div key={index} className="trend__item">
                   <Link to={`/product/${product.productId}`}>
                     <div className="trend__item__pic">
                       <img src={JSON.parse(product.image).image1} alt="true" />
@@ -119,9 +119,9 @@ function Trend() {
                       <div className="product__price">
                         {product && product.price
                           ? product.price.toLocaleString("it-IT", {
-                              style: "currency",
-                              currency: "VND",
-                            })
+                            style: "currency",
+                            currency: "VND",
+                          })
                           : null}
                       </div>
                     </div>
