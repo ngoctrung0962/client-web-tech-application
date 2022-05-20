@@ -204,7 +204,10 @@ function Detail() {
             <div className="product__item">
               <div className="product__item__pic set-bg" data-setbg={product ? product.image : null}
                 style={{
-                  backgroundImage: `url(${product.image ? JSON.parse(product.image).image1 : ""})`
+                  backgroundImage: `url(${product.image ? JSON.parse(product.image).image1 : ""})`,
+
+                  backgroundSize: "contain",
+                  backgroundPosition: "center"
                 }}>
                 {product && product.quantity < 1 ? <div className="label soldout">Sold out</div> : <div className="label new">New</div>}
 
