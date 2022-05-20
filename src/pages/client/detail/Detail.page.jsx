@@ -239,29 +239,37 @@ function Detail() {
     e.preventDefault()
     if (!user)
       nav('/signin')
-
+    
+    //////
     const input = parseInt(inputQuantity);
-    if (product.quantity === 0) {
-      showNotification("warning", "HUHU OH NO !!!", "Not enough products, my friends", "Choose others");
+    if(input <= 0){
+      showNotification("error", "ERROR", "Invalid input quantity", 'OK');
     }
-    else {
-      const cartItem = {
-        id: {
-          username: user.username,
-          productId: product.productId,
-        },
-        quantity: input
-      };
-      const resultCheck = checkQuantity(cartItem, product.quantity, listCart);
-      if (resultCheck) {
-        const res = await insertCartRedux(dispatch, cartItem, user.username, product.productId);
-        if (res !== undefined)
-          showNotification("success", "Great", "Add to cart successful", "Ok");
-        else
-          showNotification("error", "Oh No", "Not enough, try again", "Ok");
+    else{
+
+      if (product.quantity === 0) {
+        showNotification("warning", "HUHU OH NO !!!", "Not enough products, my friends", "Choose others");
       }
       else {
-        showNotification("error", "Oh No", "Not enough, try again", "Ok");
+        const cartItem = {
+          id: {
+            username: user.username,
+            productId: product.productId,
+          },
+          quantity: input
+        };
+        
+        const resultCheck = checkQuantity(cartItem, product.quantity, listCart);
+        if (resultCheck) {
+          const res = await insertCartRedux(dispatch, cartItem, user.username, product.productId);
+          if (res !== undefined)
+            showNotification("success", "Great", "Add to cart successful", "Ok");
+          else
+            showNotification("error", "Oh No", "Not enough, try again", "Ok");
+        }
+        else {
+          showNotification("error", "Oh No", "Not enough, try again", "Ok");
+        }
       }
     }
   }
