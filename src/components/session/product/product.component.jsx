@@ -180,7 +180,7 @@ function Product() {
                           </a>
                         </li>
                         <li>
-                          <Link onClick={(e) => e} to="/cart">
+                          <Link onClick={(e) => addToCart(e, product)} to="/cart">
                             <span className="icon_bag_alt" />
                           </Link>
                         </li>
