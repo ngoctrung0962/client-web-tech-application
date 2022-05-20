@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import productApi from "../../../api/productApi";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
 function Trend() {
   const [topSellers, setTopSeller] = useState([]);
@@ -34,26 +36,29 @@ function Trend() {
                 <h4>Hot Trend</h4>
               </div>
               {hottrends.map((product, index) => (
-                <div className="trend__item" key={index}>
+                <div key={index} className="trend__item" >
                   <Link to={`/product/${product.productId}`}>
                     <div className="trend__item__pic">
                       <img src={JSON.parse(product.image).image1} alt="true" />
                     </div>
                     <div className="trend__item__text">
                       <h6>{product.name}</h6>
-                      <div className="rating">
+                      <Box component="fieldset" mb={3} borderColor="transparent">
+                        <Rating name="read-only" value={5} readOnly />
+                      </Box>
+                      {/* <div className="rating">
                         <i className="fa fa-star" />
                         <i className="fa fa-star" />
                         <i className="fa fa-star" />
                         <i className="fa fa-star" />
                         <i className="fa fa-star" />
-                      </div>
+                      </div> */}
                       <div className="product__price">
                         {product && product.price
                           ? product.price.toLocaleString("it-IT", {
-                              style: "currency",
-                              currency: "VND",
-                            })
+                            style: "currency",
+                            currency: "VND",
+                          })
                           : null}
                       </div>
                     </div>
@@ -76,18 +81,20 @@ function Trend() {
                     <div className="trend__item__text">
                       <h6>{product.name}</h6>
                       <div className="rating">
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
+                        <Box
+                          component="fieldset"
+                          mb={3}
+                          borderColor="transparent"
+                        >
+                          <Rating name="read-only" value={5} readOnly />
+                        </Box>
                       </div>
                       <div className="product__price">
                         {product && product.price
                           ? product.price.toLocaleString("it-IT", {
-                              style: "currency",
-                              currency: "VND",
-                            })
+                            style: "currency",
+                            currency: "VND",
+                          })
                           : null}
                       </div>
                     </div>
@@ -102,7 +109,7 @@ function Trend() {
                 <h4>Feature</h4>
               </div>
               {topFeatures.map((product, index) => (
-                <div className="trend__item" key={index}>
+                <div key={index} className="trend__item">
                   <Link to={`/product/${product.productId}`}>
                     <div className="trend__item__pic">
                       <img src={JSON.parse(product.image).image1} alt="true" />
@@ -110,18 +117,20 @@ function Trend() {
                     <div className="trend__item__text">
                       <h6>{product.name}</h6>
                       <div className="rating">
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
+                        <Box
+                          component="fieldset"
+                          mb={3}
+                          borderColor="transparent"
+                        >
+                          <Rating name="read-only" value={5} readOnly />
+                        </Box>
                       </div>
                       <div className="product__price">
                         {product && product.price
                           ? product.price.toLocaleString("it-IT", {
-                              style: "currency",
-                              currency: "VND",
-                            })
+                            style: "currency",
+                            currency: "VND",
+                          })
                           : null}
                       </div>
                     </div>

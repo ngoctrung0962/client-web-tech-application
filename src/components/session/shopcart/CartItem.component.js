@@ -40,7 +40,7 @@ function CartItem(props) {
             <i className="fa fa-star" />
           </div> */}
           <Box component="fieldset" mb={3} borderColor="transparent">
-            <Rating name="read-only" value={4} readOnly />
+            <Rating name="read-only" value={5} readOnly />
           </Box>
         </div>
       </td>
