@@ -300,7 +300,8 @@ function Shop() {
                               backgroundImage: `url(${JSON.parse(individualFilteredProduct.image)
                                 .image1
                                 })`,
-                              backgroundSize: "contain"
+                              backgroundSize: "contain",
+                              backgroundPosition: "center"
                             }}
                           >
                             {individualFilteredProduct &&
