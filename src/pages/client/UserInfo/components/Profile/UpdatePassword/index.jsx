@@ -24,11 +24,17 @@ export const UpdatePassword = ({ userdetail }) => {
         else {
             try {
                 const res = await userApi.changepassword(userdetail.username, formData)
-                console.log(res)
-                showNotification('success', 'Great', 'Change password success! Please login again', 'OK')
-                dispatch(Logout())
-                setErrorconfirm("")
-                setErroroldpass("")
+
+                if (!res.status || res.status === 200) {
+                    showNotification('success', 'Great', 'Change password success! Please login again', 'OK')
+                    dispatch(Logout())
+                    setErrorconfirm("")
+                    setErroroldpass("")
+                }
+                else {
+                    setErroroldpass("Wrong password!")
+                    setErrorconfirm("")
+                }
             } catch (error) {
                 setErroroldpass("Wrong password!")
                 setErrorconfirm("")
