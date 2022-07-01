@@ -47,7 +47,7 @@ export const History = () => {
         return (
             <div key={order.orderId} >
                 <div className='history__table'>
-                    <p>Đơn hàng: {order.orderId}  &emsp; &emsp; &emsp; Ngày mua: {order.purchaseDate.slice(0, 10)}  &emsp; &emsp; &emsp; Tổng tiền: {order.totalPrices.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                    <p>Đơn hàng: {order.orderId}  &emsp; &emsp; &emsp; Ngày mua: {order.purchaseDate.slice(0, 10)}  &emsp; &emsp; &emsp; Tổng tiền: {(order.totalPrices - order.discountPrice).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                     <p>Địa chỉ: {order.address}  &emsp; &emsp; &emsp; Người nhận: {order.name} &emsp; &emsp; &emsp;  Số điện thoại: {order.phoneNumber}</p>
                     <table className='history__table--content' border="1">
                         <tbody>

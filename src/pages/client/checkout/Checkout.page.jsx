@@ -32,7 +32,7 @@ function Checkout() {
 
     useEffect(() => {
         const fetchData = async () => {
-            if(!location.state?.listCarts){
+            if (!location.state?.listCarts) {
                 navigate('/cart')
             }
             const listDeliveries = await getListDeliveriesApi();

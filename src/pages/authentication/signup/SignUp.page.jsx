@@ -2,7 +2,43 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import userApi from "../../../api/userApi";
 import { showNotification } from "../../../utils/MyUtils";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .required("Vui lòng nhập fullname"),
+  username: yup
+    .string()
+    .required("Vui lòng nhập username")
+    .max(10, "Tối đa 10 kí tự"),
+  email: yup
+    .string()
+    .required("hông được để trống").email("Không phải một email"),
+  phoneNumber: yup
+    .string()
+    .required("hông được để trống")
+    .min(10, "Số điện thoại gồm 10 chữ số").max(10, "Số điện thoại gồm 10 chữ số"),
+  dateOfBirth: yup
+    .date().required("Không được để trống"),
+  address: yup
+    .string(),
+  password: yup
+    .string()
+    .required("không được để trống")
+    .min(6, "Mật khẩu phải nhiều hơn 6 kí tự")
+
+});
+
 function SignUp() {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({ resolver: yupResolver(schema) });
+
   const initValue = { name: "", username: "", email: "", phoneNumber: "", dateOfBirth: "", address: "", gender: true, password: "" }
   const [formvalues, setFormvalues] = useState(initValue);
   const handleChange = (e) => {
@@ -10,36 +46,34 @@ function SignUp() {
     setFormvalues({ ...formvalues, [name]: value });
   }
   const [confirmpassword, setConfirmpassword] = useState("")
-  const handleChangeConfirm = () => {
-
-  }
   const nav = useNavigate();
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e, data) => {
     e.preventDefault();
-    console.log(formvalues)
-    if (formvalues.password === confirmpassword) {
-      const res = await userApi.register(
-        formvalues.username,
-        formvalues.password,
-        formvalues
-      );
-      console.log(res)
+    console.log("hehehe")
+    console.log(data ? data.name : "")
+    // console.log(formvalues)
+    // if (formvalues.password === confirmpassword) {
+    //   const res = await userApi.register(
+    //     formvalues.username,
+    //     formvalues.password,
+    //     formvalues
+    //   );
+    //   console.log(res)
 
-      if (!res.status || res.status === 200) {
+    //   if (!res.status || res.status === 200) {
 
-        showNotification('success', 'Sign up success !', 'Please log in again', 'OK')
-        nav("/signin")
-      }
-      else {
-        showNotification('error', 'Sign up fail !', `Error: ${res.message}`, 'OK')
-      }
-    }
-    else {
-      showNotification('error', 'Sign up fail !', "Error: Confirm password doesn't match", 'OK')
-    }
+    //     showNotification('success', 'Sign up success !', 'Please log in again', 'OK')
+    //     nav("/signin")
+    //   }
+    //   else {
+    //     showNotification('error', 'Sign up fail !', `Error: ${res.message}`, 'OK')
+    //   }
+    // }
+    // else {
+    //   showNotification('error', 'Sign up fail !', "Error: Confirm password doesn't match", 'OK')
+    // }
 
   };
-
   return (
     <div
       className="wrapper"
@@ -49,7 +83,7 @@ function SignUp() {
         <div className="image-holder">
           <img src="img/signup/ip13.jpg" alt="Image Sign Up" />
         </div>
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit(onSubmit)} >
           <h3>Sign Up Form</h3>
           <div className="form-wrapper">
             <input
@@ -58,11 +92,11 @@ function SignUp() {
               type="text"
               placeholder="Full Name"
               className="form-control"
-              value={formvalues.name}
               onChange={handleChange}
-              required
+              ref={register}
             />
-
+            {errors.name &&
+              <p style={{ color: "red" }} className="error">{errors.name?.message}</p>}
           </div>
           <div className="form-wrapper">
             <input
@@ -72,8 +106,10 @@ function SignUp() {
               placeholder="Username"
               className="form-control"
               onChange={handleChange}
-              required
+              ref={register}
             />
+            {errors.username &&
+              <p style={{ color: "red" }} className="error">{errors.username?.message}</p>}
             <i className="zmdi zmdi-account" />
           </div>
           <div className="form-wrapper">
@@ -84,8 +120,11 @@ function SignUp() {
               placeholder="Email Address"
               className="form-control"
               onChange={handleChange}
+              ref={register}
               required
             />
+            {errors.email &&
+              <p style={{ color: "red" }} className="error">{errors.email?.message}</p>}
             <i className="zmdi zmdi-email" />
           </div>
           <div className="form-wrapper">
@@ -108,8 +147,10 @@ function SignUp() {
               placeholder="Phone Number"
               className="form-control"
               onChange={handleChange}
-              required
+              ref={register}
             />
+            {errors.phoneNumber &&
+              <p style={{ color: "red" }} className="error">{errors.phoneNumber?.message}</p>}
             <i className="zmdi zmdi-phone" />
           </div>
           <div className="form-wrapper">
@@ -132,8 +173,11 @@ function SignUp() {
               placeholder="Password"
               className="form-control"
               onChange={handleChange}
+              ref={register}
               required
             />
+            {errors.password &&
+              <p style={{ color: "red" }} className="error">{errors.password?.message}</p>}
             <i className="zmdi zmdi-lock" />
           </div>
           <div className="form-wrapper">
